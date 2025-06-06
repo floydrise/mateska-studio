@@ -1,5 +1,7 @@
 import { integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 
 export const workoutPlanTable = pgTable("workout_plan", {
   workoutPlanId: serial("workout_plan_id").primaryKey(),
@@ -36,7 +38,6 @@ export const workoutSectionTable = pgTable("workout_section", {
     .notNull()
     .references(() => workoutPlanTable.workoutPlanId, { onDelete: "cascade" }),
   sectionTitle: text("section_title").notNull(),
-  workoutSectionPosition: integer().notNull().default(1),
 });
 
 export const workoutSessionsTable = pgTable("workout_session", {
@@ -47,5 +48,4 @@ export const workoutSessionsTable = pgTable("workout_session", {
   sessionTitle: text().notNull(),
   sessionVideoUrl: text().notNull(),
   sessionDescription: text().notNull(),
-  sessionPosition: integer().notNull().default(1),
 });
