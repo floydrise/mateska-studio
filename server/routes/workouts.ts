@@ -2,7 +2,12 @@ import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { WorkoutSchema } from "../schemas/zod_schemas";
 import { db } from "../db";
-import { workoutCardTable, workoutPlanTable } from "../db/schema";
+import {
+  workoutCardTable,
+  workoutPlanTable,
+  workoutSectionTable,
+  workoutSessionsTable,
+} from "../db/schema";
 
 const app = new Hono()
   .get("/", (c) => c.json({ msg: "Working" }))
@@ -24,6 +29,30 @@ const app = new Hono()
       workoutCardTargetMuscles: card.targetMuscles,
       workoutCardEquipment: card.equipment,
     });
+
+    for (const section of validatedWorkout.sections) {
+      const { sectionId } = await db
+        .insert(workoutSectionTable)
+        .values({
+          workoutPlanId: planId,
+          sectionTitle: section.sectionTitle,
+        })
+        .returning({ sectionId: workoutSectionTable.sectionId })
+        .then((res) => res[0]);
+
+      if (!sectionId) continue;
+
+      for (const session of section.sessions) {
+        await db.insert(workoutSessionsTable).values({
+          sectionId,
+          sessionTitle: session.sessionTitle,
+          sessionVideoUrl: session.videoUrl,
+          sessionDescription: session.description,
+        });
+      }
+    }
+
+    return c.json({ msg: "Workout successfully created" }, 201);
   });
 
 export default app;
