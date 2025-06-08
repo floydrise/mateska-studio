@@ -3,13 +3,12 @@ import { db } from "../db";
 import { workoutCardTable } from "../db/schema";
 import { zValidator } from "@hono/zod-validator";
 import { eq } from "drizzle-orm";
-import { IdParamSchema, PatchCardSchema } from "../schemas/zod_schemas";
+import { PatchCardSchema } from "../schemas/zod_schemas";
+import { validateId } from "../utils";
 
-const validateId = zValidator("param", IdParamSchema);
 const app = new Hono()
   .get("/", async (c) => {
     const workoutCards = await db.select().from(workoutCardTable);
-    if (workoutCards.length === 0) return c.json({ msg: "No cards yet" }, 200);
     return c.json({ cards: workoutCards });
   })
   .get("/:id", validateId, async (c) => {
