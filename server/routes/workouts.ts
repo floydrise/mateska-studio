@@ -8,9 +8,9 @@ import {
   workoutSectionTable,
   workoutSessionsTable,
 } from "../db/schema";
+import cardsRoute from "./workout_cards";
 
 const app = new Hono()
-  .get("/", (c) => c.json({ msg: "Working" }))
   .post("/", zValidator("json", WorkoutSchema), async (c) => {
     const validatedWorkout = c.req.valid("json");
     const { planId } = await db
@@ -53,6 +53,7 @@ const app = new Hono()
     }
 
     return c.json({ msg: "Workout successfully created" }, 201);
-  });
+  })
+  .route("/cards", cardsRoute);
 
 export default app;
