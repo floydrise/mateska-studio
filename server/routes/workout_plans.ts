@@ -1,10 +1,14 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { IdParamSchema, PatchWorkoutPlanSchema } from "../schemas/zod_schemas";
+import {
+  PatchSectionSchema,
+  PatchWorkoutPlanSchema,
+} from "../schemas/zod_schemas";
 import { db } from "../db";
-import { workoutPlanTable } from "../db/schema";
-import { eq } from "drizzle-orm";
+import { workoutPlanTable, workoutSectionTable } from "../db/schema";
+import { and, eq } from "drizzle-orm";
 import { validateId } from "../utils";
+import { z } from "zod";
 
 const app = new Hono()
   .get("/", async (c) => {
@@ -54,6 +58,94 @@ const app = new Hono()
       { msg: "Successfully deleted the workout plan", deletedPlan },
       200,
     );
-  });
+  })
+  .get("/:id/sections", validateId, async (c) => {
+    const { id } = c.req.valid("param");
+    const sessions = await db
+      .select()
+      .from(workoutSectionTable)
+      .where(eq(workoutSectionTable.workoutPlanId, id));
+    if (sessions.length === 0) return c.json({ msg: "No sections found" }, 404);
+    return c.json({ sessions });
+  })
+  .get(
+    "/:planId/sections/:sectionId",
+    zValidator(
+      "param",
+      z.object({
+        planId: z.coerce.number().positive(),
+        sectionId: z.coerce.number().positive(),
+      }),
+    ),
+    async (c) => {
+      const { planId, sectionId } = c.req.valid("param");
+      const section = await db
+        .select()
+        .from(workoutSectionTable)
+        .where(
+          and(
+            eq(workoutSectionTable.workoutPlanId, planId),
+            eq(workoutSectionTable.sectionId, sectionId),
+          ),
+        )
+        .then((res) => res[0]);
+      if (!section) return c.json({ msg: "No section found" }, 404);
+      return c.json({ section });
+    },
+  )
+  .delete(
+    "/:planId/sections/:sectionId",
+    zValidator(
+      "param",
+      z.object({
+        planId: z.coerce.number().positive(),
+        sectionId: z.coerce.number().positive(),
+      }),
+    ),
+    async (c) => {
+      const { planId, sectionId } = c.req.valid("param");
+      const deletedSection = await db
+        .delete(workoutSectionTable)
+        .where(
+          and(
+            eq(workoutSectionTable.workoutPlanId, planId),
+            eq(workoutSectionTable.sectionId, sectionId),
+          ),
+        )
+        .returning()
+        .then((res) => res[0]);
+      if (!deletedSection) return c.json({ msg: "No section to delete" }, 404);
+      return c.json({ msg: "Successfully deleted section", deletedSection });
+    },
+  )
+  .patch(
+    "/:planId/sections/:sectionId",
+    zValidator(
+      "param",
+      z.object({
+        planId: z.coerce.number().positive(),
+        sectionId: z.coerce.number().positive(),
+      }),
+    ),
+    zValidator("json", PatchSectionSchema),
+    async (c) => {
+      const { planId, sectionId } = c.req.valid("param");
+      const validatedSection = c.req.valid("json");
+      const updatedSection = await db
+        .update(workoutSectionTable)
+        .set({ sectionTitle: validatedSection.sectionTitle })
+        .where(
+          and(
+            eq(workoutSectionTable.workoutPlanId, planId),
+            eq(workoutSectionTable.sectionId, sectionId),
+          ),
+        )
+        .returning()
+        .then((res) => res[0]);
+      if (!updatedSection)
+        return c.json({ msg: "No section found to update" }, 404);
+      return c.json({ msg: "Successfully updated section", updatedSection });
+    },
+  );
 
 export default app;
