@@ -5,7 +5,11 @@ import {
   PatchWorkoutPlanSchema,
 } from "../schemas/zod_schemas";
 import { db } from "../db";
-import { workoutPlanTable, workoutSectionTable } from "../db/schema";
+import {
+  workoutPlanTable,
+  workoutSectionTable,
+  workoutSessionsTable,
+} from "../db/schema";
 import { and, eq } from "drizzle-orm";
 import { validateId } from "../utils";
 import { z } from "zod";
@@ -145,6 +149,35 @@ const app = new Hono()
       if (!updatedSection)
         return c.json({ msg: "No section found to update" }, 404);
       return c.json({ msg: "Successfully updated section", updatedSection });
+    },
+  )
+  .get(
+    "/:planId/sections/:sectionId/sessions",
+    zValidator(
+      "param",
+      z.object({
+        planId: z.coerce.number().positive(),
+        sectionId: z.coerce.number().positive(),
+      }),
+    ),
+    async (c) => {
+      const { planId, sectionId } = c.req.valid("param");
+      const sessions = await db
+        .select({
+          sessionId: workoutSessionsTable.workoutSessionId,
+          sectionId: workoutSessionsTable.sectionId,
+          sessionTitle: workoutSessionsTable.sessionTitle,
+          sessionVideoUrl: workoutSessionsTable.sessionVideoUrl,
+          sessionDescription: workoutSessionsTable.sessionDescription,
+        })
+        .from(workoutSessionsTable)
+        .innerJoin(
+          workoutSectionTable,
+          eq(workoutSessionsTable.sectionId, workoutSectionTable.sectionId),
+        )
+        .where(eq(workoutSectionTable.workoutPlanId, planId));
+      if (!sessions) return c.json({ msg: "No sessions found" }, 404);
+      return c.json({ sessions });
     },
   );
 

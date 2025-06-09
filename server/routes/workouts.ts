@@ -10,6 +10,7 @@ import {
 } from "../db/schema";
 import cardsRoute from "./workout_cards";
 import plansRoute from "./workout_plans";
+import sectionsRoute from "./workout_sections";
 
 const app = new Hono()
   .post("/", zValidator("json", WorkoutSchema), async (c) => {
@@ -56,6 +57,7 @@ const app = new Hono()
     return c.json({ msg: "Workout successfully created" }, 201);
   })
   .route("/plans", plansRoute)
-  .route("/cards", cardsRoute);
+  .route("/cards", cardsRoute)
+  .route("/sections", sectionsRoute);
 
 export default app;
