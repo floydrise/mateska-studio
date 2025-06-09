@@ -1,14 +1,13 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 
 import "./styles.css";
 import reportWebVitals from "./reportWebVitals.ts";
 import { ThemeProvider } from "./components/theme-provider.tsx";
-
 // Create a new router instance
 const router = createRouter({
   routeTree,
@@ -25,6 +24,8 @@ declare module "@tanstack/react-router" {
     router: typeof router;
   }
 }
+// Create a client
+const queryClient = new QueryClient();
 
 // Render the app
 const rootElement = document.getElementById("app");
@@ -33,7 +34,9 @@ if (rootElement && !rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
       </ThemeProvider>
     </StrictMode>
   );

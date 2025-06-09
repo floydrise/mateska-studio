@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ModeToggle } from "./mode-toggle";
-import studioLogo from "../../public/mateska_logo.webp";
+import studioLogo from "/mateska_logo.webp";
 
 export default function Header() {
   return (

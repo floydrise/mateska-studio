@@ -5,7 +5,11 @@ import {
   workoutSectionTable,
   workoutSessionsTable,
 } from "../db/schema";
-import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+} from "drizzle-zod";
 
 export const WorkoutSchema = z.object({
   workoutPlanTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
@@ -50,6 +54,8 @@ export const PatchCardSchema = createUpdateSchema(workoutCardTable, {
   workoutCardTitle: (schema) =>
     schema.min(3, "Трябва да е най-малко 3 букви").optional(),
 });
+
+export const SelectCardSchema = createSelectSchema(workoutCardTable);
 
 export const PatchWorkoutPlanSchema = createUpdateSchema(workoutPlanTable, {
   workoutPlanTitle: (schema) => schema.min(3, "Трябва да е поне 3 букви"),
