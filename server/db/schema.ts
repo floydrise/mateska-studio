@@ -1,8 +1,5 @@
 import { integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
-import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod";
-
 export const workoutPlanTable = pgTable("workout_plan", {
   workoutPlanId: serial("workout_plan_id").primaryKey(),
   workoutPlanTitle: text("workout_plan_title").notNull(),

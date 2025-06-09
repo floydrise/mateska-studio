@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v4";
 import {
   workoutCardTable,
   workoutPlanTable,
@@ -34,10 +34,10 @@ export const WorkoutSchema = z.object({
               sessionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
               videoUrl: z.string().url("Must be a URL"),
               description: z.string().min(3, "Трябва да е най-малко 3 букви"),
-            })
+            }),
           )
           .min(1, "Трябва да добавиш поне 1 сесия"),
-      })
+      }),
     )
     .min(1, "Трябва да добавиш поне 1 секция"),
 });
@@ -55,7 +55,9 @@ export const PatchCardSchema = createUpdateSchema(workoutCardTable, {
     schema.min(3, "Трябва да е най-малко 3 букви").optional(),
 });
 
-export const SelectCardSchema = createSelectSchema(workoutCardTable);
+export const SelectCardSchema = createSelectSchema(workoutCardTable).omit({
+  workoutCardCreatedAt: true,
+});
 
 export const PatchWorkoutPlanSchema = createUpdateSchema(workoutPlanTable, {
   workoutPlanTitle: (schema) => schema.min(3, "Трябва да е поне 3 букви"),
@@ -85,7 +87,7 @@ export const PostSectionSchema = z.object({
         sessionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
         videoUrl: z.string().url("Must be a URL"),
         description: z.string().min(3, "Трябва да е най-малко 3 букви"),
-      })
+      }),
     )
     .min(1, "Трябва да добавиш поне 1 сесия"),
 });

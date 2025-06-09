@@ -10,7 +10,7 @@ export const Route = createFileRoute("/workouts")({
 
 function RouteComponent() {
   const { isLoading, error, data, isError } = useQuery(
-    getWorkoutCardsQueryOptions
+    getWorkoutCardsQueryOptions,
   );
   if (isError) toast.error("An error occurred: " + error.message);
   if (isLoading) return <h1>Loading ...</h1>;
