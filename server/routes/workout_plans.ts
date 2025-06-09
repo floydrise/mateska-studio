@@ -176,8 +176,45 @@ const app = new Hono()
           eq(workoutSessionsTable.sectionId, workoutSectionTable.sectionId),
         )
         .where(eq(workoutSectionTable.workoutPlanId, planId));
-      if (!sessions) return c.json({ msg: "No sessions found" }, 404);
+      if (sessions.length === 0)
+        return c.json({ msg: "No sessions found" }, 404);
       return c.json({ sessions });
+    },
+  )
+  .get(
+    "/:planId/sections/:sectionId/sessions/:sessionId",
+    zValidator(
+      "param",
+      z.object({
+        planId: z.coerce.number().positive(),
+        sectionId: z.coerce.number().positive(),
+        sessionId: z.coerce.number().positive(),
+      }),
+    ),
+    async (c) => {
+      const { planId, sectionId, sessionId } = c.req.valid("param");
+      const session = await db
+        .select({
+          sessionId: workoutSessionsTable.workoutSessionId,
+          sectionId: workoutSessionsTable.sectionId,
+          sessionTitle: workoutSessionsTable.sessionTitle,
+          sessionVideoUrl: workoutSessionsTable.sessionVideoUrl,
+          sessionDescription: workoutSessionsTable.sessionDescription,
+        })
+        .from(workoutSessionsTable)
+        .innerJoin(
+          workoutSectionTable,
+          eq(workoutSessionsTable.sectionId, workoutSectionTable.sectionId),
+        )
+        .where(
+          and(
+            eq(workoutSectionTable.workoutPlanId, planId),
+            eq(workoutSessionsTable.workoutSessionId, sessionId),
+          ),
+        )
+        .then((res) => res[0]);
+      if (!session) return c.json({ msg: "No session found" }, 404);
+      return c.json({ session });
     },
   );
 
