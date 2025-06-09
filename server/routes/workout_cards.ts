@@ -44,7 +44,7 @@ const app = new Hono()
     if (!updatedCard)
       return c.json(
         { msg: "Couldn't find a card with this ID to update" },
-        404,
+        404
       );
     return c.json({ msg: "Successfully updated the card", updatedCard }, 200);
   });
