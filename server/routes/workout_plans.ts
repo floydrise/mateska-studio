@@ -46,9 +46,9 @@ const app = new Hono()
         return c.json({ msg: "Couldn't find a plan to update" }, 404);
       return c.json(
         { msg: "Successfully updated workout plan", updatedWorkoutPlan },
-        200,
+        200
       );
-    },
+    }
   )
   .delete("/:id", validateId, async (c) => {
     const { id } = c.req.valid("param");
@@ -60,7 +60,7 @@ const app = new Hono()
     if (!deletedPlan) return c.json({ msg: "No plan found to delete" }, 404);
     return c.json(
       { msg: "Successfully deleted the workout plan", deletedPlan },
-      200,
+      200
     );
   })
   .get("/:id/sections", validateId, async (c) => {
@@ -79,7 +79,7 @@ const app = new Hono()
       z.object({
         planId: z.coerce.number().positive(),
         sectionId: z.coerce.number().positive(),
-      }),
+      })
     ),
     async (c) => {
       const { planId, sectionId } = c.req.valid("param");
@@ -89,13 +89,13 @@ const app = new Hono()
         .where(
           and(
             eq(workoutSectionTable.workoutPlanId, planId),
-            eq(workoutSectionTable.sectionId, sectionId),
-          ),
+            eq(workoutSectionTable.sectionId, sectionId)
+          )
         )
         .then((res) => res[0]);
       if (!section) return c.json({ msg: "No section found" }, 404);
       return c.json({ section });
-    },
+    }
   )
   .delete(
     "/:planId/sections/:sectionId",
@@ -104,7 +104,7 @@ const app = new Hono()
       z.object({
         planId: z.coerce.number().positive(),
         sectionId: z.coerce.number().positive(),
-      }),
+      })
     ),
     async (c) => {
       const { planId, sectionId } = c.req.valid("param");
@@ -113,14 +113,14 @@ const app = new Hono()
         .where(
           and(
             eq(workoutSectionTable.workoutPlanId, planId),
-            eq(workoutSectionTable.sectionId, sectionId),
-          ),
+            eq(workoutSectionTable.sectionId, sectionId)
+          )
         )
         .returning()
         .then((res) => res[0]);
       if (!deletedSection) return c.json({ msg: "No section to delete" }, 404);
       return c.json({ msg: "Successfully deleted section", deletedSection });
-    },
+    }
   )
   .patch(
     "/:planId/sections/:sectionId",
@@ -129,7 +129,7 @@ const app = new Hono()
       z.object({
         planId: z.coerce.number().positive(),
         sectionId: z.coerce.number().positive(),
-      }),
+      })
     ),
     zValidator("json", PatchSectionSchema),
     async (c) => {
@@ -141,15 +141,15 @@ const app = new Hono()
         .where(
           and(
             eq(workoutSectionTable.workoutPlanId, planId),
-            eq(workoutSectionTable.sectionId, sectionId),
-          ),
+            eq(workoutSectionTable.sectionId, sectionId)
+          )
         )
         .returning()
         .then((res) => res[0]);
       if (!updatedSection)
         return c.json({ msg: "No section found to update" }, 404);
       return c.json({ msg: "Successfully updated section", updatedSection });
-    },
+    }
   )
   .get(
     "/:planId/sections/:sectionId/sessions",
@@ -158,7 +158,7 @@ const app = new Hono()
       z.object({
         planId: z.coerce.number().positive(),
         sectionId: z.coerce.number().positive(),
-      }),
+      })
     ),
     async (c) => {
       const { planId, sectionId } = c.req.valid("param");
@@ -173,13 +173,13 @@ const app = new Hono()
         .from(workoutSessionsTable)
         .innerJoin(
           workoutSectionTable,
-          eq(workoutSessionsTable.sectionId, workoutSectionTable.sectionId),
+          eq(workoutSessionsTable.sectionId, workoutSectionTable.sectionId)
         )
         .where(eq(workoutSectionTable.workoutPlanId, planId));
       if (sessions.length === 0)
         return c.json({ msg: "No sessions found" }, 404);
       return c.json({ sessions });
-    },
+    }
   )
   .get(
     "/:planId/sections/:sectionId/sessions/:sessionId",
@@ -189,7 +189,7 @@ const app = new Hono()
         planId: z.coerce.number().positive(),
         sectionId: z.coerce.number().positive(),
         sessionId: z.coerce.number().positive(),
-      }),
+      })
     ),
     async (c) => {
       const { planId, sectionId, sessionId } = c.req.valid("param");
@@ -204,18 +204,18 @@ const app = new Hono()
         .from(workoutSessionsTable)
         .innerJoin(
           workoutSectionTable,
-          eq(workoutSessionsTable.sectionId, workoutSectionTable.sectionId),
+          eq(workoutSessionsTable.sectionId, workoutSectionTable.sectionId)
         )
         .where(
           and(
             eq(workoutSectionTable.workoutPlanId, planId),
-            eq(workoutSessionsTable.workoutSessionId, sessionId),
-          ),
+            eq(workoutSessionsTable.workoutSessionId, sessionId)
+          )
         )
         .then((res) => res[0]);
       if (!session) return c.json({ msg: "No session found" }, 404);
       return c.json({ session });
-    },
+    }
   );
 
 export default app;

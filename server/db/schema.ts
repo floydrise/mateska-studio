@@ -41,11 +41,11 @@ export const workoutSectionTable = pgTable("workout_section", {
 });
 
 export const workoutSessionsTable = pgTable("workout_session", {
-  workoutSessionId: serial().primaryKey(),
-  sectionId: integer()
+  workoutSessionId: serial("workout_session_id").primaryKey(),
+  sectionId: integer("section_id")
     .notNull()
     .references(() => workoutSectionTable.sectionId, { onDelete: "cascade" }),
-  sessionTitle: text().notNull(),
-  sessionVideoUrl: text().notNull(),
-  sessionDescription: text().notNull(),
+  sessionTitle: text("session_title").notNull(),
+  sessionVideoUrl: text("session_video_url").notNull(),
+  sessionDescription: text("session_description").notNull(),
 });
