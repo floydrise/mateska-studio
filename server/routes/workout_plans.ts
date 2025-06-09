@@ -3,6 +3,7 @@ import { zValidator } from "@hono/zod-validator";
 import {
   PatchSectionSchema,
   PatchWorkoutPlanSchema,
+  PostSectionSchema,
   PostSessionSchema,
 } from "../schemas/zod_schemas";
 import { db } from "../db";
@@ -248,6 +249,43 @@ const app = new Hono()
         { msg: "Successfully created new session", newSession },
         201
       );
+    }
+  )
+  .post(
+    "/:planId/sections",
+    zValidator(
+      "param",
+      z.object({
+        planId: z.coerce.number().positive(),
+      })
+    ),
+    zValidator("json", PostSectionSchema),
+    async (c) => {
+      const { planId } = c.req.valid("param");
+      const validatedSection = c.req.valid("json");
+      const { sectionId } = await db
+        .insert(workoutSectionTable)
+        .values({
+          workoutPlanId: planId,
+          sectionTitle: validatedSection.sectionTitle,
+        })
+        .returning({ sectionId: workoutSectionTable.sectionId })
+        .then((res) => res[0]);
+      const sessions = validatedSection.sessions;
+      for (const session of sessions) {
+        const newSession = await db
+          .insert(workoutSessionsTable)
+          .values({
+            sectionId,
+            sessionDescription: session.description,
+            sessionTitle: session.sessionTitle,
+            sessionVideoUrl: session.videoUrl,
+          })
+          .returning()
+          .then((res) => res[0]);
+        if (!newSession) continue;
+      }
+      return c.json({ msg: "Successfully created section with sessions" }, 201);
     }
   );
 

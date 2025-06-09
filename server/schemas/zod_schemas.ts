@@ -70,3 +70,16 @@ export const PostSessionSchema = createInsertSchema(workoutSessionsTable, {
   sessionDescription: (schema) => schema.min(3, "Трябва да е поне 3 букви"),
   sessionVideoUrl: (schema) => schema.min(3, "Трябва да е най-малко 3 букви"),
 });
+
+export const PostSectionSchema = z.object({
+  sectionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
+  sessions: z
+    .array(
+      z.object({
+        sessionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
+        videoUrl: z.string().url("Must be a URL"),
+        description: z.string().min(3, "Трябва да е най-малко 3 букви"),
+      })
+    )
+    .min(1, "Трябва да добавиш поне 1 сесия"),
+});
