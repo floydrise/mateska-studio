@@ -3,6 +3,7 @@ import { zValidator } from "@hono/zod-validator";
 import {
   PatchSectionSchema,
   PatchWorkoutPlanSchema,
+  PostSessionSchema,
 } from "../schemas/zod_schemas";
 import { db } from "../db";
 import {
@@ -65,12 +66,12 @@ const app = new Hono()
   })
   .get("/:id/sections", validateId, async (c) => {
     const { id } = c.req.valid("param");
-    const sessions = await db
+    const sections = await db
       .select()
       .from(workoutSectionTable)
       .where(eq(workoutSectionTable.workoutPlanId, id));
-    if (sessions.length === 0) return c.json({ msg: "No sections found" }, 404);
-    return c.json({ sessions });
+    if (sections.length === 0) return c.json({ msg: "No sections found" }, 404);
+    return c.json({ sections });
   })
   .get(
     "/:planId/sections/:sectionId",
@@ -175,7 +176,12 @@ const app = new Hono()
           workoutSectionTable,
           eq(workoutSessionsTable.sectionId, workoutSectionTable.sectionId)
         )
-        .where(eq(workoutSectionTable.workoutPlanId, planId));
+        .where(
+          and(
+            eq(workoutSectionTable.workoutPlanId, planId),
+            eq(workoutSectionTable.sectionId, sectionId)
+          )
+        );
       if (sessions.length === 0)
         return c.json({ msg: "No sessions found" }, 404);
       return c.json({ sessions });
@@ -209,12 +215,39 @@ const app = new Hono()
         .where(
           and(
             eq(workoutSectionTable.workoutPlanId, planId),
-            eq(workoutSessionsTable.workoutSessionId, sessionId)
+            eq(workoutSessionsTable.workoutSessionId, sessionId),
+            eq(workoutSectionTable.sectionId, sectionId)
           )
         )
         .then((res) => res[0]);
       if (!session) return c.json({ msg: "No session found" }, 404);
       return c.json({ session });
+    }
+  )
+  .post(
+    "/:planId/sections/:sectionId/sessions",
+    zValidator(
+      "param",
+      z.object({
+        planId: z.coerce.number().positive(),
+        sectionId: z.coerce.number().positive(),
+      })
+    ),
+    zValidator("json", PostSessionSchema),
+    async (c) => {
+      const { sectionId } = c.req.valid("param");
+      const validatedSession = c.req.valid("json");
+      const newSession = await db
+        .insert(workoutSessionsTable)
+        .values({ ...validatedSession, sectionId })
+        .returning()
+        .then((res) => res[0]);
+      if (!newSession)
+        return c.json({ msg: "Could not create new workout session" }, 400);
+      return c.json(
+        { msg: "Successfully created new session", newSession },
+        201
+      );
     }
   );
 

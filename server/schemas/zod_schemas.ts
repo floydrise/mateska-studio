@@ -5,7 +5,7 @@ import {
   workoutSectionTable,
   workoutSessionsTable,
 } from "../db/schema";
-import { createUpdateSchema } from "drizzle-zod";
+import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 
 export const WorkoutSchema = z.object({
   workoutPlanTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
@@ -60,6 +60,12 @@ export const PatchSectionSchema = createUpdateSchema(workoutSectionTable, {
 });
 
 export const PatchSessionSchema = createUpdateSchema(workoutSessionsTable, {
+  sessionTitle: (schema) => schema.min(3, "Трябва да е поне 3 букви"),
+  sessionDescription: (schema) => schema.min(3, "Трябва да е поне 3 букви"),
+  sessionVideoUrl: (schema) => schema.min(3, "Трябва да е най-малко 3 букви"),
+});
+
+export const PostSessionSchema = createInsertSchema(workoutSessionsTable, {
   sessionTitle: (schema) => schema.min(3, "Трябва да е поне 3 букви"),
   sessionDescription: (schema) => schema.min(3, "Трябва да е поне 3 букви"),
   sessionVideoUrl: (schema) => schema.min(3, "Трябва да е най-малко 3 букви"),
