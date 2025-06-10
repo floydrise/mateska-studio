@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { db } from "../db";
-import { workoutCardTable } from "../db/schema";
+import { workoutCardTable } from "../db/schema/schema";
 import { zValidator } from "@hono/zod-validator";
 import { eq } from "drizzle-orm";
 import { PatchCardSchema } from "../schemas/zod_schemas";

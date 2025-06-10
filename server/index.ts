@@ -22,7 +22,7 @@ const api = app
       exposeHeaders: ["Content-Length"],
       maxAge: 600,
       credentials: true,
-    }),
+    })
   )
   .notFound((c) => c.json({ msg: "Not found" }, 404))
   .get("/", (c) => {

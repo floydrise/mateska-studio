@@ -4,7 +4,7 @@ import {
   workoutPlanTable,
   workoutSectionTable,
   workoutSessionsTable,
-} from "../db/schema";
+} from "../db/schema/schema";
 import {
   createInsertSchema,
   createSelectSchema,
@@ -34,10 +34,10 @@ export const WorkoutSchema = z.object({
               sessionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
               videoUrl: z.string().url("Must be a URL"),
               description: z.string().min(3, "Трябва да е най-малко 3 букви"),
-            }),
+            })
           )
           .min(1, "Трябва да добавиш поне 1 сесия"),
-      }),
+      })
     )
     .min(1, "Трябва да добавиш поне 1 секция"),
 });
@@ -87,7 +87,7 @@ export const PostSectionSchema = z.object({
         sessionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
         videoUrl: z.string().url("Must be a URL"),
         description: z.string().min(3, "Трябва да е най-малко 3 букви"),
-      }),
+      })
     )
     .min(1, "Трябва да добавиш поне 1 сесия"),
 });

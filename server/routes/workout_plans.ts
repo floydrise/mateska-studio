@@ -11,7 +11,7 @@ import {
   workoutPlanTable,
   workoutSectionTable,
   workoutSessionsTable,
-} from "../db/schema";
+} from "../db/schema/schema";
 import { and, eq } from "drizzle-orm";
 import { validateId } from "../utils";
 import { z } from "zod";

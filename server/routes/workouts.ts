@@ -7,7 +7,7 @@ import {
   workoutPlanTable,
   workoutSectionTable,
   workoutSessionsTable,
-} from "../db/schema";
+} from "../db/schema/schema";
 import cardsRoute from "./workout_cards";
 import plansRoute from "./workout_plans";
 import sessionsRoute from "./workout_sessions";

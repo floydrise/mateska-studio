@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { z } from "zod";
 import { db } from "../db";
-import { workoutSessionsTable } from "../db/schema";
+import { workoutSessionsTable } from "../db/schema/schema";
 import { eq } from "drizzle-orm";
 import { PatchSessionSchema } from "../schemas/zod_schemas";
 import { zValidator } from "@hono/zod-validator";
