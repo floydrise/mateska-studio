@@ -15,7 +15,7 @@ function RouteComponent() {
   if (isError) toast.error("An error occurred: " + error.message);
   if (isLoading) return <h1>Loading ...</h1>;
   return (
-    <div>
+    <div className={"flex justify-center items-center mt-20"}>
       {data?.cards.map((card) => (
         <WorkoutCard key={card.workoutCardId} workoutCard={card} />
       ))}
