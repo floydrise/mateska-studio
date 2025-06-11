@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { auth } from "../auth";
 import workoutsRoute from "./routes/workouts";
+import sendEmailRoute from "./routes/send_email";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { serveStatic } from "hono/bun";
@@ -22,13 +23,14 @@ const api = app
       exposeHeaders: ["Content-Length"],
       maxAge: 600,
       credentials: true,
-    })
+    }),
   )
   .notFound((c) => c.json({ msg: "Not found" }, 404))
   .get("/", (c) => {
     return c.json({ msg: "Howdy 🤠!" }, 200);
   })
-  .route("/workouts", workoutsRoute);
+  .route("/workouts", workoutsRoute)
+  .route("/send_email", sendEmailRoute);
 
 app.use("*", serveStatic({ root: "./view/dist" }));
 app.get("*", serveStatic({ path: "./view/dist/index.html" }));
