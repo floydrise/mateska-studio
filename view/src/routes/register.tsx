@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Card,
   CardContent,
@@ -27,13 +27,21 @@ function RouteComponent() {
           <RegisterForm />
         </CardContent>
         <CardFooter>
-          <p
-            className={
-              "text-sm italic font-light m-auto inline-flex items-center gap-1"
-            }
-          >
-            Добре дошли в екипа на MateskaSport! <Heart className="size-3" />
-          </p>
+          <div>
+            <p>
+              Имаш акаунт?{" "}
+              <Link to="/login" className="underline">
+                Влез
+              </Link>
+            </p>
+            <p
+              className={
+                "text-sm italic font-light m-auto inline-flex items-center gap-1"
+              }
+            >
+              Добре дошли в екипа на MateskaSport! <Heart className="size-3" />
+            </p>
+          </div>
         </CardFooter>
       </Card>
     </section>

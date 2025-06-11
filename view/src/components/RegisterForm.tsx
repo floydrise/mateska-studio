@@ -47,8 +47,6 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
 export const RegisterForm = () => {
   const [eyeIcon, setEyeIcon] = useState<boolean>(false);
   const [type, setType] = useState("password");
-  let toastId: string | number;
-  const navigate = useNavigate();
   const handleToggle = () => {
     if (type === "password") {
       setEyeIcon(true);
@@ -58,6 +56,8 @@ export const RegisterForm = () => {
       setType("password");
     }
   };
+  let toastId: string | number;
+  const navigate = useNavigate();
   const form = useForm({
     defaultValues: {
       name: "",
@@ -76,17 +76,17 @@ export const RegisterForm = () => {
         },
         {
           onRequest: () => {
-            toastId = toast.loading("Loading");
+            toastId = toast.loading("Зарежда");
           },
           onSuccess: () => {
             toast.dismiss(toastId);
-            toast.success("Successfully created account");
+            toast.success("Успешно създадохте акаунт");
             navigate({ to: "/" });
           },
           onError: (ctx) => {
             toast.dismiss(toastId);
             toast.error(
-              "An error occurred while creating account: " + ctx.error.message
+              "Изникна грешка: " + ctx.error.message
             );
             navigate({ to: "/login" });
           },
@@ -193,8 +193,8 @@ export const RegisterForm = () => {
           children={([canSubmit, isSubmitting]) => (
             <div className="flex justify-between gap-2">
               <Button
-                variant={"secondary"}
-                className="flex-1"
+                variant={"outline"}
+                className="flex-1 transition duration-500 hover:scale-105"
                 type="reset"
                 onClick={(e) => {
                   e.preventDefault();
@@ -203,7 +203,11 @@ export const RegisterForm = () => {
               >
                 Изтрии
               </Button>
-              <Button type="submit" disabled={!canSubmit} className="flex-1">
+              <Button
+                type="submit"
+                disabled={!canSubmit}
+                className="flex-1 transition duration-500 hover:scale-105"
+              >
                 {isSubmitting ? (
                   <Loader className="animate-spin" />
                 ) : (

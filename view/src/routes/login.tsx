@@ -15,6 +15,7 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { LoginForm } from "@/components/LoginForm";
 export const Route = createFileRoute("/login")({
   component: RouteComponent,
 });
@@ -35,14 +36,8 @@ function RouteComponent() {
           </CardDescription>
         </CardHeader>
         <CardContent className={"flex flex-col gap-4"}>
-          <div className="flex flex-col gap-2 justify-start">
-            <Label htmlFor="email">Имейл</Label>
-            <Input id="email" type="email" placeholder="example@email.com" />
-            <Label htmlFor="password">Парола</Label>
-            <Input id="password" type="password" placeholder="password" />
-            <Button className="text-lg transition duration-500 hover:scale-105">
-              Влез <Send />
-            </Button>
+          <div className="flex flex-col gap-1">
+            <LoginForm />
             <div className="flex justify-between">
               <Link to="/register" className="hover:underline">
                 Регистрирай се
