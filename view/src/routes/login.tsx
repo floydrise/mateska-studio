@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button.tsx";
 import { FaGoogle } from "react-icons/fa6";
 import {
@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { authClient } from "@/lib/auth-client.ts";
-import { Heart, Mail, Send } from "lucide-react";
+import { Heart, Send } from "lucide-react";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -28,19 +28,29 @@ function RouteComponent() {
           <CardTitle
             className={"text-xl justify-center items-center flex gap-1"}
           >
-            Бързо регистриране
+            Влез в профила си
           </CardTitle>
           <CardDescription className={"m-auto flex gap-1 items-center"}>
-            <Mail /> Влез с имейл:
+            С имейл и парола
           </CardDescription>
         </CardHeader>
         <CardContent className={"flex flex-col gap-4"}>
           <div className="flex flex-col gap-2 justify-start">
-            <Label>Имейл</Label>
-            <Input type="email" placeholder="example@email.com" />
+            <Label htmlFor="email">Имейл</Label>
+            <Input id="email" type="email" placeholder="example@email.com" />
+            <Label htmlFor="password">Парола</Label>
+            <Input id="password" type="password" placeholder="password" />
             <Button className="text-lg transition duration-500 hover:scale-105">
               Влез <Send />
             </Button>
+            <div className="flex justify-between">
+              <Link to="/register" className="hover:underline">
+                Регистрирай се
+              </Link>
+              <p className="hover:cursor-pointer hover:underline">
+                Забравена парола?
+              </p>
+            </div>
           </div>
           <div className="flex items-center gap-2 justify-center">
             <Separator className="flex-1" />
