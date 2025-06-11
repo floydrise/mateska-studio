@@ -11,6 +11,19 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    sendResetPassword: async ({ user, url, token }, request) => {
+      await fetch(`${process.env.BETTER_AUTH_URL}/api/send_email/reset_password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          url,
+          email: user.email,
+          name: user.name,
+        }),
+      });
+    },
   },
   plugins: [
     magicLink({

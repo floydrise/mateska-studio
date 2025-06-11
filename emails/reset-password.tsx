@@ -1,31 +1,34 @@
 import {
-  Body,
-  Container,
-  Head,
-  Heading,
-  Html,
-  Preview,
-  Text,
   Img,
+  Html,
+  Head,
+  Body,
+  Preview,
+  Container,
+  Heading,
+  Text,
 } from "@react-email/components";
 
-const MagicLink = ({ email, url }: { email: string; url: string }) => (
+const ResetPassword = ({ name, url }: { name: string; url: string }) => (
   <Html>
     <Head />
     <Body style={main}>
-      <Preview>Добре дошъл в Mateska Studio</Preview>
+      <Preview>Следвай стъпките описани в имейла</Preview>
       <Container style={container}>
         <Img
           src="https://mateskasport.com/wp-content/uploads/2025/01/Logo-2.png"
           alt="Mateska Studio - company logo"
           width="300"
+          style={{ margin: "auto" }}
         />
-        <Heading style={h1}>Здравей, {email} 👀👋🏻</Heading>
+        <Heading style={h1}>Здравей, {name} 👀👋🏻</Heading>
         <Text style={{ ...text, marginBottom: "14px" }}>
-          Радваме се да те видим, моля кликни линка отдолу за да си влезеш в
-          акаунта 👇🏻
+          Забрави паролата, а? Моля, кликни линка отдолу и следвай стъпките за
+          спяна на парола 👇🏻
           <br />
           {url}
+          <br />
+          Успех!
         </Text>
         <Text style={{ ...footer, marginBottom: 0 }}>
           С уважение, екипът на MateskaSport 🏋
@@ -38,7 +41,7 @@ const MagicLink = ({ email, url }: { email: string; url: string }) => (
   </Html>
 );
 
-export default MagicLink;
+export default ResetPassword;
 
 const main = {
   backgroundColor: "#ffffff",

@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as WorkoutsImport } from './routes/workouts'
+import { Route as ResetpasswordImport } from './routes/reset_password'
 import { Route as RegisterImport } from './routes/register'
 import { Route as ProfileImport } from './routes/profile'
 import { Route as LoginImport } from './routes/login'
@@ -22,6 +23,12 @@ import { Route as IndexImport } from './routes/index'
 const WorkoutsRoute = WorkoutsImport.update({
   id: '/workouts',
   path: '/workouts',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ResetpasswordRoute = ResetpasswordImport.update({
+  id: '/reset_password',
+  path: '/reset_password',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -81,6 +88,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
+    '/reset_password': {
+      id: '/reset_password'
+      path: '/reset_password'
+      fullPath: '/reset_password'
+      preLoaderRoute: typeof ResetpasswordImport
+      parentRoute: typeof rootRoute
+    }
     '/workouts': {
       id: '/workouts'
       path: '/workouts'
@@ -98,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/reset_password': typeof ResetpasswordRoute
   '/workouts': typeof WorkoutsRoute
 }
 
@@ -106,6 +121,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/reset_password': typeof ResetpasswordRoute
   '/workouts': typeof WorkoutsRoute
 }
 
@@ -115,15 +131,35 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/reset_password': typeof ResetpasswordRoute
   '/workouts': typeof WorkoutsRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/profile' | '/register' | '/workouts'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/profile'
+    | '/register'
+    | '/reset_password'
+    | '/workouts'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/profile' | '/register' | '/workouts'
-  id: '__root__' | '/' | '/login' | '/profile' | '/register' | '/workouts'
+  to:
+    | '/'
+    | '/login'
+    | '/profile'
+    | '/register'
+    | '/reset_password'
+    | '/workouts'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/profile'
+    | '/register'
+    | '/reset_password'
+    | '/workouts'
   fileRoutesById: FileRoutesById
 }
 
@@ -132,6 +168,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
+  ResetpasswordRoute: typeof ResetpasswordRoute
   WorkoutsRoute: typeof WorkoutsRoute
 }
 
@@ -140,6 +177,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
+  ResetpasswordRoute: ResetpasswordRoute,
   WorkoutsRoute: WorkoutsRoute,
 }
 
@@ -157,6 +195,7 @@ export const routeTree = rootRoute
         "/login",
         "/profile",
         "/register",
+        "/reset_password",
         "/workouts"
       ]
     },
@@ -171,6 +210,9 @@ export const routeTree = rootRoute
     },
     "/register": {
       "filePath": "register.tsx"
+    },
+    "/reset_password": {
+      "filePath": "reset_password.tsx"
     },
     "/workouts": {
       "filePath": "workouts.tsx"

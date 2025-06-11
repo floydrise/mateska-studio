@@ -16,12 +16,14 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { LoginForm } from "@/components/LoginForm";
+import { ResetPasswordForm } from "@/components/ResetPasswordForm";
 export const Route = createFileRoute("/login")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const [isLoading, setIsLoading] = useState(false);
+  const [toggleForgoten, setToggleForgoten] = useState(false);
   return (
     <section className={"m-auto px-2 max-w-sm md:max-w-md mt-40"}>
       <Card>
@@ -37,12 +39,15 @@ function RouteComponent() {
         </CardHeader>
         <CardContent className={"flex flex-col gap-4"}>
           <div className="flex flex-col gap-1">
-            <LoginForm />
+            {toggleForgoten ? <ResetPasswordForm /> : <LoginForm />}
             <div className="flex justify-between">
               <Link to="/register" className="hover:underline">
                 Регистрирай се
               </Link>
-              <p className="hover:cursor-pointer hover:underline">
+              <p
+                onClick={() => setToggleForgoten(!toggleForgoten)}
+                className="hover:cursor-pointer hover:underline"
+              >
                 Забравена парола?
               </p>
             </div>
