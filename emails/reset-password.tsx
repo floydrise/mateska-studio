@@ -24,7 +24,7 @@ const ResetPassword = ({ name, url }: { name: string; url: string }) => (
         <Heading style={h1}>Здравей, {name} 👀👋🏻</Heading>
         <Text style={{ ...text, marginBottom: "14px" }}>
           Забрави паролата, а? Моля, кликни линка отдолу и следвай стъпките за
-          спяна на парола 👇🏻
+          смяна на парола 👇🏻
           <br />
           {url}
           <br />

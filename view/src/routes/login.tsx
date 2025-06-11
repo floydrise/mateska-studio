@@ -48,7 +48,7 @@ function RouteComponent() {
                 onClick={() => setToggleForgoten(!toggleForgoten)}
                 className="hover:cursor-pointer hover:underline"
               >
-                Забравена парола?
+                {toggleForgoten ? "Обратно към логин" : "Забравена парола?"}
               </p>
             </div>
           </div>
