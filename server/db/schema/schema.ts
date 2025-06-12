@@ -13,6 +13,7 @@ export const workoutCardTable = pgTable("workout_card", {
   workoutPlanId: integer("workout_plan_id")
     .notNull()
     .references(() => workoutPlanTable.workoutPlanId, { onDelete: "cascade" }),
+  stripePriceId: text("stripe_price_id").notNull(),
   workoutCardTitle: text("workout_card_title").notNull(),
   workoutCardImgUrl: text("workout_card_img_url").notNull(),
   workoutCardPrice: integer("workout_card_price").notNull(),

@@ -30,6 +30,7 @@ const app = new Hono()
       workoutCardPrice: card.price,
       workoutCardTargetMuscles: card.targetMuscles,
       workoutCardEquipment: card.equipment,
+      stripePriceId: card.stripePriceId,
     });
 
     for (const section of validatedWorkout.sections) {

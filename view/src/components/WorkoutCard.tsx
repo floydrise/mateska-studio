@@ -9,8 +9,25 @@ import {
 import { Dumbbell, ShoppingCart, Target } from "lucide-react";
 import imgPlaceholder from "/imgPlaceholder.svg";
 import { Button } from "@/components/ui/button.tsx";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useNavigate } from "@tanstack/react-router";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
+  const { data } = authClient.useSession();
+  const user = data?.user;
+  const navigate = useNavigate();
+  const { data: subData } = useQuery({
+    queryKey: ["get-subscriptions"],
+    queryFn: async () => {
+      const { data: subscriptions } = await authClient.subscription.list();
+      const activeSubscription = subscriptions!.find(
+        (sub) => sub.status === "active" || sub.status === "trialing"
+      );
+      return activeSubscription;
+    },
+  });
   const {
     workoutCardTitle,
     workoutCardImgUrl,
@@ -68,8 +85,25 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
         <Button
           size={"lg"}
           className={"w-full text-lg transform duration-500 hover:scale-105"}
+          onClick={async () => {
+            if (!user) {
+              navigate({ to: "/login" });
+            } else {
+              try {
+                const { error } = await authClient.subscription.upgrade({
+                  plan: workoutCardTitle,
+                  successUrl: "http://localhost:5173/profile",
+                  cancelUrl: "http://localhost:5173",
+                  subscriptionId: subData?.stripeSubscriptionId || undefined,
+                });
+                if (error) toast.error("Изникна грешка: " + error.message);
+              } catch (error) {
+                console.log(error);
+              }
+            }
+          }}
         >
-          <ShoppingCart className={"size-5"} /> Купи
+          <ShoppingCart className={"size-5"} /> Абонирай ме
         </Button>
       </CardFooter>
     </Card>

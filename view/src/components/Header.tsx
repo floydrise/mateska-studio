@@ -8,7 +8,7 @@ export default function Header() {
   const navigate = useNavigate();
   const { data } = authClient.useSession();
   return (
-    <header className="p-2 border flex gap-2 justify-between bg-white text-black">
+    <header className="p-2 border flex gap-2 justify-between bg-slate-100 text-black">
       <nav className="flex flex-row items-center gap-2">
         <img src={studioLogo} alt="App logo" className="size-20" />
         <Link to="/" className={`[&.active]:font-bold `}>

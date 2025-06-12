@@ -81,12 +81,12 @@ export const NewPasswordForm = ({ token }: { token: string }) => {
           onSuccess: () => {
             toast.dismiss(toastId);
             toast.success("Успешно обновихте паролата си");
-            navigate({ to: "/" });
+            navigate({ to: "/login" });
           },
           onError: (ctx) => {
             toast.dismiss(toastId);
             toast.error(
-              "Изникна грешка: " + ctx.error.message + "Моля опитайте отново"
+              "Изникна грешка: " + ctx.error.message + "\nМоля опитайте отново"
             );
             navigate({ to: "/" });
           },

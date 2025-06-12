@@ -1,0 +1,93 @@
+{
+  "workoutPlanTitle": "Програма за цялото тяло",
+  "card": {
+    "cardTitle": "Начинаещ Сила и Тонус",
+    "imgUrl": "https://example.com/images/workout.jpg",
+    "stripePriceId": "",
+    "price": 49.99,
+    "targetMuscles": ["Гърди", "Гръб", "Крака", "Рамене"],
+    "equipment": ["Дъмбели", "Ластици", "Йога постелка"]
+  },
+  "sections": [
+    {
+      "sectionTitle": "Седмица 1: Основи",
+      "sessions": [
+        {
+          "sessionTitle": "Горна част на тялото – основи",
+          "videoUrl": "https://example.com/videos/session1.mp4",
+          "description": "Тази сесия се фокусира върху основни движения за горна част с леки тежести."
+        },
+        {
+          "sessionTitle": "Сила в долната част",
+          "videoUrl": "https://example.com/videos/session2.mp4",
+          "description": "Активирай седалището и краката с кръгова тренировка за долната част."
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Седмица 2: Напредък",
+      "sessions": [
+        {
+          "sessionTitle": "Цялостна тренировка",
+          "videoUrl": "https://example.com/videos/session3.mp4",
+          "description": "Комбинирана тренировка за сила и кардио елементи."
+        }
+      ]
+    }
+  ]
+}
+
+
+{
+  "workoutPlanTitle": "Train With Me",
+  "card": {
+    "cardTitle": "Train With Me - Full Body",
+    "imgUrl": "https://example.com/images/train-with-me.jpg",
+    "price": 60,
+    "targetMuscles": ["chest", "back", "legs", "core"],
+    "equipment": ["dumbbells", "yoga mat", "resistance bands"],
+    "stripePriceId": "price_1RZCefQ1fyNLsQ88k0alE0E5"
+  },
+  "sections": [
+    {
+      "sectionTitle": "Week 1",
+      "sessions": [
+        {
+          "sessionTitle": "Push Day",
+          "videoUrl": "https://vimeo.com/123456789",
+          "description": "Upper body push exercises including chest and triceps."
+        },
+        {
+          "sessionTitle": "Pull Day",
+          "videoUrl": "https://vimeo.com/987654321",
+          "description": "Upper body pull exercises including back and biceps."
+        },
+        {
+          "sessionTitle": "Leg Day",
+          "videoUrl": "https://vimeo.com/112233445",
+          "description": "Lower body exercises including quads, hamstrings, and glutes."
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Week 2",
+      "sessions": [
+        {
+          "sessionTitle": "Push Day",
+          "videoUrl": "https://vimeo.com/223344556",
+          "description": "More volume on chest, shoulders, and triceps."
+        },
+        {
+          "sessionTitle": "Pull Day",
+          "videoUrl": "https://vimeo.com/334455667",
+          "description": "Focused back and biceps hypertrophy session."
+        },
+        {
+          "sessionTitle": "Leg Day",
+          "videoUrl": "https://vimeo.com/445566778",
+          "description": "Advanced lower-body compound movements."
+        }
+      ]
+    }
+  ]
+}

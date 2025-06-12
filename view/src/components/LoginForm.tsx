@@ -85,7 +85,7 @@ export const LoginForm = () => {
             if (ctx.response.status === 401) {
               toast.error("Невалиден имейл или парола");
             } else {
-              toast.error("Изникна грешка" + ctx.error.message);
+              toast.error("Изникна грешка: " + ctx.error.message);
             }
             form.reset();
           },
