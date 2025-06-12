@@ -27,7 +27,9 @@ export default function SubscriptionCard({
       <CardContent className="pt-6 px-6 pb-4">
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center">
-            <span className="text-3xl font-bold">{subscription.plan}</span>
+            <span className="text-3xl font-bold">
+              {subscription.plan[0].toUpperCase() + subscription.plan.slice(1)}
+            </span>
           </div>
           <Badge
             variant="outline"
@@ -100,12 +102,12 @@ export default function SubscriptionCard({
             }}
             className="text-xl flex-1 transition duration-500 hover:scale-105 hover:-translate-y-1 hover:-translate-x-1"
           >
-            <CalendarCheck /> Възстанови
+            <CalendarCheck className="size-5"/> Възстанови
           </Button>
         ) : (
           <Button
             onClick={async () => {
-              const { error, data } = await authClient.subscription.cancel({
+              const { error } = await authClient.subscription.cancel({
                 returnUrl: "/",
               });
               if (error) {

@@ -14,5 +14,5 @@ function App() {
   const { error } = Route.useSearch();
   if (error === "INVALID_TOKEN")
     return <p>Срокът на логин токенът е изтекъл, моля логнете се отново</p>;
-  return <div>Howdy</div>;
+  return <div id="top">Howdy</div>;
 }
