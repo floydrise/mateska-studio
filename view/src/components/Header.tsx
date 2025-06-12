@@ -15,7 +15,10 @@ export default function Header() {
           Начало
         </Link>
         <Link to="/workouts" className={`[&.active]:font-bold`}>
-          Тренировки
+          Продукти
+        </Link>
+        <Link to="/profile" className={`[&.active]:font-bold`}>
+          Профил
         </Link>
         {data?.session ? (
           <Button

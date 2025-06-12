@@ -12,22 +12,14 @@ import { Button } from "@/components/ui/button.tsx";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { getUserSubscriptionsQueryOptions } from "@/lib/api";
 
 const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
   const { data } = authClient.useSession();
   const user = data?.user;
   const navigate = useNavigate();
-  const { data: subData } = useQuery({
-    queryKey: ["get-subscriptions"],
-    queryFn: async () => {
-      const { data: subscriptions } = await authClient.subscription.list();
-      const activeSubscription = subscriptions!.find(
-        (sub) => sub.status === "active" || sub.status === "trialing"
-      );
-      return activeSubscription;
-    },
-  });
+  const { data: subData } = useQuery(getUserSubscriptionsQueryOptions);
   const {
     workoutCardTitle,
     workoutCardImgUrl,
