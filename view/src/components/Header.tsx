@@ -3,7 +3,7 @@ import { ModeToggle } from "./mode-toggle";
 import studioLogo from "/Logo-2.webp";
 import { Button } from "./ui/button";
 import { authClient } from "@/lib/auth-client";
-import { User } from "lucide-react";
+import { Home, Store, User } from "lucide-react";
 import { motion } from "motion/react";
 
 export default function Header() {
@@ -25,15 +25,15 @@ export default function Header() {
         <div className="flex gap-6">
           <Link
             to="/"
-            className={`[&.active]:scale-110 [&.active]:font-bold [&.active]:text-xl  font-light transform duration-500 hover:scale-110 hover:font-base text-lg`}
+            className={`[&.active]:scale-110 [&.active]:font-bold [&.active]:text-xl flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base text-lg`}
           >
-            Начало
+            <Home /> Начало
           </Link>
           <Link
             to="/workouts"
-            className={`[&.active]:scale-110 [&.active]:font-bold [&.active]:text-xl font-light transform duration-500 hover:scale-110 hover:font-base text-lg`}
+            className={`[&.active]:scale-110 [&.active]:font-bold [&.active]:text-xl flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base text-lg`}
           >
-            Продукти
+            <Store /> Продукти
           </Link>
         </div>
         <div className="flex gap-4">

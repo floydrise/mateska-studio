@@ -126,17 +126,18 @@ export default function SubscriptionCard({
             <OctagonX className="size-5" /> Прекъсни
           </Button>
         )}
-        <Link
-          to={"/workout/$workoutId"}
-          params={{ workoutId: String(subscription.limits?.workoutPlanId) }}
+        <Button
+          variant={"outline"}
+          className="text-xl flex-1 transition duration-500 hover:scale-105 hover:-translate-y-1 hover:translate-x-1"
+          asChild
         >
-          <Button
-            variant={"outline"}
-            className="text-xl flex-1 transition duration-500 hover:scale-105 hover:-translate-y-1 hover:translate-x-1"
+          <Link
+            to={"/workout/$workoutId"}
+            params={{ workoutId: String(subscription.limits?.workoutPlanId) }}
           >
             <Dumbbell className="size-5" /> Тренирай
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </CardFooter>
     </Card>
   );
