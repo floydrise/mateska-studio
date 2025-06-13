@@ -14,10 +14,11 @@ export function ModeToggle() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild className={"text-black hover:text-black"}>
+      <DropdownMenuTrigger asChild>
         <Button
           size="icon"
-          className="rounded-full border border-slate-300 bg-slate-100 transition duration-500 scale-105 hover:scale-100 hover:text-white"
+          variant={"outline"}
+          className="rounded-full transition duration-500 scale-110 hover:scale-100"
         >
           <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
@@ -31,9 +32,9 @@ export function ModeToggle() {
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           <Sparkles /> Тъмна
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        {/* <DropdownMenuItem onClick={() => setTheme("system")}>
           <Monitor /> Система
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );
