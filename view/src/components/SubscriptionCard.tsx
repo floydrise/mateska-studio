@@ -15,6 +15,7 @@ import { Button } from "./ui/button";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 
 export default function SubscriptionCard({
   subscription,
@@ -125,12 +126,17 @@ export default function SubscriptionCard({
             <OctagonX className="size-5" /> Прекъсни
           </Button>
         )}
-        <Button
-          variant={"outline"}
-          className="text-xl flex-1 transition duration-500 hover:scale-105 hover:-translate-y-1 hover:translate-x-1"
+        <Link
+          to={"/workout/$workoutId"}
+          params={{ workoutId: String(subscription.limits?.workoutPlanId) }}
         >
-          <Dumbbell className="size-5" /> Тренирай
-        </Button>
+          <Button
+            variant={"outline"}
+            className="text-xl flex-1 transition duration-500 hover:scale-105 hover:-translate-y-1 hover:translate-x-1"
+          >
+            <Dumbbell className="size-5" /> Тренирай
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

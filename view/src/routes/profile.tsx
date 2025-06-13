@@ -2,6 +2,7 @@ import SubscriptionCard from "@/components/SubscriptionCard";
 import { Button } from "@/components/ui/button";
 import { getUserSubscriptionsQueryOptions } from "@/lib/api";
 import { authClient } from "@/lib/auth-client";
+import type { Subscription } from "@better-auth/stripe";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { format } from "date-fns";
@@ -63,7 +64,7 @@ function RouteComponent() {
         {isLoading ? (
           "Зарежда"
         ) : data !== undefined ? (
-          <SubscriptionCard subscription={data} />
+          <SubscriptionCard subscription={data as Subscription} />
         ) : (
           "Все още няма абонаменти"
         )}
