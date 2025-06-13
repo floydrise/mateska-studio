@@ -1,31 +1,30 @@
 import { Link } from "@tanstack/react-router";
-import { ModeToggle } from "./mode-toggle";
-import studioLogoLight from "/Logo-2.webp";
-import studioLogoDark from "/logo_dark.webp";
+import studioLogoLight from "/logoLight.webp";
+import studioLogoDark from "/logoDark.webp";
 import { Button } from "./ui/button";
 import { authClient } from "@/lib/auth-client";
 import { Home, Store, User } from "lucide-react";
 import { motion } from "motion/react";
-import { useTheme } from "./theme-provider";
-
-//bg-slate-100 dark:bg-slate-200 text-black
+import { useTheme } from "next-themes";
 export default function Header() {
   const { data } = authClient.useSession();
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   return (
-    <header className="p-2 border sticky top-0">
+    <header className="p-2 border sticky top-0 bg-background">
       <nav className="flex flex-row justify-between items-center gap-2 w-full px-2">
-        <motion.img
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 0.4,
-            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-          }}
-          src={theme === "dark" ? studioLogoDark : studioLogoLight}
-          alt="App logo"
-          className="size-20"
-        />
+        <Link to="/">
+          <motion.img
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 0.4,
+              scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+            }}
+            src={resolvedTheme === "dark" ? studioLogoDark : studioLogoLight}
+            alt="App logo"
+            className="size-20"
+          />
+        </Link>
         <div className="flex gap-6">
           <Link
             to="/"
@@ -56,7 +55,6 @@ export default function Header() {
               <Link to="/login">Влез</Link>
             </Button>
           )}
-          <ModeToggle />
         </div>
       </nav>
     </header>

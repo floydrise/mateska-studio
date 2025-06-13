@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTheme } from "@/components/theme-provider";
+import { useTheme } from "next-themes";
 
 export function ModeToggle() {
   const { setTheme } = useTheme();
@@ -32,9 +32,9 @@ export function ModeToggle() {
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           <Sparkles /> Тъмна
         </DropdownMenuItem>
-        {/* <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
           <Monitor /> Система
-        </DropdownMenuItem> */}
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
