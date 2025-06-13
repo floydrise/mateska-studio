@@ -86,7 +86,7 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
                   plan: workoutCardTitle,
                   successUrl: "http://localhost:5173/profile",
                   cancelUrl: "http://localhost:5173",
-                  subscriptionId: subData?.stripeSubscriptionId || undefined,
+                  subscriptionId: subData?.stripeSubscriptionId ?? undefined,
                 });
                 if (error) toast.error("Изникна грешка: " + error.message);
               } catch (error) {

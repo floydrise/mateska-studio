@@ -66,11 +66,15 @@ export const auth = betterAuth({
             .select({
               name: workoutCardTable.workoutCardTitle,
               priceId: workoutCardTable.stripePriceId,
+              workoutPlanId: workoutCardTable.workoutPlanId,
             })
             .from(workoutCardTable);
           return plans.map((plan) => ({
             name: plan.name,
             priceId: plan.priceId,
+            limits: {
+              workoutPlanId: plan.workoutPlanId,
+            },
           }));
         },
       },

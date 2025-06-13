@@ -5,6 +5,7 @@ import {
   boolean,
   integer,
 } from "drizzle-orm/pg-core";
+import { workoutPlanTable } from "./schema";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),

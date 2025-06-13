@@ -62,7 +62,8 @@ export default function SubscriptionCard({
               <span className="text-lg">Начална дата</span>
             </div>
             <span className="font-semibold text-lg">
-              {format(subscription.periodStart!, "dd/MM/yyyy")}
+              {subscription.periodStart &&
+                format(subscription.periodStart, "dd/MM/yyyy")}
             </span>
           </div>
 
@@ -72,7 +73,8 @@ export default function SubscriptionCard({
               <span className="text-lg">Крайна дата</span>
             </div>
             <span className="font-semibold text-lg">
-              {format(subscription.periodEnd!, "dd/MM/yyyy")}
+              {subscription.periodEnd &&
+                format(subscription.periodEnd, "dd/MM/yyyy")}
             </span>
           </div>
           {subscription.cancelAtPeriodEnd ? (
@@ -90,7 +92,7 @@ export default function SubscriptionCard({
         {subscription.cancelAtPeriodEnd ? (
           <Button
             onClick={async () => {
-              const { error, data } = await authClient.subscription.restore();
+              const { error } = await authClient.subscription.restore();
               if (error) {
                 toast.error("Възникна грешка: " + error.message);
               } else {
@@ -102,7 +104,7 @@ export default function SubscriptionCard({
             }}
             className="text-xl flex-1 transition duration-500 hover:scale-105 hover:-translate-y-1 hover:-translate-x-1"
           >
-            <CalendarCheck className="size-5"/> Възстанови
+            <CalendarCheck className="size-5" /> Възстанови
           </Button>
         ) : (
           <Button
