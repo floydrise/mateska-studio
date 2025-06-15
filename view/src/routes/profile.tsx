@@ -21,12 +21,12 @@ function RouteComponent() {
   const navigate = useNavigate();
   if (isError) console.log("Изинка грешка: " + error.message);
   return (
-    <section className="mt-20 ml-10 max-w-lg">
+    <section className="mt-10 flex flex-col justify-center items-center w-full">
       {isPending ? (
         <Loader className="animate-spin" />
       ) : (
         <div className="max-w-fit">
-          <h1 className="text-4xl font-bold">Моят профил:</h1>
+          <h1 className="text-4xl font-bold">Моите данни:</h1>
           <div className="ml-4 mt-2">
             <p className="flex items-center text-xl gap-1 text-muted-foreground">
               <User /> Име: {user?.name}
@@ -60,7 +60,7 @@ function RouteComponent() {
         </div>
       )}
       <div className="my-10">
-        <h1 className="text-4xl font-bold">Моите продукти:</h1>
+        <h1 className="text-4xl font-bold mb-2">Моите продукти:</h1>
         {isLoading ? (
           "Зарежда"
         ) : data !== undefined ? (

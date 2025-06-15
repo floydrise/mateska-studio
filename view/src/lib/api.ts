@@ -11,6 +11,16 @@ const fetchWorkoutCards = async () => {
   return await res.json();
 };
 
+const fetchUserWorkout = async (workoutPlanId: string) => {
+  const res = await api.workouts.workout_info[":workout_plan_id"].$get({
+    param: {
+      workout_plan_id: workoutPlanId,
+    },
+  });
+  if (!res.ok) throw new Error("грешка при извличането на информация");
+  return await res.json();
+};
+
 export const getWorkoutCardsQueryOptions = queryOptions({
   queryKey: ["fetch-workout-cards"],
   queryFn: fetchWorkoutCards,
@@ -28,3 +38,10 @@ export const getUserSubscriptionsQueryOptions = queryOptions({
   },
   staleTime: 5 * 1000,
 });
+
+export const getUserWorkoutPlanQueryOptions = (workoutPlanId: string) =>
+  queryOptions({
+    queryKey: ["get-user-workout", workoutPlanId],
+    queryFn: () => fetchUserWorkout(workoutPlanId),
+    staleTime: 5 * 1000,
+  });
