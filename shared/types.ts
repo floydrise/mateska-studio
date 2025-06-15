@@ -10,3 +10,16 @@ declare module "@better-auth/stripe" {
     };
   }
 }
+
+export interface UserWorkoutType {
+  planTitle: string;
+  sections: {
+    sectionId: number;
+    sectionTitle: string;
+    sessions: {
+      sessionTitle: string;
+      videoUrl: string;
+      description: string;
+    }[];
+  }[];
+}
