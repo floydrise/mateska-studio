@@ -26,8 +26,8 @@ function RouteComponent() {
         <Loader className="animate-spin" />
       ) : (
         <div className="max-w-fit">
-          <h1 className="text-4xl font-bold">Моите данни:</h1>
-          <div className="ml-4 mt-2">
+          <h1 className="text-2xl md:text-4xl font-bold">Моите данни:</h1>
+          <div className="mt-2">
             <p className="flex items-center text-xl gap-1 text-muted-foreground">
               <User /> Име: {user?.name}
             </p>
@@ -35,7 +35,8 @@ function RouteComponent() {
               <Mail /> Email: {user?.email}
             </p>
             <p className="flex items-center text-xl gap-1 text-muted-foreground">
-              <Calendar /> Създаден на: {format(user?.createdAt!, "dd/MM/yyyy")}
+              <Calendar /> Регистриран на:{" "}
+              {format(user?.createdAt!, "dd/MM/yyyy")}
             </p>
             <div className="w-full flex justify-between gap-2 mt-2">
               <Button
@@ -60,7 +61,7 @@ function RouteComponent() {
         </div>
       )}
       <div className="my-10">
-        <h1 className="text-4xl font-bold mb-2">Моите продукти:</h1>
+        <h1 className="text-2xl md:text-4xl font-bold mb-2">Моите продукти:</h1>
         {isLoading ? (
           "Зарежда"
         ) : data !== undefined ? (

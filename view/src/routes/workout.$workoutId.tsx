@@ -1,3 +1,4 @@
+import Sidenavbar from "@/components/SiderBar";
 import { getUserWorkoutPlanQueryOptions } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
@@ -16,5 +17,9 @@ function RouteComponent() {
   }
   if (isError) return <p>An erro occurred: {error.message}</p>;
   console.log(data);
-  return <div>Hello "/workout/{workoutId}"!</div>;
+  return (
+    
+      <Sidenavbar />
+    
+  );
 }

@@ -10,7 +10,7 @@ export default function Header() {
   const { data } = authClient.useSession();
   const { resolvedTheme } = useTheme();
   return (
-    <header className="p-2 border sticky top-0 bg-background">
+    <header className="p-2 border sticky top-0 bg-background z-10">
       <nav className="flex flex-row justify-between items-center gap-2 w-full px-2">
         <Link to="/">
           <motion.img
