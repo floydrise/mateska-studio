@@ -5,21 +5,37 @@ import { getUserSubscriptionsQueryOptions } from "@/lib/api";
 import { authClient } from "@/lib/auth-client";
 import type { Subscription } from "@better-auth/stripe";
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  redirect,
+  useNavigate,
+} from "@tanstack/react-router";
 import { format } from "date-fns";
 import { Calendar, LogOut, Mail, Trash, User } from "lucide-react";
 
 export const Route = createFileRoute("/profile")({
   component: RouteComponent,
+  beforeLoad: async ({ location }) => {
+    const { data } = await authClient.getSession();
+    if (!data?.user) {
+      throw redirect({
+        to: "/login",
+        search: {
+          redirect: location.href,
+        },
+      });
+    }
+  },
 });
 
 function RouteComponent() {
   const { data: authData, isPending } = authClient.useSession();
   const user = authData?.user;
+  const navigate = useNavigate();
   const { data, isLoading, isError, error } = useQuery(
     getUserSubscriptionsQueryOptions
   );
-  const navigate = useNavigate();
   if (isError) console.log("Изинка грешка: " + error.message);
   return (
     <section className="mt-10 flex flex-col justify-center items-center w-full">
@@ -68,8 +84,11 @@ function RouteComponent() {
         ) : data ? (
           <SubscriptionCard subscription={data as Subscription} />
         ) : (
-          <span className="text-muted-foreground">            
-            Все още нямате абонаменти. Вземи от <Link to="/" className="underline">тук</Link>
+          <span className="text-muted-foreground">
+            Все още нямате абонаменти. Вземи от{" "}
+            <Link to="/" className="underline">
+              тук
+            </Link>
           </span>
         )}
       </div>

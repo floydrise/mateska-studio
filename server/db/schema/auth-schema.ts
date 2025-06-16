@@ -5,7 +5,6 @@ import {
   boolean,
   integer,
 } from "drizzle-orm/pg-core";
-import { workoutPlanTable } from "./schema";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -21,6 +20,10 @@ export const user = pgTable("user", {
   updatedAt: timestamp("updated_at")
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
+  role: text("role"),
+  banned: boolean("banned"),
+  banReason: text("ban_reason"),
+  banExpires: timestamp("ban_expires"),
   stripeCustomerId: text("stripe_customer_id"),
 });
 
@@ -35,6 +38,7 @@ export const session = pgTable("session", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
+  impersonatedBy: text("impersonated_by"),
 });
 
 export const account = pgTable("account", {
@@ -76,7 +80,7 @@ export const subscription = pgTable("subscription", {
     .references(() => user.id, { onDelete: "cascade" }),
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
-  status: text("status").notNull(),
+  status: text("status").default("incomplete"),
   periodStart: timestamp("period_start"),
   periodEnd: timestamp("period_end"),
   cancelAtPeriodEnd: boolean("cancel_at_period_end"),

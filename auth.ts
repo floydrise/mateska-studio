@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "./server/db";
 import * as schema from "./server/db/schema/auth-schema";
-import { magicLink } from "better-auth/plugins";
+import { admin, magicLink } from "better-auth/plugins";
 import { stripe } from "@better-auth/stripe";
 import Stripe from "stripe";
 import { workoutCardTable } from "./server/db/schema/schema";
@@ -34,6 +34,7 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    admin(),
     magicLink({
       sendMagicLink: async ({ email, token, url }, request) => {
         await fetch(
