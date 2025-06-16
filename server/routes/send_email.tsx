@@ -4,11 +4,13 @@ import { Resend } from "resend";
 import z from "zod/v4";
 import MagicLink from "../../emails/magic-link";
 import ResetPassword from "../../emails/reset-password";
+import { internalMiddleware } from "../internal-middleware";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const app = new Hono()
   .post(
     "/magic_link",
+    internalMiddleware,
     zValidator(
       "json",
       z.object({
@@ -33,6 +35,7 @@ const app = new Hono()
   )
   .post(
     "/reset_password",
+    internalMiddleware,
     zValidator(
       "json",
       z.object({
