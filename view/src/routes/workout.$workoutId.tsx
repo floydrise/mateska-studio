@@ -1,11 +1,39 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import UserWorkout from "@/components/UserWorkout";
-import { getUserWorkoutPlanQueryOptions } from "@/lib/api";
+import {
+  fetchUserActiveSubscriptions,
+  getUserWorkoutPlanQueryOptions,
+} from "@/lib/api";
+import { authClient } from "@/lib/auth-client";
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/workout/$workoutId")({
   component: RouteComponent,
+  beforeLoad: async ({ location, params }) => {
+    const { data } = await authClient.getSession();
+    if (!data?.user) {
+      throw redirect({
+        to: "/login",
+        search: {
+          redirect: location.href,
+        },
+      });
+    }
+    const activeSubscription = await fetchUserActiveSubscriptions();
+    if (
+      String(activeSubscription?.limits.workoutPlanId) !== params.workoutId &&
+      activeSubscription !== null
+    ) {
+      throw redirect({
+        to: "/profile",
+        search: {
+          redirect: location.href,
+        },
+      });
+    }
+  },
 });
 
 function RouteComponent() {
@@ -13,6 +41,7 @@ function RouteComponent() {
   const { isLoading, isError, error, data } = useQuery(
     getUserWorkoutPlanQueryOptions(workoutId)
   );
+  const navigate = useNavigate();
   if (isLoading) {
     return (
       <div className="flex gap-1 my-2">
@@ -21,6 +50,11 @@ function RouteComponent() {
       </div>
     );
   }
-  if (isError) return <p>An erro occurred: {error.message}</p>;
+
+  if (isError) {
+    navigate({ to: "/" });
+    toast.error("Изникна грешка: " + error.message);
+    return;
+  }
   return <UserWorkout userWorkout={data!} />;
 }

@@ -13,9 +13,15 @@ import plansRoute from "./workout_plans";
 import sessionsRoute from "./workout_sessions";
 import { z } from "zod/v4";
 import { asc, eq } from "drizzle-orm";
+import { authMiddleware } from "../middleware/auth-middleware";
+import { HTTPException } from "hono/http-exception";
 
 const app = new Hono()
-  .post("/", zValidator("json", WorkoutSchema), async (c) => {
+  .post("/", authMiddleware, zValidator("json", WorkoutSchema), async (c) => {
+    const user = c.get("user");
+    if (user?.role !== "amind") {
+      return c.json({ msg: "Unauthorised" }, 401);
+    }
     const validatedWorkout = c.req.valid("json");
     const { planId } = await db
       .insert(workoutPlanTable)
@@ -71,13 +77,17 @@ const app = new Hono()
     ),
     async (c) => {
       const { workout_plan_id: workoutPlanId } = c.req.valid("param");
-      const { workoutTitle } = await db
+      const workoutDbRes = await db
         .select({
           workoutTitle: workoutPlanTable.workoutPlanTitle,
         })
         .from(workoutPlanTable)
-        .where(eq(workoutPlanTable.workoutPlanId, workoutPlanId))
-        .then((res) => res[0]);
+        .where(eq(workoutPlanTable.workoutPlanId, workoutPlanId));
+
+      if (workoutDbRes.length === 0) {
+        return c.json({ msg: "тренировката не е намерена" }, 404);
+      }
+      const workoutTitle = workoutDbRes[0].workoutTitle;
       const rawSections = await db
         .select({
           sectionId: workoutSectionTable.sectionId,

@@ -2,6 +2,7 @@ import { queryOptions } from "@tanstack/react-query";
 import type { AppType } from "../../../server";
 import { hc } from "hono/client";
 import { authClient } from "./auth-client";
+import type { Subscription } from "@better-auth/stripe";
 
 const api = hc<AppType>("/").api;
 
@@ -17,8 +18,23 @@ const fetchUserWorkout = async (workoutPlanId: string) => {
       workout_plan_id: workoutPlanId,
     },
   });
-  if (!res.ok) throw new Error("грешка при извличането на информация");
+  if (!res.ok) {
+    const errRes = await res.json();
+    if ("msg" in errRes) {
+      throw new Error(errRes.msg);
+    }
+    throw new Error("грешка при извличането на информация");
+  }
   return await res.json();
+};
+
+export const fetchUserActiveSubscriptions = async () => {
+  const { data: subscriptions } = await authClient.subscription.list();
+  if (subscriptions === null) return null;
+  const activeSubscription = subscriptions!.find(
+    (sub) => sub.status === "active" || sub.status === "trialing"
+  );
+  return activeSubscription as Subscription;
 };
 
 export const getWorkoutCardsQueryOptions = queryOptions({
@@ -29,13 +45,7 @@ export const getWorkoutCardsQueryOptions = queryOptions({
 
 export const getUserSubscriptionsQueryOptions = queryOptions({
   queryKey: ["get-subscriptions"],
-  queryFn: async () => {
-    const { data: subscriptions } = await authClient.subscription.list();
-    const activeSubscription = subscriptions!.find(
-      (sub) => sub.status === "active" || sub.status === "trialing"
-    );
-    return activeSubscription ? activeSubscription : null;
-  },
+  queryFn: fetchUserActiveSubscriptions,
   staleTime: 5 * 1000,
 });
 

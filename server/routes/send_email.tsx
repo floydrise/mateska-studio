@@ -4,7 +4,7 @@ import { Resend } from "resend";
 import z from "zod/v4";
 import MagicLink from "../../emails/magic-link";
 import ResetPassword from "../../emails/reset-password";
-import { internalMiddleware } from "../internal-middleware";
+import { internalMiddleware } from "../middleware/internal-middleware";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const app = new Hono()
