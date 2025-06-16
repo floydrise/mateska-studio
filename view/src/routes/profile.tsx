@@ -1,7 +1,10 @@
 import SubscriptionCard from "@/components/SubscriptionCard";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getUserSubscriptionsQueryOptions } from "@/lib/api";
+import {
+  getAuthDataQueryOptions,
+  getUserSubscriptionsQueryOptions,
+} from "@/lib/api";
 import { authClient } from "@/lib/auth-client";
 import type { Subscription } from "@better-auth/stripe";
 import { useQuery } from "@tanstack/react-query";
@@ -16,8 +19,10 @@ import { Calendar, LogOut, Mail, Trash, User } from "lucide-react";
 
 export const Route = createFileRoute("/profile")({
   component: RouteComponent,
-  beforeLoad: async ({ location }) => {
-    const { data } = await authClient.getSession();
+  beforeLoad: async ({ location, context }) => {
+    const data = await context.queryClient.ensureQueryData(
+      getAuthDataQueryOptions
+    );
     if (!data?.user) {
       throw redirect({
         to: "/login",

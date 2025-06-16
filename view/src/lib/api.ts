@@ -37,6 +37,11 @@ export const fetchUserActiveSubscriptions = async () => {
   return activeSubscription as Subscription;
 };
 
+export const fetchAuthData = async () => {
+  const { data } = await authClient.getSession();
+  return data;
+};
+
 export const getWorkoutCardsQueryOptions = queryOptions({
   queryKey: ["fetch-workout-cards"],
   queryFn: fetchWorkoutCards,
@@ -55,3 +60,9 @@ export const getUserWorkoutPlanQueryOptions = (workoutPlanId: string) =>
     queryFn: () => fetchUserWorkout(workoutPlanId),
     staleTime: 5 * 1000,
   });
+
+export const getAuthDataQueryOptions = queryOptions({
+  queryKey: ["get-auth-data"],
+  queryFn: fetchAuthData,
+  staleTime: 5 * 1000,
+});

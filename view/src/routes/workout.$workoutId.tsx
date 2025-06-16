@@ -1,18 +1,20 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import UserWorkout from "@/components/UserWorkout";
 import {
-  fetchUserActiveSubscriptions,
+  getAuthDataQueryOptions,
+  getUserSubscriptionsQueryOptions,
   getUserWorkoutPlanQueryOptions,
 } from "@/lib/api";
-import { authClient } from "@/lib/auth-client";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/workout/$workoutId")({
   component: RouteComponent,
-  beforeLoad: async ({ location, params }) => {
-    const { data } = await authClient.getSession();
+  beforeLoad: async ({ location, params, context }) => {
+    const data = await context.queryClient.ensureQueryData(
+      getAuthDataQueryOptions
+    );
     if (!data?.user) {
       throw redirect({
         to: "/login",
@@ -21,7 +23,10 @@ export const Route = createFileRoute("/workout/$workoutId")({
         },
       });
     }
-    const activeSubscription = await fetchUserActiveSubscriptions();
+
+    const activeSubscription = await context.queryClient.ensureQueryData(
+      getUserSubscriptionsQueryOptions
+    );
     if (
       String(activeSubscription?.limits.workoutPlanId) !== params.workoutId &&
       activeSubscription !== null
