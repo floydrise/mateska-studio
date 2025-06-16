@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Dumbbell, ShoppingCart, Target } from "lucide-react";
+import { BookOpen, Dumbbell, Rocket, Target } from "lucide-react";
 import imgPlaceholder from "/imgPlaceholder.svg";
 import { Button } from "@/components/ui/button.tsx";
 import { authClient } from "@/lib/auth-client";
@@ -28,7 +28,7 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
     workoutCardEquipment,
   } = workoutCard;
   return (
-    <Card className="group overflow-hidden w-full max-w-sm transition-all pt-0">
+    <Card className="group overflow-hidden w-full max-w-sm transition-all pt-0 scale-95 md:scale-100">
       <div className="aspect-video w-full overflow-hidden">
         <img
           src={workoutCardImgUrl || imgPlaceholder}
@@ -73,10 +73,12 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
           </div>
         </div>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="gap-2">
         <Button
           size={"lg"}
-          className={"w-full text-lg transform duration-500 hover:scale-105"}
+          className={
+            "w-1/2 text-lg transform duration-500 hover:scale-105 hover:-translate-y-1 hover:-translate-x-1"
+          }
           onClick={async () => {
             if (!user) {
               navigate({ to: "/login" });
@@ -95,7 +97,16 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
             }
           }}
         >
-          <ShoppingCart className={"size-5"} /> Абонирай ме
+          <Rocket className={"size-5"} /> Абонирай ме
+        </Button>
+        <Button
+          size={"lg"}
+          variant={"outline"}
+          className={
+            "w-1/2 text-lg transform duration-500 hover:scale-105 hover:-translate-y-1 hover:translate-x-1"
+          }
+        >
+          <BookOpen className={"size-5"} /> Инфо
         </Button>
       </CardFooter>
     </Card>

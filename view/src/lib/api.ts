@@ -34,7 +34,7 @@ export const getUserSubscriptionsQueryOptions = queryOptions({
     const activeSubscription = subscriptions!.find(
       (sub) => sub.status === "active" || sub.status === "trialing"
     );
-    return activeSubscription;
+    return activeSubscription ? activeSubscription : null;
   },
   staleTime: 5 * 1000,
 });

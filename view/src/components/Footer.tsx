@@ -19,7 +19,7 @@ export default function Footer() {
   const { setTheme, theme } = useTheme();
   return (
     <footer className="relative border-t bg-background text-foreground transition-colors duration-300">
-      <div className="container mx-auto px-4 py-12 md:px-6 lg:px-8">
+      <div className="container mx-auto px-4 py-4 md:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="relative">
             <h2 className="mb-4 text-3xl font-bold tracking-tight">Бюлетин</h2>
@@ -190,7 +190,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 text-center md:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t pt-4 text-center md:flex-row">
           <p className="text-sm text-muted-foreground">
             © 2025 MateskaSport Studio. Всички права запазени.
           </p>

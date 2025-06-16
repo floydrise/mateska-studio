@@ -37,7 +37,7 @@ export default function SubscriptionCard({
             <ChevronDown
               className={`${show ? "transition duration-500 rotate-180" : "transition duration-500 rotate-0"}`}
             />
-            <span className="text-xl md:text-2xl font-bold">
+            <span className="text-lg md:text-2xl font-bold">
               {subscription.plan[0].toUpperCase() + subscription.plan.slice(1)}
             </span>
           </div>
@@ -48,8 +48,11 @@ export default function SubscriptionCard({
             {subscription.status}
           </Badge>
         </div>
-
-        {show && (
+        <div
+          className={`overflow-hidden transition-all duration-700 ease-in-out ${
+            show ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
           <div className="space-y-6">
             <div className="flex items-center justify-between py-2 md:py-4 border-b border-gray-100">
               <div className="flex items-center gap-3 text-gray-600">
@@ -98,7 +101,7 @@ export default function SubscriptionCard({
               </div>
             ) : null}
           </div>
-        )}
+        </div>
       </CardContent>
       <CardFooter className="justify-between gap-2">
         {subscription.cancelAtPeriodEnd ? (

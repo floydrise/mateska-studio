@@ -1,12 +1,13 @@
 import SubscriptionCard from "@/components/SubscriptionCard";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getUserSubscriptionsQueryOptions } from "@/lib/api";
 import { authClient } from "@/lib/auth-client";
 import type { Subscription } from "@better-auth/stripe";
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { format } from "date-fns";
-import { Calendar, Loader, LogOut, Mail, Trash, User } from "lucide-react";
+import { Calendar, LogOut, Mail, Trash, User } from "lucide-react";
 
 export const Route = createFileRoute("/profile")({
   component: RouteComponent,
@@ -22,11 +23,11 @@ function RouteComponent() {
   if (isError) console.log("Изинка грешка: " + error.message);
   return (
     <section className="mt-10 flex flex-col justify-center items-center w-full">
-      {isPending ? (
-        <Loader className="animate-spin" />
-      ) : (
-        <div className="max-w-fit">
-          <h1 className="text-2xl md:text-4xl font-bold">Моите данни:</h1>
+      <div className="max-w-fit">
+        <h1 className="text-2xl md:text-4xl font-bold">Моите данни:</h1>
+        {isPending ? (
+          <Skeleton className="h-40 w-80" />
+        ) : (
           <div className="mt-2">
             <p className="flex items-center text-xl gap-1 text-muted-foreground">
               <User /> Име: {user?.name}
@@ -58,16 +59,18 @@ function RouteComponent() {
               </Button>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
       <div className="my-10">
         <h1 className="text-2xl md:text-4xl font-bold mb-2">Моите продукти:</h1>
         {isLoading ? (
-          "Зарежда"
-        ) : data !== undefined ? (
+          <Skeleton className="h-48 w-90" />
+        ) : data ? (
           <SubscriptionCard subscription={data as Subscription} />
         ) : (
-          "Все още няма абонаменти"
+          <span className="text-muted-foreground">            
+            Все още нямате абонаменти. Вземи от <Link to="/" className="underline">тук</Link>
+          </span>
         )}
       </div>
     </section>

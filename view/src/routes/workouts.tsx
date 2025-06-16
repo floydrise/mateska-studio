@@ -10,12 +10,16 @@ export const Route = createFileRoute("/workouts")({
 
 function RouteComponent() {
   const { isLoading, error, data, isError } = useQuery(
-    getWorkoutCardsQueryOptions,
+    getWorkoutCardsQueryOptions
   );
   if (isError) toast.error("An error occurred: " + error.message);
   if (isLoading) return <h1>Loading ...</h1>;
   return (
-    <div className={"flex justify-center items-center mt-20"}>
+    <div
+      className={
+        "grid grid-cols-1 md:grid-cols-2 place-items-center gap-4 my-10"
+      }
+    >
       {data?.cards.map((card) => (
         <WorkoutCard key={card.workoutCardId} workoutCard={card} />
       ))}
