@@ -12,7 +12,7 @@ import {
   workoutSectionTable,
   workoutSessionsTable,
 } from "../db/schema/schema";
-import { and, eq } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 import { validateId } from "../utils";
 import { z } from "zod";
 
@@ -70,7 +70,8 @@ const app = new Hono()
     const sections = await db
       .select()
       .from(workoutSectionTable)
-      .where(eq(workoutSectionTable.workoutPlanId, id));
+      .where(eq(workoutSectionTable.workoutPlanId, id))
+      .orderBy(asc(workoutSectionTable.position));
     if (sections.length === 0) return c.json({ msg: "No sections found" }, 404);
     return c.json({ sections });
   })
@@ -268,6 +269,7 @@ const app = new Hono()
         .values({
           workoutPlanId: planId,
           sectionTitle: validatedSection.sectionTitle,
+          position: validatedSection.position,
         })
         .returning({ sectionId: workoutSectionTable.sectionId })
         .then((res) => res[0]);
@@ -280,6 +282,7 @@ const app = new Hono()
             sessionDescription: session.description,
             sessionTitle: session.sessionTitle,
             sessionVideoUrl: session.videoUrl,
+            position: session.position,
           })
           .returning()
           .then((res) => res[0]);

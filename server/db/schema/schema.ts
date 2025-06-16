@@ -36,6 +36,7 @@ export const workoutSectionTable = pgTable("workout_section", {
     .notNull()
     .references(() => workoutPlanTable.workoutPlanId, { onDelete: "cascade" }),
   sectionTitle: text("section_title").notNull(),
+  position: integer().notNull(),
 });
 
 export const workoutSessionsTable = pgTable("workout_session", {
@@ -46,4 +47,5 @@ export const workoutSessionsTable = pgTable("workout_session", {
   sessionTitle: text("session_title").notNull(),
   sessionVideoUrl: text("session_video_url").notNull(),
   sessionDescription: text("session_description").notNull(),
+  position: integer().notNull(),
 });

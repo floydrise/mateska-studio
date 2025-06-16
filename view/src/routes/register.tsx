@@ -14,7 +14,7 @@ export const Route = createFileRoute("/register")({
 
 function RouteComponent() {
   return (
-    <section className={"m-auto px-2 max-w-sm md:max-w-md mt-40"}>
+    <section className={"m-auto px-2 w-sm max-w-sm md:min-w-md my-20"}>
       <Card>
         <CardHeader>
           <CardTitle

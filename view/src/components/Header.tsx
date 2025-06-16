@@ -41,7 +41,7 @@ export default function Header() {
         </div>
         <div className="flex gap-4">
           {data?.session ? (
-            <Link to="/profile" className={`[&.active]:font-bold`}>
+            <Link to="/profile">
               <Button
                 size={"icon"}
                 variant={"outline"}

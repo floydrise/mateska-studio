@@ -12,7 +12,7 @@ import cardsRoute from "./workout_cards";
 import plansRoute from "./workout_plans";
 import sessionsRoute from "./workout_sessions";
 import { z } from "zod/v4";
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 
 const app = new Hono()
   .post("/", zValidator("json", WorkoutSchema), async (c) => {
@@ -41,6 +41,7 @@ const app = new Hono()
         .values({
           workoutPlanId: planId,
           sectionTitle: section.sectionTitle,
+          position: section.sectionPosition,
         })
         .returning({ sectionId: workoutSectionTable.sectionId })
         .then((res) => res[0]);
@@ -53,6 +54,7 @@ const app = new Hono()
           sessionTitle: session.sessionTitle,
           sessionVideoUrl: session.videoUrl,
           sessionDescription: session.description,
+          position: session.sessionPosition,
         });
       }
     }
@@ -89,7 +91,11 @@ const app = new Hono()
           workoutSessionsTable,
           eq(workoutSessionsTable.sectionId, workoutSectionTable.sectionId)
         )
-        .where(eq(workoutSectionTable.workoutPlanId, workoutPlanId));
+        .where(eq(workoutSectionTable.workoutPlanId, workoutPlanId))
+        .orderBy(
+          asc(workoutSectionTable.position),
+          asc(workoutSessionsTable.position)
+        );
 
       let sections: {
         sectionId: number;

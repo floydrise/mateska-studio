@@ -8,6 +8,7 @@ import {
   OctagonX,
   Dumbbell,
   Ban,
+  ChevronDown,
 } from "lucide-react";
 import type { Subscription } from "@better-auth/stripe";
 import { format } from "date-fns";
@@ -32,7 +33,10 @@ export default function SubscriptionCard({
           onClick={() => setShow(!show)}
           className="flex justify-between items-center mb-4 gap-2 hover:cursor-pointer"
         >
-          <div className="flex items-center">
+          <div className="flex items-center gap-1 ">
+            <ChevronDown
+              className={`${show ? "transition duration-500 rotate-180" : "transition duration-500 rotate-0"}`}
+            />
             <span className="text-xl md:text-2xl font-bold">
               {subscription.plan[0].toUpperCase() + subscription.plan.slice(1)}
             </span>

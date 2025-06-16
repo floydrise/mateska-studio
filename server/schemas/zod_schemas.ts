@@ -29,10 +29,12 @@ export const WorkoutSchema = z.object({
     .array(
       z.object({
         sectionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
+        sectionPosition: z.number().positive(),
         sessions: z
           .array(
             z.object({
               sessionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
+              sessionPosition: z.number().positive(),
               videoUrl: z.string().url("Must be a URL"),
               description: z.string().min(3, "Трябва да е най-малко 3 букви"),
             })
@@ -86,9 +88,11 @@ export const PostSectionSchema = z.object({
     .array(
       z.object({
         sessionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
-        videoUrl: z.string().url("Must be a URL"),
+        videoUrl: z.url("Must be a URL"),
         description: z.string().min(3, "Трябва да е най-малко 3 букви"),
+        position: z.number().positive(),
       })
     )
     .min(1, "Трябва да добавиш поне 1 сесия"),
+  position: z.number().positive(),
 });

@@ -10,10 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { authClient } from "@/lib/auth-client.ts";
-import { Heart, Send } from "lucide-react";
+import { Heart } from "lucide-react";
 import { useState } from "react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { LoginForm } from "@/components/LoginForm";
 import { ResetPasswordForm } from "@/components/ResetPasswordForm";
@@ -25,7 +23,7 @@ function RouteComponent() {
   const [isLoading, setIsLoading] = useState(false);
   const [toggleForgoten, setToggleForgoten] = useState(false);
   return (
-    <section className={"m-auto px-2 max-w-sm md:max-w-md mt-40"}>
+    <section className={"m-auto px-2 max-w-sm md:min-w-md my-20"}>
       <Card>
         <CardHeader>
           <CardTitle
