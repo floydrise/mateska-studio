@@ -44,6 +44,7 @@ export const auth = betterAuth({
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "x-internal-api-key": process.env.INTERNAL_API_KEY!,
             },
             body: JSON.stringify({
               url,
@@ -82,6 +83,25 @@ export const auth = betterAuth({
       },
     }),
   ],
+  user: {
+    deleteUser: {
+      enabled: true,
+      sendDeleteAccountVerification: async ({ user, url, token }) => {
+        await fetch(`${Bun.env.BETTER_AUTH_URL}/api/send_email/delete_user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-internal-api-key": process.env.INTERNAL_API_KEY!,
+          },
+          body: JSON.stringify({
+            url: url,
+            user_email: user.email,
+            user_name: user.name,
+          }),
+        });
+      },
+    },
+  },
   trustedOrigins: ["http://localhost:5173", "http://localhost:3000"],
   socialProviders: {
     google: {

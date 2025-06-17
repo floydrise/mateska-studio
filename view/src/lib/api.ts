@@ -42,9 +42,23 @@ export const fetchAuthData = async () => {
   return data;
 };
 
+export const fetchUserAccountList = async () => {
+  const { data, error } = await authClient.listAccounts();
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
+};
+
 export const getWorkoutCardsQueryOptions = queryOptions({
   queryKey: ["fetch-workout-cards"],
   queryFn: fetchWorkoutCards,
+  staleTime: 5 * 1000,
+});
+
+export const listUserAccountsQueryOptions = queryOptions({
+  queryKey: ["list-user-accounts"],
+  queryFn: fetchUserAccountList,
   staleTime: 5 * 1000,
 });
 

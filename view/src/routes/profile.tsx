@@ -4,6 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
   getAuthDataQueryOptions,
   getUserSubscriptionsQueryOptions,
+  listUserAccountsQueryOptions,
 } from "@/lib/api";
 import { authClient } from "@/lib/auth-client";
 import type { Subscription } from "@better-auth/stripe";
@@ -16,6 +17,21 @@ import {
 } from "@tanstack/react-router";
 import { format } from "date-fns";
 import { Calendar, LogOut, Mail, Trash, User } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@radix-ui/react-label";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/profile")({
   component: RouteComponent,
@@ -46,7 +62,10 @@ export const Route = createFileRoute("/profile")({
 });
 
 function RouteComponent() {
+  const [password, setPassword] = useState("");
   const { data: authData, isPending } = authClient.useSession();
+  const { data: accountsList } = useQuery(listUserAccountsQueryOptions);
+  let hasPassword = accountsList?.find((acc) => acc.provider === "credential");
   const user = authData?.user;
   const navigate = useNavigate();
   const { data, isLoading, isError, error } = useQuery(
@@ -84,12 +103,95 @@ function RouteComponent() {
                 >
                   <LogOut /> Излез
                 </Button>
-                <Button
-                  variant={"destructive"}
-                  className="flex-1 transition duration-300 hover:scale-105"
-                >
-                  <Trash /> Изтрии
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger
+                    asChild
+                    className="transition duration-300 hover:scale-105"
+                  >
+                    <Button variant={"destructive"}>
+                      <Trash /> Изтрии
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Напълно сигурен/а ли сте?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className={"text-red-500"}>
+                        Това действие{" "}
+                        <span className={"underline italic"}>НЕ</span> може да
+                        бъде отменено. Това ще изтрие акаунтът Ви и ще изтрие
+                        всички данни от сървърите ни.
+                      </AlertDialogDescription>
+                      <br />
+                      <AlertDialogDescription className={"font-semibold"}>
+                        {hasPassword ? (
+                          <>
+                            <Label htmlFor="password" className="text-lg">
+                              Потвърдете паролата си:
+                            </Label>
+                            <Input
+                              type="text"
+                              id="password"
+                              placeholder="password"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <span>
+                              Ще ви бъде изпратен линк, моля кликнете го и
+                              акаунтът ви ще бъде изтрит
+                            </span>
+                          </>
+                        ) : (
+                          <span>
+                            Ще ви бъде изпратен линк, моля кликнете го и
+                            акаунтът ви ще бъде изтрит
+                          </span>
+                        )}
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Отмени</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={async () => {
+                          if (hasPassword) {
+                            try {
+                              const { error, data } =
+                                await authClient.deleteUser({
+                                  password: password,
+                                  callbackURL: "http://localhost:5173/goodbye",
+                                });
+                              if (error) {
+                                toast.error(
+                                  error.message === "Invalid password"
+                                    ? "Невалидна парола"
+                                    : error.message
+                                );
+                                setPassword("");
+                              }
+                              if (data?.success)
+                                toast.success("Проверете пощата си");
+                            } catch (error) {
+                              console.log(error);
+                            }
+                          } else {
+                            const { data, error } = await authClient.deleteUser(
+                              {
+                                callbackURL: "http://localhost:5173/goodbye",
+                              }
+                            );
+                            if (error) toast.error(error.message);
+                            if (data?.success)
+                              toast.success("Проверете пощата си");
+                          }
+                          // navigate({ to: "/goodbye" });
+                        }}
+                      >
+                        Продължи
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </div>
           )}
