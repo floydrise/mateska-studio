@@ -1,11 +1,5 @@
 import { NewPasswordForm } from "@/components/NewPasswordForm";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { zodValidator } from "@tanstack/zod-adapter";
 import z from "zod/v4";
@@ -18,6 +12,18 @@ const SearchParamsSchema = z.object({
 export const Route = createFileRoute("/reset_password")({
   component: RouteComponent,
   validateSearch: zodValidator(SearchParamsSchema),
+  head: () => ({
+    meta: [
+      {
+        name: "description",
+        content:
+          "Обновете паролата си. Независимо дали сте я забравили или просто искате да я смените",
+      },
+      {
+        title: "Reset password • Mateska Studio",
+      },
+    ],
+  }),
 });
 
 function RouteComponent() {

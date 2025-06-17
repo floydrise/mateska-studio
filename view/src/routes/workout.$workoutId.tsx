@@ -39,6 +39,18 @@ export const Route = createFileRoute("/workout/$workoutId")({
       });
     }
   },
+  head: () => ({
+    meta: [
+      {
+        name: "description",
+        content:
+          "Тренирайте с Матеска - вашият избран план. Тук ще намерите тренировъчните видеа и опътвания",
+      },
+      {
+        title: "Training • Mateska Studio",
+      },
+    ],
+  }),
 });
 
 function RouteComponent() {

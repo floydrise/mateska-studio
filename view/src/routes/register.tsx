@@ -10,6 +10,17 @@ import { Heart } from "lucide-react";
 import { RegisterForm } from "@/components/RegisterForm";
 export const Route = createFileRoute("/register")({
   component: RouteComponent,
+  head: () => ({
+    meta: [
+      {
+        name: "description",
+        content: "Регистрирайте се в платформата",
+      },
+      {
+        title: "Register • Mateska Studio",
+      },
+    ],
+  }),
 });
 
 function RouteComponent() {

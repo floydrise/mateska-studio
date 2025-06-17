@@ -32,6 +32,17 @@ export const Route = createFileRoute("/profile")({
       });
     }
   },
+  head: () => ({
+    meta: [
+      {
+        name: "description",
+        content: "Потребителски профил - лична данни и абонаменти",
+      },
+      {
+        title: "Profile • Mateska Studio",
+      },
+    ],
+  }),
 });
 
 function RouteComponent() {

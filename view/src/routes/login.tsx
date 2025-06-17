@@ -17,6 +17,17 @@ import { LoginForm } from "@/components/LoginForm";
 import { ResetPasswordForm } from "@/components/ResetPasswordForm";
 export const Route = createFileRoute("/login")({
   component: RouteComponent,
+  head: () => ({
+    meta: [
+      {
+        name: "description",
+        content: "Влезте в профила си или обновете забравената си парола",
+      },
+      {
+        title: "Login • Mateska Studio",
+      },
+    ],
+  }),
 });
 
 function RouteComponent() {
@@ -29,10 +40,10 @@ function RouteComponent() {
           <CardTitle
             className={"text-xl justify-center items-center flex gap-1"}
           >
-            Влез в профила си
+            {toggleForgoten ? "Забравена парола" : "Влез в профила си"}
           </CardTitle>
           <CardDescription className={"m-auto flex gap-1 items-center"}>
-            С имейл и парола
+            {toggleForgoten ? "Въведете имейлът си" : "С имейл и парола"}
           </CardDescription>
         </CardHeader>
         <CardContent className={"flex flex-col gap-4"}>

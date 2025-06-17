@@ -1,4 +1,8 @@
-import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
+import {
+  HeadContent,
+  Outlet,
+  createRootRouteWithContext,
+} from "@tanstack/react-router";
 
 import Header from "../components/Header";
 import { Toaster } from "sonner";
@@ -12,6 +16,7 @@ interface MyRouterContext {
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
     <div className="min-h-[100dvh] grid grid-rows-[auto_1fr_auto]">
+      <HeadContent />
       <Header />
       <Outlet />
       <Toaster />

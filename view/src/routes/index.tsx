@@ -8,6 +8,17 @@ const ErrorSearchParams = z.object({
 export const Route = createFileRoute("/")({
   component: App,
   validateSearch: zodValidator(ErrorSearchParams),
+  head: () => ({
+    meta: [
+      {
+        name: "description",
+        content: "Начална страница на MateskaSport Studio. Запознайте се с платформата",
+      },
+      {
+        title: "Home • Mateska Studio",
+      },
+    ],
+  }),
 });
 
 function App() {
