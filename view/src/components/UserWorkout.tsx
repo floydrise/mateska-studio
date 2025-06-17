@@ -29,7 +29,7 @@ export default function UserWorkout({
       <aside
         className={`${
           isOpen ? "w-42 md:w-80" : "w-16"
-        } flex flex-col border-r transition-all duration-300 ease-in-out`}
+        } flex flex-col border-r transition-all duration-500 ease-in-out`}
       >
         <div className="flex h-14 items-center justify-between border-b px-4">
           <span
@@ -104,20 +104,14 @@ export default function UserWorkout({
           </nav>
         </ScrollArea>
       </aside>
-      <main className="flex-1 flex flex-col max-w-screen items-center gap-10 my-10">
+      <main className="flex-1 flex flex-col max-w-screen items-center gap-10 md:my-10">
         <h1 className="text-2xl font-bold">{content?.title}</h1>
         <iframe
           src={content?.videoUrl}
-          title="YouTube video player"
-          allow="accelerometer; 
-  autoplay; 
-  clipboard-write; 
-  encrypted-media; 
-  gyroscope; 
-  picture-in-picture; 
-  web-share"
+          title={content.title}
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
           allowFullScreen
-          className={`w-10/11 h-5/6 rounded-lg`}
+          className="w-full h-full"
         ></iframe>
         <p className="text-center">{content?.description}</p>
       </main>

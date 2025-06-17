@@ -33,6 +33,7 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
 }
 
 export const ResetPasswordForm = () => {
+  const [isOpen, setIsOpen] = useState(false);
   let toastId: string | number;
   const navigate = useNavigate();
   const form = useForm({
@@ -85,12 +86,12 @@ export const ResetPasswordForm = () => {
                   <Label htmlFor={field.name} className="text-lg">
                     Имейл
                   </Label>
-                  <Tooltip>
-                    <TooltipTrigger>
+                  <Tooltip open={isOpen} onOpenChange={setIsOpen}>
+                    <TooltipTrigger onClick={() => setIsOpen(!isOpen)}>
                       <Info className="size-5" />
                     </TooltipTrigger>
-                    <TooltipContent>
-                      <p>
+                    <TooltipContent className="w-xs md:w-fit ">
+                      <p className="text-center">
                         Ще изпратим линк за смяна на паролата на имейлът, който
                         въведеш
                       </p>

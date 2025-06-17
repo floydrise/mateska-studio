@@ -39,12 +39,15 @@ function RouteComponent() {
           <div className="flex flex-col gap-1">
             {toggleForgoten ? <ResetPasswordForm /> : <LoginForm />}
             <div className="flex justify-between">
-              <Link to="/register" className="hover:underline">
+              <Link
+                to="/register"
+                className="hover:underline text-sm md:text-base"
+              >
                 Регистрирай се
               </Link>
               <p
                 onClick={() => setToggleForgoten(!toggleForgoten)}
-                className="hover:cursor-pointer hover:underline"
+                className="hover:cursor-pointer hover:underline text-sm md:text-base"
               >
                 {toggleForgoten ? "Обратно към логин" : "Забравена парола?"}
               </p>
