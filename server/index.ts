@@ -3,6 +3,7 @@ import { trimTrailingSlash } from "hono/trailing-slash";
 import { auth } from "../auth";
 import workoutsRoute from "./routes/workouts";
 import sendEmailRoute from "./routes/send_email";
+import deleteStripeDataRoute from "./routes/delete_stripe_ data";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { serveStatic } from "hono/bun";
@@ -30,7 +31,8 @@ const api = app
     return c.json({ msg: "Howdy 🤠!" }, 200);
   })
   .route("/workouts", workoutsRoute)
-  .route("/send_email", sendEmailRoute);
+  .route("/send_email", sendEmailRoute)
+  .route("/delete_stripe_data", deleteStripeDataRoute);
 
 app.use("*", serveStatic({ root: "./view/dist" }));
 app.get("*", serveStatic({ path: "./view/dist/index.html" }));

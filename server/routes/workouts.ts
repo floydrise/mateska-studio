@@ -14,7 +14,6 @@ import sessionsRoute from "./workout_sessions";
 import { z } from "zod/v4";
 import { asc, eq } from "drizzle-orm";
 import { authMiddleware } from "../middleware/auth-middleware";
-import { HTTPException } from "hono/http-exception";
 
 const app = new Hono()
   .post("/", authMiddleware, zValidator("json", WorkoutSchema), async (c) => {

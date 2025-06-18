@@ -10,6 +10,7 @@ import {
   createSelectSchema,
   createUpdateSchema,
 } from "drizzle-zod";
+import { user } from "../db/schema/auth-schema";
 
 export const WorkoutSchema = z.object({
   workoutPlanTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
@@ -96,3 +97,5 @@ export const PostSectionSchema = z.object({
     .min(1, "Трябва да добавиш поне 1 сесия"),
   position: z.number().positive(),
 });
+
+export const UserSelectSchema = createSelectSchema(user);

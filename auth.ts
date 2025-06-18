@@ -7,7 +7,7 @@ import { stripe } from "@better-auth/stripe";
 import Stripe from "stripe";
 import { workoutCardTable } from "./server/db/schema/schema";
 
-const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!);
+export const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -62,6 +62,7 @@ export const auth = betterAuth({
         // Do something with the newly created customer
         console.log(`Customer ${customer.id} created for user ${user.id}`);
       },
+
       subscription: {
         enabled: true,
         plans: async () => {
@@ -86,6 +87,18 @@ export const auth = betterAuth({
   user: {
     deleteUser: {
       enabled: true,
+      beforeDelete: async (user, request) => {
+        await fetch(`${process.env.BETTER_AUTH_URL}/api/delete_stripe_data`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-internal-api-key": process.env.INTERNAL_API_KEY!,
+          },
+          body: JSON.stringify({
+            user,
+          }),
+        });
+      },
       sendDeleteAccountVerification: async ({ user, url, token }) => {
         await fetch(`${Bun.env.BETTER_AUTH_URL}/api/send_email/delete_user`, {
           method: "POST",
