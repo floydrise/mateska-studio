@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button.tsx";
-import { FaGoogle } from "react-icons/fa6";
+import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import {
   Card,
   CardContent,
@@ -81,7 +81,21 @@ function RouteComponent() {
               });
             }}
           >
-            <FaGoogle className={"size-6"} /> Влез с Google акаунт
+            <FaGoogle className={"size-6"} /> Влез с Google
+          </Button>
+          <Button
+            disabled={isLoading}
+            variant={"outline"}
+            className="transition duration-500 hover:scale-105"
+            onClick={async () => {
+              setIsLoading(true);
+              await authClient.signIn.social({
+                provider: "facebook",
+                callbackURL: "http://localhost:5173/",
+              });
+            }}
+          >
+            <FaFacebook className={"size-6"} /> Влез с Facebook
           </Button>
         </CardContent>
         <CardFooter>

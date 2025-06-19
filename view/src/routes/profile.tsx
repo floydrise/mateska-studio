@@ -32,6 +32,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Route = createFileRoute("/profile")({
   component: RouteComponent,
@@ -80,118 +81,131 @@ function RouteComponent() {
           {isPending ? (
             <Skeleton className="h-40 w-80" />
           ) : (
-            <div className="mt-2">
-              <p className="flex items-center text-xl gap-1 text-muted-foreground">
-                <User /> Име: {user?.name}
-              </p>
-              <p className="flex items-center text-xl gap-1 text-muted-foreground">
-                <Mail /> Email: {user?.email}
-              </p>
-              <p className="flex items-center text-xl gap-1 text-muted-foreground">
-                <Calendar /> Регистриран на:{" "}
-                {format(user?.createdAt!, "dd/MM/yyyy")}
-              </p>
-              <div className="w-full flex justify-between gap-2 mt-2">
-                <Button
-                  onClick={async () =>
-                    authClient.signOut({
-                      fetchOptions: { onSuccess: () => navigate({ to: "/" }) },
-                    })
-                  }
-                  variant={"outline"}
-                  className="flex-1 transition duration-300 hover:scale-105"
-                >
-                  <LogOut /> Излез
-                </Button>
-                <AlertDialog>
-                  <AlertDialogTrigger
-                    asChild
-                    className="transition duration-300 hover:scale-105"
+            <div className="mt-2 flex flex-col md:flex-row items-center gap-2">
+              <Avatar className="rounded-lg size-16">
+                <AvatarImage
+                  src={user?.image ?? "https://github.com/evilrabbit.png"}
+                  alt="User profile pic"
+                />
+                <AvatarFallback>ER</AvatarFallback>
+              </Avatar>
+              <div>
+                <div>
+                  <p className="flex items-center text-xl gap-1 text-muted-foreground">
+                    <User /> Име: {user?.name}
+                  </p>
+                  <p className="flex items-center text-xl gap-1 text-muted-foreground">
+                    <Mail /> Email: {user?.email}
+                  </p>
+                  <p className="flex items-center text-xl gap-1 text-muted-foreground">
+                    <Calendar /> Регистриран на:{" "}
+                    {format(user?.createdAt!, "dd/MM/yyyy")}
+                  </p>
+                </div>
+                <div className="w-full flex justify-between gap-2 mt-2">
+                  <Button
+                    onClick={async () =>
+                      authClient.signOut({
+                        fetchOptions: {
+                          onSuccess: () => navigate({ to: "/" }),
+                        },
+                      })
+                    }
+                    variant={"outline"}
+                    className="flex-1 transition duration-300 hover:scale-105"
                   >
-                    <Button variant={"destructive"}>
-                      <Trash /> Изтрии
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Напълно сигурен/а ли сте?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription className={"text-red-500"}>
-                        Това действие{" "}
-                        <span className={"underline italic"}>НЕ</span> може да
-                        бъде отменено. Това ще изтрие акаунтът Ви и ще изтрие
-                        всички данни от сървърите ни.
-                      </AlertDialogDescription>
-                      <br />
-                      <AlertDialogDescription className={"font-semibold"}>
-                        {hasPassword ? (
-                          <>
-                            <Label htmlFor="password" className="text-lg">
-                              Потвърдете паролата си:
-                            </Label>
-                            <Input
-                              type="text"
-                              id="password"
-                              placeholder="password"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                            />
+                    <LogOut /> Излез
+                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger
+                      asChild
+                      className="transition duration-300 hover:scale-105"
+                    >
+                      <Button variant={"destructive"}>
+                        <Trash /> Изтрии
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Напълно сигурен/а ли сте?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className={"text-red-500"}>
+                          Това действие{" "}
+                          <span className={"underline italic"}>НЕ</span> може да
+                          бъде отменено. Това ще изтрие акаунтът Ви и ще изтрие
+                          всички данни от сървърите ни.
+                        </AlertDialogDescription>
+                        <br />
+                        <AlertDialogDescription className={"font-semibold"}>
+                          {hasPassword ? (
+                            <>
+                              <Label htmlFor="password" className="text-lg">
+                                Потвърдете паролата си:
+                              </Label>
+                              <Input
+                                type="text"
+                                id="password"
+                                placeholder="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                              />
+                              <span>
+                                Ще ви бъде изпратен линк, моля кликнете го и
+                                акаунтът ви ще бъде изтрит
+                              </span>
+                            </>
+                          ) : (
                             <span>
                               Ще ви бъде изпратен линк, моля кликнете го и
                               акаунтът ви ще бъде изтрит
                             </span>
-                          </>
-                        ) : (
-                          <span>
-                            Ще ви бъде изпратен линк, моля кликнете го и
-                            акаунтът ви ще бъде изтрит
-                          </span>
-                        )}
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Отмени</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={async () => {
-                          if (hasPassword) {
-                            try {
-                              const { error, data } =
+                          )}
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Отмени</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={async () => {
+                            if (hasPassword) {
+                              try {
+                                const { error, data } =
+                                  await authClient.deleteUser({
+                                    password: password,
+                                    callbackURL:
+                                      "http://localhost:5173/goodbye",
+                                  });
+                                if (error) {
+                                  toast.error(
+                                    error.message === "Invalid password"
+                                      ? "Невалидна парола"
+                                      : error.message
+                                  );
+                                  setPassword("");
+                                }
+                                if (data?.success)
+                                  toast.success("Проверете пощата си");
+                              } catch (error) {
+                                console.log(error);
+                              }
+                            } else {
+                              const { data, error } =
                                 await authClient.deleteUser({
-                                  password: password,
                                   callbackURL: "http://localhost:5173/goodbye",
                                 });
-                              if (error) {
-                                toast.error(
-                                  error.message === "Invalid password"
-                                    ? "Невалидна парола"
-                                    : error.message
-                                );
-                                setPassword("");
-                              }
+                              if (error) toast.error(error.message);
                               if (data?.success)
                                 toast.success("Проверете пощата си");
-                            } catch (error) {
-                              console.log(error);
                             }
-                          } else {
-                            const { data, error } = await authClient.deleteUser(
-                              {
-                                callbackURL: "http://localhost:5173/goodbye",
-                              }
-                            );
-                            if (error) toast.error(error.message);
-                            if (data?.success)
-                              toast.success("Проверете пощата си");
-                          }
-                          // navigate({ to: "/goodbye" });
-                        }}
-                      >
-                        Продължи
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                            // navigate({ to: "/goodbye" });
+                          }}
+                        >
+                          Продължи
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
               </div>
             </div>
           )}
