@@ -5,7 +5,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Dumbbell, ChevronRight, ChevronDown } from "lucide-react";
+import { Dumbbell, ChevronRight, ChevronDown, ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import type { UserWorkoutType } from "../../../shared/types";
 
@@ -15,15 +15,29 @@ export default function UserWorkout({
   userWorkout: UserWorkoutType;
 }) {
   const [isOpen, setIsOpen] = useState(true);
+  const [sessionIndex, setSessionIndex] = useState(0);
+  const [sectionInfo, setSectionInfo] = useState<{
+    index: number;
+    title: string;
+  }>({
+    index: 0,
+    title: userWorkout.sections[0].sectionTitle,
+  });
   const [content, setContent] = useState<{
     title: string;
     videoUrl: string;
     description: string;
   }>({
-    title: userWorkout.sections[0].sessions[0].sessionTitle,
-    videoUrl: userWorkout.sections[0].sessions[0].videoUrl,
-    description: userWorkout.sections[0].sessions[0].description,
+    title:
+      userWorkout.sections[sectionInfo.index].sessions[sessionIndex]
+        .sessionTitle,
+    videoUrl:
+      userWorkout.sections[sectionInfo.index].sessions[sessionIndex].videoUrl,
+    description:
+      userWorkout.sections[sectionInfo.index].sessions[sessionIndex]
+        .description,
   });
+
   return (
     <div className="flex h-screen">
       <aside
@@ -50,12 +64,18 @@ export default function UserWorkout({
         <ScrollArea className="flex-1">
           <nav className="p-2">
             {isOpen ? (
-              userWorkout.sections.map((section) => (
+              userWorkout.sections.map((section, index) => (
                 <Collapsible key={section.sectionId}>
                   <CollapsibleTrigger asChild>
                     <Button
                       variant="ghost"
                       className="w-full h-fit justify-start"
+                      onClick={() =>
+                        setSectionInfo({
+                          index,
+                          title: section.sectionTitle,
+                        })
+                      }
                     >
                       {isOpen && (
                         <>
@@ -74,13 +94,14 @@ export default function UserWorkout({
                         variant="ghost"
                         size="sm"
                         className="w-full min-h-fit justify-start border-l"
-                        onClick={() =>
+                        onClick={() => {
                           setContent({
                             title: session.sessionTitle,
                             videoUrl: session.videoUrl,
                             description: session.description,
-                          })
-                        }
+                          });
+                          setSessionIndex(index);
+                        }}
                       >
                         <span className="text-wrap">
                           {session.sessionTitle}
@@ -105,9 +126,66 @@ export default function UserWorkout({
         </ScrollArea>
       </aside>
       <main className="flex-1 flex flex-col max-w-screen items-center gap-10 md:my-10">
-        <h1 className="text-2xl font-bold">{content?.title}</h1>
+        <div className="flex items-center justify-between w-full md:w-1/2">
+          <Button
+            size={"icon"}
+            className="ml-2 rounded-full transform duration-500 hover:scale-110"
+            onClick={() => {
+              setSessionIndex((prev) => {
+                const previousIndex = prev - 1;
+                if (previousIndex >= 0) {
+                  const prevSession =
+                    userWorkout.sections[sectionInfo.index].sessions[
+                      previousIndex
+                    ];
+                  setContent({
+                    title: prevSession.sessionTitle,
+                    videoUrl: prevSession.videoUrl,
+                    description: prevSession.description,
+                  });
+                  return previousIndex;
+                }
+
+                return prev;
+              });
+            }}
+          >
+            <ChevronLeft />
+          </Button>
+          <div className="flex flex-col items-center">
+            <p className="text-muted-foreground">{sectionInfo.title}</p>
+            <h1 className="text-2xl font-bold">{content?.title}</h1>
+          </div>
+          <Button
+            size={"icon"}
+            className="mr-2 rounded-full transform duration-500 hover:scale-110"
+            onClick={() => {
+              setSessionIndex((prev) => {
+                const nextIndex = prev + 1;
+
+                if (
+                  nextIndex <
+                  userWorkout.sections[sectionInfo.index].sessions.length
+                ) {
+                  const nextSession =
+                    userWorkout.sections[sectionInfo.index].sessions[nextIndex];
+                  setContent({
+                    title: nextSession.sessionTitle,
+                    videoUrl: nextSession.videoUrl,
+                    description: nextSession.description,
+                  });
+                  return nextIndex;
+                }
+
+                return prev;
+              });
+            }}
+          >
+            <ChevronRight />
+          </Button>
+        </div>
         <iframe
-          src={content?.videoUrl}
+          src={content.videoUrl}
           title={content.title}
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
           allowFullScreen
