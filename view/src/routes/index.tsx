@@ -1,6 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { Dumbbell, Pyramid, Sparkles, Store } from "lucide-react";
+import {
+  Dumbbell,
+  MessageCircleQuestion,
+  Pyramid,
+  Sparkles,
+  Store,
+} from "lucide-react";
 import girlMeditatingImg from "/lotus.png";
 import hourGlassImg from "/hourglass.png";
 import scaleImg from "/scale.png";
@@ -11,6 +17,7 @@ import WorkoutCard from "@/components/WorkoutCard";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import Testimonials from "@/components/Testimonials";
+import { FAQ } from "@/components/FAQ";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -39,7 +46,7 @@ function App() {
         <div className="flex flex-col items-center md:items-start gap-2">
           <div className="text-center md:text-start max-w-xl">
             <h1 className="text-3xl md:text-4xl font-bold">
-              Твоето фитнес пътешествие започва тук!
+              Твоето фитнес пътешествие започва тук 🔥
             </h1>
             <h2 className="text-lg text-muted-foreground">
               Тренировки с професионален инструктор - вкъщи, в парка или във
@@ -124,13 +131,19 @@ function App() {
           </div>
         )}
       </section>
-      <section className="bg-accent px-10 py-10">
-        <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center">
+      <section className="bg-accent px-10 py-10 flex flex-col items-center">
+        <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2">
           <Pyramid /> Отзиви на клиенти
         </h1>
         <div className="mt-10">
           <Testimonials />
         </div>
+      </section>
+      <section className="px-10 py-10">
+        <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center">
+          <MessageCircleQuestion /> Често задавани въпроси
+        </h1>
+        <FAQ />
       </section>
     </main>
   );

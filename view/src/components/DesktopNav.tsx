@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Home, Store, User } from "lucide-react";
+import { Home, LogIn, Store, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { authClient } from "@/lib/auth-client";
 
@@ -34,7 +34,9 @@ export const DesktopNav = () => {
           </Link>
         ) : (
           <Button asChild>
-            <Link to="/login">Влез</Link>
+            <Link to="/login">
+              <LogIn /> Влез
+            </Link>
           </Button>
         )}
       </div>
