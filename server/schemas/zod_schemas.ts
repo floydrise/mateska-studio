@@ -16,7 +16,7 @@ export const WorkoutSchema = z.object({
   workoutPlanTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
   card: z.object({
     cardTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
-    imgUrl: z.string().url().nonempty("Трябва да добавиш URL на снимка"),
+    imgUrl: z.url().nonempty("Трябва да добавиш URL на снимка"),
     stripePriceId: z.string().min(3, "Трябва да е най-малко 3 букви"),
     price: z.number().nonnegative("Не може да е по-малко от 0"),
     targetMuscles: z
@@ -36,7 +36,7 @@ export const WorkoutSchema = z.object({
             z.object({
               sessionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
               sessionPosition: z.number().positive(),
-              videoUrl: z.string().url("Must be a URL"),
+              videoUrl: z.url("Must be a URL"),
               description: z.string().min(3, "Трябва да е най-малко 3 букви"),
             })
           )
