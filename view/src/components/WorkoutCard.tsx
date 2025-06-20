@@ -97,7 +97,7 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
             }
           }}
         >
-          <Rocket className={"size-5"} /> Абонирай ме
+          <Rocket className={"size-5"} /> Купи
         </Button>
         <Button
           size={"lg"}

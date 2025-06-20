@@ -12,7 +12,7 @@ export default function Header() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
-    <header className="p-2 border sticky top-0 bg-background z-10">
+    <header className="p-2 border sticky top-0 bg-background z-30">
       <nav className="flex flex-row justify-between items-center gap-2 w-full px-2">
         <Link to="/">
           <motion.img

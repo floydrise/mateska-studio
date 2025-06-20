@@ -1,20 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { z } from "zod";
-import { zodValidator } from "@tanstack/zod-adapter";
 import { Button } from "@/components/ui/button";
-import { Dumbbell, Flame, Sparkles } from "lucide-react";
+import { Dumbbell, Pyramid, Sparkles, Store } from "lucide-react";
 import girlMeditatingImg from "/lotus.png";
 import hourGlassImg from "/hourglass.png";
 import scaleImg from "/scale.png";
 import monitorImg from "/monitor.png";
 import mirrorImg from "/mirror.png";
+import { getWorkoutCardsQueryOptions } from "@/lib/api";
+import WorkoutCard from "@/components/WorkoutCard";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
+import Testimonials from "@/components/Testimonials";
 
-const ErrorSearchParams = z.object({
-  error: z.string().optional(),
-});
 export const Route = createFileRoute("/")({
   component: App,
-  validateSearch: zodValidator(ErrorSearchParams),
   head: () => ({
     meta: [
       {
@@ -30,11 +29,12 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
-  const { error } = Route.useSearch();
-  if (error === "INVALID_TOKEN")
-    return <p>Срокът на логин токенът е изтекъл, моля логнете се отново</p>;
+  const { isLoading, error, data, isError } = useQuery(
+    getWorkoutCardsQueryOptions
+  );
+  if (isError) toast.error(error.message);
   return (
-    <main id="top">
+    <main>
       <section className="flex flex-col md:flex-row gap-4 justify-between items-center my-10 px-10">
         <div className="flex flex-col items-center md:items-start gap-2">
           <div className="text-center md:text-start max-w-xl">
@@ -59,7 +59,7 @@ function App() {
           className="w-140 h-auto rounded-xl"
         />
       </section>
-      <section className="bg-accent px-10 py-10">
+      <section className="bg-accent px-10 py-20">
         <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center">
           <Sparkles /> Защо да избереш нас?
         </h1>
@@ -107,9 +107,30 @@ function App() {
         </ul>
       </section>
       <section className="px-10 py-10">
-        <h1 className="flex gap-2 text-3xl items-center font-bold">
-          <Flame /> Представени програми
+        <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center">
+          <Store /> Тренировъчни програми
         </h1>
+        {isLoading ? (
+          <p>зарежда ...</p>
+        ) : (
+          <div
+            className={
+              "grid grid-cols-1 md:grid-cols-2 place-items-center gap-4"
+            }
+          >
+            {data?.cards.map((card) => (
+              <WorkoutCard key={card.workoutCardId} workoutCard={card} />
+            ))}
+          </div>
+        )}
+      </section>
+      <section className="bg-accent px-10 py-10">
+        <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center">
+          <Pyramid /> Отзиви на клиенти
+        </h1>
+        <div className="mt-10">
+          <Testimonials />
+        </div>
       </section>
     </main>
   );

@@ -12,7 +12,7 @@ function RouteComponent() {
   const { isLoading, error, data, isError } = useQuery(
     getWorkoutCardsQueryOptions
   );
-  if (isError) toast.error("An error occurred: " + error.message);
+  if (isError) toast.error("Изникна грешка: " + error.message);
   if (isLoading) return <h1>Loading ...</h1>;
   return (
     <div
