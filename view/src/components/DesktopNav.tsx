@@ -1,24 +1,48 @@
-import { Link } from "@tanstack/react-router";
-import { Home, LogIn, Store, User } from "lucide-react";
+import { Link, useLocation } from "@tanstack/react-router";
+import {
+  Book,
+  Home,
+  LogIn,
+  MessageCircleQuestion,
+  Store,
+  User,
+} from "lucide-react";
 import { Button } from "./ui/button";
 import { authClient } from "@/lib/auth-client";
 
 export const DesktopNav = () => {
   const { data } = authClient.useSession();
+  const { hash } = useLocation();
   return (
     <>
       <div className="flex gap-6">
         <Link
           to="/"
-          className={`[&.active]:scale-110 [&.active]:font-extrabold [&.active]:text-xl flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base text-lg`}
+          hash="top"
+          className={`${hash === "top" && "scale-110 font-extrabold text-xl"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base text-lg`}
         >
           <Home /> Начало
         </Link>
         <Link
-          to="/workouts"
-          className={`[&.active]:scale-110 [&.active]:font-extrabold [&.active]:text-xl flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base text-lg`}
+          to="/"
+          hash="products"
+          className={`${hash === "products" && "scale-110 font-extrabold text-xl"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base text-lg`}
         >
           <Store /> Продукти
+        </Link>
+        <Link
+          to="/"
+          hash="howTo"
+          className={`${hash === "howTo" && "scale-110 font-extrabold text-xl"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base text-lg`}
+        >
+          <Book /> Как се ползва?
+        </Link>
+        <Link
+          to="/"
+          hash="faq"
+          className={`${hash === "faq" && "scale-110 font-extrabold text-xl"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base text-lg`}
+        >
+          <MessageCircleQuestion /> FAQ
         </Link>
       </div>
       <div className="flex gap-4">

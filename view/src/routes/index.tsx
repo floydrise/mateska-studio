@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
+  Book,
   Dumbbell,
   MessageCircleQuestion,
   Pyramid,
@@ -41,7 +42,7 @@ function App() {
   );
   if (isError) toast.error(error.message);
   return (
-    <main>
+    <main id="top">
       <section className="flex flex-col md:flex-row gap-4 justify-between items-center my-10 px-10">
         <div className="flex flex-col items-center md:items-start gap-2">
           <div className="text-center md:text-start max-w-xl">
@@ -113,7 +114,7 @@ function App() {
           </div>
         </ul>
       </section>
-      <section className="px-10 py-10">
+      <section id="products" className="px-10 py-10">
         <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center">
           <Store /> Тренировъчни програми
         </h1>
@@ -139,7 +140,20 @@ function App() {
           <Testimonials />
         </div>
       </section>
-      <section className="px-10 py-10">
+      <section id="howTo" className="px-10 py-10">
+        <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2">
+          <Book /> Как се ползва?
+        </h1>
+        <iframe
+          className="w-full md:h-150"
+          src="https://www.youtube.com/embed/xu8rh9Ref4Y?si=OXfGi8aM0cCXvgDT"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        ></iframe>
+      </section>
+      <section id="faq" className="bg-accent px-10 py-10">
         <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center">
           <MessageCircleQuestion /> Често задавани въпроси
         </h1>
