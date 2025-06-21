@@ -19,6 +19,9 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import Testimonials from "@/components/Testimonials";
 import { FAQ } from "@/components/FAQ";
+import Threads from "@/components/ThreadsBg";
+import BlurText from "@/components/BlurText";
+import SplitText from "@/components/SplitText";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -43,16 +46,29 @@ function App() {
   if (isError) toast.error(error.message);
   return (
     <main id="top">
-      <section className="flex flex-col md:flex-row gap-4 justify-between items-center my-10 px-10">
+      <section className="flex flex-col md:flex-row gap-4 justify-between items-center mt-10 px-10">
         <div className="flex flex-col items-center md:items-start gap-2">
           <div className="text-center md:text-start max-w-xl">
-            <h1 className="text-3xl md:text-4xl font-bold">
-              Твоето фитнес пътешествие започва тук 🔥
-            </h1>
-            <h2 className="text-lg text-muted-foreground">
-              Тренировки с професионален инструктор - вкъщи, в парка или във
-              фитнеса
-            </h2>
+            <BlurText
+              text="Твоето фитнес пътешествие започва тук 🔥"
+              delay={150}
+              animateBy="words"
+              direction="top"
+              className="text-3xl md:text-4xl font-bold"
+            />
+            <SplitText
+              text="Тренировки с професионален инструктор - вкъщи, в парка или във фитнеса"
+              className="text-lg text-muted-foreground"
+              delay={150}
+              duration={0.6}
+              ease="power3.out"
+              splitType="words"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              rootMargin="-100px"
+              textAlign="start"
+            />
           </div>
           <Button
             size={"lg"}
@@ -67,6 +83,9 @@ function App() {
           className="w-140 h-auto rounded-xl"
         />
       </section>
+      <div className="w-full h-20 md:h-80 relative rotate-180">
+        <Threads amplitude={3} distance={0} enableMouseInteraction={false} />
+      </div>
       <section className="bg-accent px-10 py-20">
         <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center">
           <Sparkles /> Защо да избереш нас?
