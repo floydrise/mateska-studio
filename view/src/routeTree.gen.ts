@@ -8,201 +8,106 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorkoutsRouteImport } from './routes/workouts'
+import { Route as Terms_of_useRouteImport } from './routes/terms_of_use'
+import { Route as Reset_passwordRouteImport } from './routes/reset_password'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as Privacy_policyRouteImport } from './routes/privacy_policy'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as GoodbyeRouteImport } from './routes/goodbye'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as WorkoutWorkoutIdRouteImport } from './routes/workout.$workoutId'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as WorkoutsImport } from './routes/workouts'
-import { Route as TermsofuseImport } from './routes/terms_of_use'
-import { Route as ResetpasswordImport } from './routes/reset_password'
-import { Route as RegisterImport } from './routes/register'
-import { Route as ProfileImport } from './routes/profile'
-import { Route as PrivacypolicyImport } from './routes/privacy_policy'
-import { Route as LoginImport } from './routes/login'
-import { Route as GoodbyeImport } from './routes/goodbye'
-import { Route as IndexImport } from './routes/index'
-import { Route as WorkoutWorkoutIdImport } from './routes/workout.$workoutId'
-
-// Create/Update Routes
-
-const WorkoutsRoute = WorkoutsImport.update({
+const WorkoutsRoute = WorkoutsRouteImport.update({
   id: '/workouts',
   path: '/workouts',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const TermsofuseRoute = TermsofuseImport.update({
+const Terms_of_useRoute = Terms_of_useRouteImport.update({
   id: '/terms_of_use',
   path: '/terms_of_use',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const ResetpasswordRoute = ResetpasswordImport.update({
+const Reset_passwordRoute = Reset_passwordRouteImport.update({
   id: '/reset_password',
   path: '/reset_password',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const RegisterRoute = RegisterImport.update({
+const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const ProfileRoute = ProfileImport.update({
+const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const PrivacypolicyRoute = PrivacypolicyImport.update({
+const Privacy_policyRoute = Privacy_policyRouteImport.update({
   id: '/privacy_policy',
   path: '/privacy_policy',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const LoginRoute = LoginImport.update({
+const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const GoodbyeRoute = GoodbyeImport.update({
+const GoodbyeRoute = GoodbyeRouteImport.update({
   id: '/goodbye',
   path: '/goodbye',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const WorkoutWorkoutIdRoute = WorkoutWorkoutIdImport.update({
+const WorkoutWorkoutIdRoute = WorkoutWorkoutIdRouteImport.update({
   id: '/workout/$workoutId',
   path: '/workout/$workoutId',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/goodbye': {
-      id: '/goodbye'
-      path: '/goodbye'
-      fullPath: '/goodbye'
-      preLoaderRoute: typeof GoodbyeImport
-      parentRoute: typeof rootRoute
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
-      parentRoute: typeof rootRoute
-    }
-    '/privacy_policy': {
-      id: '/privacy_policy'
-      path: '/privacy_policy'
-      fullPath: '/privacy_policy'
-      preLoaderRoute: typeof PrivacypolicyImport
-      parentRoute: typeof rootRoute
-    }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileImport
-      parentRoute: typeof rootRoute
-    }
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterImport
-      parentRoute: typeof rootRoute
-    }
-    '/reset_password': {
-      id: '/reset_password'
-      path: '/reset_password'
-      fullPath: '/reset_password'
-      preLoaderRoute: typeof ResetpasswordImport
-      parentRoute: typeof rootRoute
-    }
-    '/terms_of_use': {
-      id: '/terms_of_use'
-      path: '/terms_of_use'
-      fullPath: '/terms_of_use'
-      preLoaderRoute: typeof TermsofuseImport
-      parentRoute: typeof rootRoute
-    }
-    '/workouts': {
-      id: '/workouts'
-      path: '/workouts'
-      fullPath: '/workouts'
-      preLoaderRoute: typeof WorkoutsImport
-      parentRoute: typeof rootRoute
-    }
-    '/workout/$workoutId': {
-      id: '/workout/$workoutId'
-      path: '/workout/$workoutId'
-      fullPath: '/workout/$workoutId'
-      preLoaderRoute: typeof WorkoutWorkoutIdImport
-      parentRoute: typeof rootRoute
-    }
-  }
-}
-
-// Create and export the route tree
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/goodbye': typeof GoodbyeRoute
   '/login': typeof LoginRoute
-  '/privacy_policy': typeof PrivacypolicyRoute
+  '/privacy_policy': typeof Privacy_policyRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
-  '/reset_password': typeof ResetpasswordRoute
-  '/terms_of_use': typeof TermsofuseRoute
+  '/reset_password': typeof Reset_passwordRoute
+  '/terms_of_use': typeof Terms_of_useRoute
   '/workouts': typeof WorkoutsRoute
   '/workout/$workoutId': typeof WorkoutWorkoutIdRoute
 }
-
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/goodbye': typeof GoodbyeRoute
   '/login': typeof LoginRoute
-  '/privacy_policy': typeof PrivacypolicyRoute
+  '/privacy_policy': typeof Privacy_policyRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
-  '/reset_password': typeof ResetpasswordRoute
-  '/terms_of_use': typeof TermsofuseRoute
+  '/reset_password': typeof Reset_passwordRoute
+  '/terms_of_use': typeof Terms_of_useRoute
   '/workouts': typeof WorkoutsRoute
   '/workout/$workoutId': typeof WorkoutWorkoutIdRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/goodbye': typeof GoodbyeRoute
   '/login': typeof LoginRoute
-  '/privacy_policy': typeof PrivacypolicyRoute
+  '/privacy_policy': typeof Privacy_policyRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
-  '/reset_password': typeof ResetpasswordRoute
-  '/terms_of_use': typeof TermsofuseRoute
+  '/reset_password': typeof Reset_passwordRoute
+  '/terms_of_use': typeof Terms_of_useRoute
   '/workouts': typeof WorkoutsRoute
   '/workout/$workoutId': typeof WorkoutWorkoutIdRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
@@ -242,85 +147,106 @@ export interface FileRouteTypes {
     | '/workout/$workoutId'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GoodbyeRoute: typeof GoodbyeRoute
   LoginRoute: typeof LoginRoute
-  PrivacypolicyRoute: typeof PrivacypolicyRoute
+  Privacy_policyRoute: typeof Privacy_policyRoute
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
-  ResetpasswordRoute: typeof ResetpasswordRoute
-  TermsofuseRoute: typeof TermsofuseRoute
+  Reset_passwordRoute: typeof Reset_passwordRoute
+  Terms_of_useRoute: typeof Terms_of_useRoute
   WorkoutsRoute: typeof WorkoutsRoute
   WorkoutWorkoutIdRoute: typeof WorkoutWorkoutIdRoute
+}
+
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/workouts': {
+      id: '/workouts'
+      path: '/workouts'
+      fullPath: '/workouts'
+      preLoaderRoute: typeof WorkoutsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms_of_use': {
+      id: '/terms_of_use'
+      path: '/terms_of_use'
+      fullPath: '/terms_of_use'
+      preLoaderRoute: typeof Terms_of_useRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset_password': {
+      id: '/reset_password'
+      path: '/reset_password'
+      fullPath: '/reset_password'
+      preLoaderRoute: typeof Reset_passwordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy_policy': {
+      id: '/privacy_policy'
+      path: '/privacy_policy'
+      fullPath: '/privacy_policy'
+      preLoaderRoute: typeof Privacy_policyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/goodbye': {
+      id: '/goodbye'
+      path: '/goodbye'
+      fullPath: '/goodbye'
+      preLoaderRoute: typeof GoodbyeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workout/$workoutId': {
+      id: '/workout/$workoutId'
+      path: '/workout/$workoutId'
+      fullPath: '/workout/$workoutId'
+      preLoaderRoute: typeof WorkoutWorkoutIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GoodbyeRoute: GoodbyeRoute,
   LoginRoute: LoginRoute,
-  PrivacypolicyRoute: PrivacypolicyRoute,
+  Privacy_policyRoute: Privacy_policyRoute,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
-  ResetpasswordRoute: ResetpasswordRoute,
-  TermsofuseRoute: TermsofuseRoute,
+  Reset_passwordRoute: Reset_passwordRoute,
+  Terms_of_useRoute: Terms_of_useRoute,
   WorkoutsRoute: WorkoutsRoute,
   WorkoutWorkoutIdRoute: WorkoutWorkoutIdRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/goodbye",
-        "/login",
-        "/privacy_policy",
-        "/profile",
-        "/register",
-        "/reset_password",
-        "/terms_of_use",
-        "/workouts",
-        "/workout/$workoutId"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/goodbye": {
-      "filePath": "goodbye.tsx"
-    },
-    "/login": {
-      "filePath": "login.tsx"
-    },
-    "/privacy_policy": {
-      "filePath": "privacy_policy.tsx"
-    },
-    "/profile": {
-      "filePath": "profile.tsx"
-    },
-    "/register": {
-      "filePath": "register.tsx"
-    },
-    "/reset_password": {
-      "filePath": "reset_password.tsx"
-    },
-    "/terms_of_use": {
-      "filePath": "terms_of_use.tsx"
-    },
-    "/workouts": {
-      "filePath": "workouts.tsx"
-    },
-    "/workout/$workoutId": {
-      "filePath": "workout.$workoutId.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

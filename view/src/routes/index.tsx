@@ -47,7 +47,7 @@ function App() {
   );
   if (isError) toast.error(error.message);
   return (
-    <main id="top">
+    <main id="top" className="overflow-hidden">
       <section className="flex flex-col md:flex-row gap-4 justify-between items-center mt-10 px-10">
         <div className="flex flex-col items-center md:items-start gap-2">
           <div className="text-center md:text-start max-w-xl">
@@ -93,8 +93,8 @@ function App() {
           className="w-140 h-auto rounded-xl"
         />
       </section>
-      <div className="w-full h-20 md:h-80 relative rotate-180">
-        <Threads amplitude={3} distance={0} enableMouseInteraction={false} />
+      <div className="w-full h-40 md:h-80 relative rotate-180">
+        <Threads amplitude={2} distance={0} enableMouseInteraction={false} />
       </div>
       <section className="bg-accent px-10 py-20">
         <motion.h1
@@ -243,7 +243,7 @@ function App() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{
-            duration: 1,
+            duration: 1.5,
           }}
           className="mt-10"
         >
