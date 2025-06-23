@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import djulkaImg from "/djulka.webp";
 type Testimonial = {
   quote: string;
   name: string;
@@ -153,10 +154,10 @@ export default Testimonials;
 const testimonials: Testimonial[] = [
   {
     quote:
-      "След години борба с мотивацията, най-накрая намерих програма, която ме кара да се вълнувам за всяка тренировка!",
-    name: "Мария Николова",
-    designation: "Маркетинг специалист, София",
-    src: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb",
+      "Алекс е повече от треньор – тя е двигателят зад промяната ми. Без нея нямаше да направя и крачка към мечтаното тяло. Всеки съвет, всяка тренировка, всяка подкрепа – всичко има значение. Благодаря ти от сърце, Алекс!",
+    name: "Джулия",
+    designation: "Маникюристка, Бургас",
+    src: djulkaImg,
   },
   {
     quote:

@@ -22,6 +22,8 @@ import { FAQ } from "@/components/FAQ";
 import Threads from "@/components/ThreadsBg";
 import BlurText from "@/components/BlurText";
 import SplitText from "@/components/SplitText";
+import { motion } from "motion/react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -72,12 +74,18 @@ function App() {
           </div>
           <Button
             size={"lg"}
-            className="transition duration-500 hover:scale-105"
+            className="transition duration-1000 hover:scale-105 animate-bounce"
           >
             <Dumbbell /> Виж тренировки
           </Button>
         </div>
-        <img
+        <motion.img
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 1.5,
+          }}
           src="https://mateskasport.com/wp-content/uploads/2023/08/3.jpg"
           alt="Pic of Mateska"
           className="w-140 h-auto rounded-xl"
@@ -87,96 +95,208 @@ function App() {
         <Threads amplitude={3} distance={0} enableMouseInteraction={false} />
       </div>
       <section className="bg-accent px-10 py-20">
-        <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 1,
+          }}
+          className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center"
+        >
           <Sparkles /> Защо да избереш нас?
-        </h1>
+        </motion.h1>
         <ul className="list-disc flex md:flex-row flex-col items-center gap-6 justify-evenly">
-          <div className="flex flex-col items-center w-fit">
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 2,
+              scale: { type: "tween", visualDuration: 2 },
+            }}
+            className="flex flex-col items-center w-fit"
+          >
             <img
               src={girlMeditatingImg}
               alt="Image of a slim waist"
               className="size-20"
             />
             <li className="text-xl">Стегни тялото си</li>
-          </div>
-          <div className="flex flex-col items-center w-fit">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              delay: 0.3,
+              duration: 2,
+              scale: { type: "tween", visualDuration: 2 },
+            }}
+            className="flex flex-col items-center w-fit"
+          >
             <img
               src={hourGlassImg}
               alt="Image of a slim waist"
               className="size-20"
             />
             <li className="text-xl">Без излишно време</li>
-          </div>
-          <div className="flex flex-col items-center w-fit">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              delay: 0.5,
+              duration: 2,
+              scale: { type: "tween", visualDuration: 2 },
+            }}
+            className="flex flex-col items-center w-fit"
+          >
             <img
               src={scaleImg}
               alt="Image of a slim waist"
               className="size-20"
             />
             <li className="text-xl">Ум и тяло в баланс</li>
-          </div>
-          <div className="flex flex-col items-center w-fit">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              delay: 0.7,
+              duration: 2,
+              scale: { type: "tween", visualDuration: 2 },
+            }}
+            className="flex flex-col items-center w-fit"
+          >
             <img
               src={monitorImg}
               alt="Image of a slim waist"
               className="size-20"
             />
             <li className="text-xl">На всяко устройство</li>
-          </div>
-          <div className="flex flex-col items-center w-fit">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              delay: 0.9,
+              duration: 2,
+              scale: { type: "tween", visualDuration: 2 },
+            }}
+            className="flex flex-col items-center w-fit"
+          >
             <img
               src={mirrorImg}
               alt="Image of a slim waist"
               className="size-20"
             />
             <li className="text-xl">Следи напредъка си</li>
-          </div>
+          </motion.div>
         </ul>
       </section>
       <section id="products" className="px-10 py-10">
-        <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 1,
+          }}
+          className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center"
+        >
           <Store /> Тренировъчни програми
-        </h1>
-        {isLoading ? (
-          <p>зарежда ...</p>
-        ) : (
-          <div
-            className={
-              "grid grid-cols-1 md:grid-cols-2 place-items-center gap-4"
-            }
-          >
-            {data?.cards.map((card) => (
-              <WorkoutCard key={card.workoutCardId} workoutCard={card} />
-            ))}
-          </div>
-        )}
-      </section>
-      <section className="bg-accent px-10 py-10 flex flex-col items-center">
-        <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2">
-          <Pyramid /> Отзиви на клиенти
-        </h1>
-        <div className="mt-10">
-          <Testimonials />
+        </motion.h1>
+        <div
+          className={"grid grid-cols-1 md:grid-cols-2 place-items-center gap-4"}
+        >
+          {isLoading
+            ? new Array(2)
+                .fill(null)
+                .map((_, index) => (
+                  <Skeleton key={index + "la"} className="w-100 h-120" />
+                ))
+            : data?.cards.map((card) => (
+                <WorkoutCard key={card.workoutCardId} workoutCard={card} />
+              ))}
         </div>
       </section>
+      <section className="bg-accent px-10 py-10 flex flex-col items-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 1,
+          }}
+          className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2"
+        >
+          <Pyramid /> Отзиви на клиенти
+        </motion.h1>
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{
+            duration: 1,
+          }}
+          className="mt-10"
+        >
+          <Testimonials />
+        </motion.div>
+      </section>
       <section id="howTo" className="px-10 py-10">
-        <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 1,
+          }}
+          className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2"
+        >
           <Book /> Как се ползва?
-        </h1>
-        <iframe
+        </motion.h1>
+        <motion.iframe
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{
+            duration: 1.5,
+          }}
           className="w-full md:h-150"
           src="https://www.youtube.com/embed/xu8rh9Ref4Y?si=OXfGi8aM0cCXvgDT"
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
-        ></iframe>
+        ></motion.iframe>
       </section>
       <section id="faq" className="bg-accent px-10 py-10">
-        <h1 className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 1,
+          }}
+          className="text-xl md:text-3xl font-bold mb-4 flex items-center gap-2 text-center"
+        >
           <MessageCircleQuestion /> Често задавани въпроси
-        </h1>
-        <FAQ />
+        </motion.h1>
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 1,
+          }}
+        >
+          <FAQ />
+        </motion.div>
       </section>
     </main>
   );

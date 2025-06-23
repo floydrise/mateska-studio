@@ -19,28 +19,28 @@ export const DesktopNav = () => {
         <Link
           to="/"
           hash="top"
-          className={`${hash === "top" && "scale-110 font-extrabold text-xl"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base text-lg`}
+          className={`${hash === "top" && "scale-110 font-extrabold text-xl -translate-y-1"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base hover:-translate-y-1 text-lg`}
         >
           <Home /> Начало
         </Link>
         <Link
           to="/"
           hash="products"
-          className={`${hash === "products" && "scale-110 font-extrabold text-xl"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base text-lg`}
+          className={`${hash === "products" && "scale-110 font-extrabold text-xl -translate-y-1"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base hover:-translate-y-1 text-lg`}
         >
           <Store /> Продукти
         </Link>
         <Link
           to="/"
           hash="howTo"
-          className={`${hash === "howTo" && "scale-110 font-extrabold text-xl"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base text-lg`}
+          className={`${hash === "howTo" && "scale-110 font-extrabold text-xl -translate-y-1"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base hover:-translate-y-1 text-lg`}
         >
           <Book /> Как се ползва?
         </Link>
         <Link
           to="/"
           hash="faq"
-          className={`${hash === "faq" && "scale-110 font-extrabold text-xl"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base text-lg`}
+          className={`${hash === "faq" && "scale-110 font-extrabold text-xl -translate-y-1"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base hover:-translate-y-1 text-lg`}
         >
           <MessageCircleQuestion /> FAQ
         </Link>
