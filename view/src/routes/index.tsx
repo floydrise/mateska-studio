@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
   Book,
@@ -72,12 +72,14 @@ function App() {
               textAlign="start"
             />
           </div>
-          <Button
-            size={"lg"}
-            className="transition duration-1000 hover:scale-105 animate-bounce"
-          >
-            <Dumbbell /> Виж тренировки
-          </Button>
+          <Link to="/" hash="products">
+            <Button
+              size={"lg"}
+              className="transition duration-1000 hover:scale-105 animate-bounce"
+            >
+              <Dumbbell /> Виж тренировки
+            </Button>
+          </Link>
         </div>
         <motion.img
           initial={{ opacity: 0, x: 100 }}

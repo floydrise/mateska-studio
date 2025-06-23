@@ -6,12 +6,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Link } from "@tanstack/react-router";
 import { Monitor, MoonStar, Send, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
   FaFacebookF,
   FaInstagram,
-  FaXTwitter,
+  FaThreads,
   FaYoutube,
 } from "react-icons/fa6";
 
@@ -30,7 +31,7 @@ export default function Footer() {
             <form className="relative">
               <Input
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Напишете имейлът си"
                 className="pr-12 backdrop-blur-sm rounded-full"
               />
               <Button
@@ -47,36 +48,40 @@ export default function Footer() {
           <div>
             <h3 className="mb-4 text-lg font-semibold">Бързи линкове</h3>
             <nav className="space-y-2 text-sm">
-              <a
-                href="#"
+              <Link
+                to="/"
                 className="block transition-colors hover:text-primary"
               >
                 Начало
-              </a>
+              </Link>
               <a
-                href="#"
+                href="https://mateskasport.com/"
+                target="_blank"
                 className="block transition-colors hover:text-primary"
               >
-                За нас
+                За мен
               </a>
-              <a
-                href="#"
-                className="block transition-colors hover:text-primary"
-              >
-                Услуги
-              </a>
-              <a
-                href="#"
+              <Link
+                to="/"
+                hash="products"
                 className="block transition-colors hover:text-primary"
               >
                 Продукти
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/"
+                hash="howTo"
                 className="block transition-colors hover:text-primary"
               >
-                Връзки
-              </a>
+                Как се ползва?
+              </Link>
+              <Link
+                to="/"
+                hash="faq"
+                className="block transition-colors hover:text-primary"
+              >
+                Често задавани въпроси
+              </Link>
             </nav>
           </div>
           <div>
@@ -99,8 +104,13 @@ export default function Footer() {
                       size="icon"
                       className="rounded-full"
                     >
-                      <FaFacebookF className="h-4 w-4" />
-                      <span className="sr-only">Facebook</span>
+                      <a
+                        href="https://www.facebook.com/aleksandra.mateska.35/"
+                        target="_blank"
+                      >
+                        <FaFacebookF className="h-4 w-4" />
+                        <span className="sr-only">Facebook</span>
+                      </a>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -116,12 +126,17 @@ export default function Footer() {
                       size="icon"
                       className="rounded-full"
                     >
-                      <FaXTwitter className="h-4 w-4" />
-                      <span className="sr-only">X (Twitter)</span>
+                      <a
+                        href="https://www.threads.com/@mateska_fitmama?xmt=AQF0eUxtYZfjDmCXYIwvY76h61krySeYalwAAPW2C_D0d5Y"
+                        target="_blank"
+                      >
+                        <FaThreads className="h-4 w-4" />
+                        <span className="sr-only">Threads</span>
+                      </a>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Последвайте ни в X (Twitter)</p>
+                    <p>Последвайте ни в Threads</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -133,8 +148,13 @@ export default function Footer() {
                       size="icon"
                       className="rounded-full"
                     >
-                      <FaInstagram className="h-4 w-4" />
-                      <span className="sr-only">Instagram</span>
+                      <a
+                        href="https://www.instagram.com/mateska_fitmama/"
+                        target="_blank"
+                      >
+                        <FaInstagram className="h-4 w-4" />
+                        <span className="sr-only">Instagram</span>
+                      </a>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -150,8 +170,13 @@ export default function Footer() {
                       size="icon"
                       className="rounded-full"
                     >
-                      <FaYoutube className="h-4 w-4" />
-                      <span className="sr-only">YouTube</span>
+                      <a
+                        href="https://www.youtube.com/@mateskasport"
+                        target="_blank"
+                      >
+                        <FaYoutube className="h-4 w-4" />
+                        <span className="sr-only">YouTube</span>
+                      </a>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -195,12 +220,18 @@ export default function Footer() {
             © 2025 MateskaSport Studio. Всички права запазени.
           </p>
           <nav className="flex gap-4 text-sm">
-            <a href="#" className="transition-colors hover:text-primary">
+            <Link
+              to="/privacy_policy"
+              className="transition-colors hover:text-primary"
+            >
               Политика за поверителност
-            </a>
-            <a href="#" className="transition-colors hover:text-primary">
+            </Link>
+            <Link
+              to="/terms_of_use"
+              className="transition-colors hover:text-primary"
+            >
               Условия за ползване
-            </a>
+            </Link>
           </nav>
         </div>
       </div>
