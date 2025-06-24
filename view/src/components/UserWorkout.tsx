@@ -14,7 +14,7 @@ export default function UserWorkout({
 }: {
   userWorkout: UserWorkoutType;
 }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [sessionIndex, setSessionIndex] = useState(0);
   const [sectionInfo, setSectionInfo] = useState<{
     index: number;
@@ -42,8 +42,8 @@ export default function UserWorkout({
     <div className="flex h-screen">
       <aside
         className={`${
-          isOpen ? "w-42 md:w-80" : "w-16"
-        } flex flex-col border-r transition-all duration-500 ease-in-out`}
+          isOpen ? "w-42" : "w-16"
+        } flex flex-col border-r rounded-xl transition-all duration-500 ease-in-out`}
       >
         <div className="flex h-14 items-center justify-between border-b px-4">
           <span
@@ -189,7 +189,7 @@ export default function UserWorkout({
           title={content.title}
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
           allowFullScreen
-          className="w-full h-full"
+          className="w-full h-full aspect-video"
         ></iframe>
         <p className="text-center">{content?.description}</p>
       </main>

@@ -4,7 +4,6 @@ import { auth, stripeClient } from "../../auth";
 import { internalMiddleware } from "../middleware/internal-middleware";
 import { zValidator } from "@hono/zod-validator";
 import z from "zod/v4";
-import { UserSelectSchema } from "../schemas/zod_schemas";
 import { db } from "../db";
 import { subscription } from "../db/schema/auth-schema";
 import { eq } from "drizzle-orm";
