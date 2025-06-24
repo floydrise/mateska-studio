@@ -84,7 +84,7 @@ function RouteComponent() {
             <div className="mt-2 flex flex-col md:flex-row items-center gap-2">
               <Avatar className="rounded-lg size-16">
                 <AvatarImage
-                  src={user?.image ?? "https://github.com/evilrabbit.png"}
+                  src={"https://github.com/evilrabbit.png"}
                   alt="User profile pic"
                 />
                 <AvatarFallback>ER</AvatarFallback>
@@ -219,7 +219,7 @@ function RouteComponent() {
           ) : (
             <span className="text-muted-foreground">
               Все още нямате абонаменти. Вземи от{" "}
-              <Link to="/" className="underline">
+              <Link to="/" hash="products" className="underline">
                 тук
               </Link>
             </span>

@@ -84,7 +84,7 @@ export default function TermsOfUse() {
           <p>
             При въпроси относно условията за ползване, моля свържете се с нас:
           </p>
-          <p className="font-medium">📧 example@email.com</p>
+          <p className="font-medium">📧 floydrise@gmail.com</p>
           <p className="font-medium">📍 Бургас, България</p>
         </section>
       </CardContent>

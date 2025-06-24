@@ -72,14 +72,23 @@ function App() {
               textAlign="start"
             />
           </div>
-          <Link to="/" hash="products">
-            <Button
-              size={"lg"}
-              className="transition duration-1000 hover:scale-105 animate-bounce"
-            >
-              <Dumbbell /> Виж тренировки
-            </Button>
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 1,
+              scale: { type: "spring", visualDuration: 1, bounce: 0.2 },
+            }}
+          >
+            <Link to="/" hash="products">
+              <Button
+                size={"lg"}
+                className="transition duration-1000 hover:scale-105 animate-bounce"
+              >
+                <Dumbbell /> Виж тренировки
+              </Button>
+            </Link>
+          </motion.div>
         </div>
         <motion.img
           initial={{ opacity: 0, x: 100 }}

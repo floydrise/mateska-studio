@@ -99,7 +99,7 @@ export default function PrivacyPolicy() {
             За въпроси, свързани с поверителността, можете да се свържете с нас
             на:
           </p>
-          <p className="font-medium">📧 example@email.com</p>
+          <p className="font-medium">📧 floydrise@gmail.com</p>
           <p className="font-medium">📍 Бургас, България</p>
         </section>
       </CardContent>
