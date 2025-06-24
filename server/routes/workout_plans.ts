@@ -15,6 +15,7 @@ import {
 import { and, asc, eq } from "drizzle-orm";
 import { validateId } from "../utils";
 import { z } from "zod";
+import { authMiddleware } from "../middleware/auth-middleware";
 
 const app = new Hono()
   .get("/", async (c) => {
@@ -34,10 +35,13 @@ const app = new Hono()
   .patch(
     "/:id",
     validateId,
+    authMiddleware,
     zValidator("json", PatchWorkoutPlanSchema),
     async (c) => {
       const { id } = c.req.valid("param");
       const validatedPlan = c.req.valid("json");
+      const user = c.get("user");
+      if (user?.role !== "admin") return c.json({ msg: "Not authorised" }, 401);
       const updatedWorkoutPlan = await db
         .update(workoutPlanTable)
         .set({ workoutPlanTitle: validatedPlan.workoutPlanTitle })
@@ -52,8 +56,10 @@ const app = new Hono()
       );
     }
   )
-  .delete("/:id", validateId, async (c) => {
+  .delete("/:id", validateId, authMiddleware, async (c) => {
     const { id } = c.req.valid("param");
+    const user = c.get("user");
+    if (user?.role !== "admin") return c.json({ msg: "Not authorised" }, 401);
     const deletedPlan = await db
       .delete(workoutPlanTable)
       .where(eq(workoutPlanTable.workoutPlanId, id))
@@ -109,8 +115,11 @@ const app = new Hono()
         sectionId: z.coerce.number().positive(),
       })
     ),
+    authMiddleware,
     async (c) => {
       const { planId, sectionId } = c.req.valid("param");
+      const user = c.get("user");
+      if (user?.role !== "admin") return c.json({ msg: "Not authorised" }, 401);
       const deletedSection = await db
         .delete(workoutSectionTable)
         .where(
@@ -135,9 +144,12 @@ const app = new Hono()
       })
     ),
     zValidator("json", PatchSectionSchema),
+    authMiddleware,
     async (c) => {
       const { planId, sectionId } = c.req.valid("param");
       const validatedSection = c.req.valid("json");
+      const user = c.get("user");
+      if (user?.role !== "admin") return c.json({ msg: "Not authorised" }, 401);
       const updatedSection = await db
         .update(workoutSectionTable)
         .set({ sectionTitle: validatedSection.sectionTitle })
@@ -236,9 +248,12 @@ const app = new Hono()
       })
     ),
     zValidator("json", PostSessionSchema),
+    authMiddleware,
     async (c) => {
       const { sectionId } = c.req.valid("param");
       const validatedSession = c.req.valid("json");
+      const user = c.get("user");
+      if (user?.role !== "admin") return c.json({ msg: "Not authorised" }, 401);
       const newSession = await db
         .insert(workoutSessionsTable)
         .values({ ...validatedSession, sectionId })
@@ -261,9 +276,12 @@ const app = new Hono()
       })
     ),
     zValidator("json", PostSectionSchema),
+    authMiddleware,
     async (c) => {
       const { planId } = c.req.valid("param");
       const validatedSection = c.req.valid("json");
+      const user = c.get("user");
+      if (user?.role !== "admin") return c.json({ msg: "Not authorised" }, 401);
       const { sectionId } = await db
         .insert(workoutSectionTable)
         .values({
