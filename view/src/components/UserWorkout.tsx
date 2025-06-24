@@ -184,13 +184,15 @@ export default function UserWorkout({
             <ChevronRight />
           </Button>
         </div>
+
         <iframe
           src={content.videoUrl}
           title={content.title}
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
           allowFullScreen
-          className="w-full h-full aspect-video"
+          className="w-full h-full scheme-normal"
         ></iframe>
+
         <p className="text-center">{content?.description}</p>
       </main>
     </div>
