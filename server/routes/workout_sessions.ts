@@ -5,6 +5,7 @@ import { workoutSessionsTable } from "../db/schema/schema";
 import { eq } from "drizzle-orm";
 import { PatchSessionSchema } from "../schemas/zod_schemas";
 import { zValidator } from "@hono/zod-validator";
+import { authMiddleware } from "../middleware/auth-middleware";
 
 const app = new Hono()
   .delete(
@@ -15,8 +16,11 @@ const app = new Hono()
         sessionId: z.coerce.number().positive(),
       })
     ),
+    authMiddleware,
     async (c) => {
       const { sessionId } = c.req.valid("param");
+      const user = c.get("user");
+      if (user?.role !== "admin") return c.json({ msg: "Not authorised" }, 401);
       const deletedSession = await db
         .delete(workoutSessionsTable)
         .where(eq(workoutSessionsTable.workoutSessionId, sessionId))
@@ -38,10 +42,13 @@ const app = new Hono()
         sessionId: z.coerce.number().positive(),
       })
     ),
+    authMiddleware,
     zValidator("json", PatchSessionSchema),
     async (c) => {
       const { sessionId } = c.req.valid("param");
       const validatedSession = c.req.valid("json");
+      const user = c.get("user");
+      if (user?.role !== "admin") return c.json({ msg: "Not authorised" }, 401);
       const updatedSession = await db
         .update(workoutSessionsTable)
         .set(validatedSession)
