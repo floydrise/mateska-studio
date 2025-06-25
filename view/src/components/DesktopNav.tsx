@@ -45,12 +45,14 @@ export const DesktopNav = () => {
         >
           <MessageCircleQuestion /> FAQ
         </Link>
-        <Link
-          to="/admin"
-          className={`${pathname === "admin" && "scale-110 font-extrabold text-xl -translate-y-1"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base hover:-translate-y-1 text-lg`}
-        >
-          <ShieldUser /> Админ
-        </Link>
+        {data?.user.role === "admin" ? (
+          <Link
+            to="/admin"
+            className={`${pathname === "/admin" && "scale-110 font-extrabold text-xl -translate-y-1"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base hover:-translate-y-1 text-lg`}
+          >
+            <ShieldUser /> Админ
+          </Link>
+        ) : null}
       </div>
       <div className="flex gap-4">
         {data?.session ? (

@@ -13,6 +13,7 @@ import {
   LogOut,
   Menu,
   MessageCircleQuestion,
+  ShieldUser,
   Store,
   User,
 } from "lucide-react";
@@ -79,6 +80,18 @@ export function MobileNav() {
               <MessageCircleQuestion className={"ml-2"} />{" "}
               <p className={"font-semibold"}>FAQ</p>
             </div>
+            {data?.user.role === "admin" ? (
+              <div
+                className={`flex gap-1 py-3 border-b ${pathname == "/admin" ? "bg-primary-foreground" : null}`}
+                onClick={async () => {
+                  setIsOpen(false);
+                  await navigate({ to: "/admin" });
+                }}
+              >
+                <ShieldUser className={"ml-2"} />{" "}
+                <p className={"font-semibold"}>Админ</p>
+              </div>
+            ) : null}
           </div>
           <div>
             {data?.user ? (
