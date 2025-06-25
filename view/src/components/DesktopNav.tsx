@@ -4,6 +4,7 @@ import {
   Home,
   LogIn,
   MessageCircleQuestion,
+  ShieldUser,
   Store,
   User,
 } from "lucide-react";
@@ -12,7 +13,7 @@ import { authClient } from "@/lib/auth-client";
 
 export const DesktopNav = () => {
   const { data } = authClient.useSession();
-  const { hash } = useLocation();
+  const { hash, pathname } = useLocation();
   return (
     <>
       <div className="flex gap-6">
@@ -44,6 +45,12 @@ export const DesktopNav = () => {
         >
           <MessageCircleQuestion /> FAQ
         </Link>
+        <Link
+          to="/admin"
+          className={`${pathname === "admin" && "scale-110 font-extrabold text-xl -translate-y-1"} flex items-center gap-1  transform duration-500 hover:scale-110 hover:font-base hover:-translate-y-1 text-lg`}
+        >
+          <ShieldUser /> Админ
+        </Link>
       </div>
       <div className="flex gap-4">
         {data?.session ? (
@@ -57,7 +64,7 @@ export const DesktopNav = () => {
             </Button>
           </Link>
         ) : (
-          <Button asChild>
+          <Button asChild className="transform duration-500 hover:scale-105">
             <Link to="/login">
               <LogIn /> Влез
             </Link>
