@@ -1,3 +1,4 @@
+import AdminDashboard from "@/components/AdminDashboard";
 import { getAuthDataQueryOptions } from "@/lib/api";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
@@ -27,5 +28,5 @@ export const Route = createFileRoute("/admin")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/admin"!</div>;
+  return <AdminDashboard />;
 }
