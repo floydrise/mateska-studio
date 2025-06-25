@@ -1,4 +1,5 @@
-import AdminDashboard from "@/components/AdminDashboard";
+import {CreateWorkoutCard} from "@/components/CreateWorkoutCard";
+import AdminNav from "@/components/AdminNav";
 import { getAuthDataQueryOptions } from "@/lib/api";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
@@ -28,5 +29,12 @@ export const Route = createFileRoute("/admin")({
 });
 
 function RouteComponent() {
-  return <AdminDashboard />;
+  return (
+    <main className="my-8">
+      <AdminNav />
+      <div className="h-full m-auto my-8">
+        <CreateWorkoutCard />
+      </div>
+    </main>
+  );
 }
