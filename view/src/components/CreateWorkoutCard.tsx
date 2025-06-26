@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -201,43 +200,145 @@ export const CreateWorkoutCard = () => {
                 }}
               />
             </div>
+            <div>
+              <form.Field
+                name="card.targetMuscles"
+                mode="array"
+                children={(field) => {
+                  return (
+                    <div>
+                      {field.state.value.map((_, index) => {
+                        return (
+                          <form.Field
+                            key={index}
+                            name={`card.targetMuscles[${index}]`}
+                          >
+                            {(subField) => {
+                              return (
+                                <div className="mb-2">
+                                  <Label
+                                    htmlFor={subField.name}
+                                    className="flex"
+                                  >
+                                    <div className="w-fit">
+                                      Група {index + 1}
+                                    </div>
+                                    <Input
+                                      id={subField.name}
+                                      name={subField.name}
+                                      type="text"
+                                      className="w-1/2"
+                                      value={subField.state.value}
+                                      onChange={(e) =>
+                                        subField.handleChange(e.target.value)
+                                      }
+                                      onBlur={subField.handleBlur}
+                                    />
+                                  </Label>
+
+                                  <FieldInfo field={subField} />
+                                </div>
+                              );
+                            }}
+                          </form.Field>
+                        );
+                      })}
+                      <Button onClick={() => field.pushValue("")} type="button">
+                        Мускулна група
+                      </Button>
+                    </div>
+                  );
+                }}
+              />
+            </div>
+            <div>
+              <form.Field
+                name="card.equipment"
+                mode="array"
+                children={(field) => {
+                  return (
+                    <div>
+                      {field.state.value.map((_, index) => {
+                        return (
+                          <form.Field
+                            key={index}
+                            name={`card.equipment[${index}]`}
+                          >
+                            {(subField) => {
+                              return (
+                                <div className="mb-2">
+                                  <Label
+                                    htmlFor={subField.name}
+                                    className="flex"
+                                  >
+                                    <div className="w-fit">
+                                      Екипировка {index + 1}
+                                    </div>
+                                    <Input
+                                      id={subField.name}
+                                      name={subField.name}
+                                      type="text"
+                                      className="w-1/2"
+                                      value={subField.state.value}
+                                      onChange={(e) =>
+                                        subField.handleChange(e.target.value)
+                                      }
+                                      onBlur={subField.handleBlur}
+                                    />
+                                  </Label>
+
+                                  <FieldInfo field={subField} />
+                                </div>
+                              );
+                            }}
+                          </form.Field>
+                        );
+                      })}
+                      <Button onClick={() => field.pushValue("")} type="button">
+                        Екипировка
+                      </Button>
+                    </div>
+                  );
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row justify-center gap-2 mt-4">
+            <Button
+              type="button"
+              onClick={() => {
+                form.reset();
+              }}
+              variant={"outline"}
+              className={
+                "md:w-2/5 w-1/2 transition duration-300 ease-in-out hover:-translate-y-1 hover:-translate-x-1 hover:scale-105"
+              }
+            >
+              <Trash /> Нулирай
+            </Button>
+            <form.Subscribe
+              selector={(state) => [state.canSubmit, state.isSubmitting]}
+              children={([canSubmit, isSubmitting]) => (
+                <Button
+                  type={"submit"}
+                  disabled={!canSubmit}
+                  className={
+                    "md:w-2/5 w-1/2 transition duration-300 ease-in-out hover:-translate-y-1 hover:translate-x-1 hover:scale-105"
+                  }
+                >
+                  {isSubmitting ? (
+                    "..."
+                  ) : (
+                    <span className="flex items-center gap-1">
+                      <Send /> Изпрати
+                    </span>
+                  )}
+                </Button>
+              )}
+            />
           </div>
         </form>
       </CardContent>
-      <CardFooter className="flex-row justify-center gap-2">
-        <Button
-          type="button"
-          onClick={() => {
-            form.reset();
-          }}
-          variant={"outline"}
-          className={
-            "md:w-2/5 w-1/2 transition duration-300 ease-in-out hover:-translate-y-1 hover:-translate-x-1 hover:scale-105"
-          }
-        >
-          <Trash /> Нулирай
-        </Button>
-        <form.Subscribe
-          selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => (
-            <Button
-              type={"submit"}
-              disabled={!canSubmit}
-              className={
-                "md:w-2/5 w-1/2 transition duration-300 ease-in-out hover:-translate-y-1 hover:translate-x-1 hover:scale-105"
-              }
-            >
-              {isSubmitting ? (
-                "..."
-              ) : (
-                <span className="flex items-center gap-1">
-                  <Send /> Изпрати
-                </span>
-              )}
-            </Button>
-          )}
-        />
-      </CardFooter>
     </Card>
   );
 };

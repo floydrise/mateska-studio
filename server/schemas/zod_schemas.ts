@@ -22,7 +22,7 @@ export const WorkoutSchema = z.object({
     stripePriceId: z.string().min(3, "Трябва да е най-малко 3 букви"),
     price: z.number().nonnegative("Не може да е по-малко от 0"),
     targetMuscles: z
-      .array(z.string())
+      .array(z.string().min(3, "Трябва да е най-малко 3 букви"))
       .min(1, "Трябва да добавиш поне 1 мускулна група"),
     equipment: z
       .array(z.string())
