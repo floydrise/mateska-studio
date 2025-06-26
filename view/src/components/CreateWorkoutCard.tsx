@@ -9,7 +9,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm, type AnyFieldApi } from "@tanstack/react-form";
-import { Brush, Diamond, FolderKanban, Send, Trash } from "lucide-react";
+import {
+  Brush,
+  CirclePlus,
+  Diamond,
+  FolderKanban,
+  Section,
+  Send,
+  Trash,
+} from "lucide-react";
 import { WorkoutSchema } from "../../../server/schemas/zod_schemas";
 import type { WorkoutFormType } from "../../../shared/types";
 
@@ -50,7 +58,7 @@ export const CreateWorkoutCard = () => {
     },
   });
   return (
-    <Card className="max-w-xl m-auto">
+    <Card className="max-w-4xl m-auto border-0 md:border-1">
       <CardHeader>
         <CardTitle className="flex items-center gap-1 md:text-2xl">
           <Brush /> Създай нов план
@@ -108,7 +116,7 @@ export const CreateWorkoutCard = () => {
                   return (
                     <>
                       <Label htmlFor={field.name} className="mb-2">
-                        Име на план
+                        Име на карта
                       </Label>
                       <Input
                         type="text"
@@ -201,6 +209,7 @@ export const CreateWorkoutCard = () => {
               />
             </div>
             <div>
+              <Label className="mb-2">Мускулни групи</Label>
               <form.Field
                 name="card.targetMuscles"
                 mode="array"
@@ -244,7 +253,7 @@ export const CreateWorkoutCard = () => {
                         );
                       })}
                       <Button onClick={() => field.pushValue("")} type="button">
-                        Мускулна група
+                        <CirclePlus /> Добави
                       </Button>
                     </div>
                   );
@@ -252,6 +261,7 @@ export const CreateWorkoutCard = () => {
               />
             </div>
             <div>
+              <Label className="mb-2">Екипировка</Label>
               <form.Field
                 name="card.equipment"
                 mode="array"
@@ -272,7 +282,7 @@ export const CreateWorkoutCard = () => {
                                     className="flex"
                                   >
                                     <div className="w-fit">
-                                      Екипировка {index + 1}
+                                      Номер {index + 1}
                                     </div>
                                     <Input
                                       id={subField.name}
@@ -295,7 +305,7 @@ export const CreateWorkoutCard = () => {
                         );
                       })}
                       <Button onClick={() => field.pushValue("")} type="button">
-                        Екипировка
+                        <CirclePlus /> Добави
                       </Button>
                     </div>
                   );
@@ -303,6 +313,294 @@ export const CreateWorkoutCard = () => {
               />
             </div>
           </div>
+
+          {/* Sections info */}
+          <p className="text-lg flex gap-1 items-center font-semibold mt-6">
+            <Section /> Секции
+          </p>
+          <div>
+            <form.Field
+              name="sections"
+              mode="array"
+              children={(field) => {
+                return (
+                  <div className="space-y-4">
+                    {field.state.value.map((_, index) => {
+                      return (
+                        <div key={index} className="bg-accent rounded-xl p-2">
+                          <form.Field name={`sections[${index}].sectionTitle`}>
+                            {(subField) => {
+                              return (
+                                <div className="mb-2">
+                                  <Label
+                                    htmlFor={subField.name}
+                                    className="flex"
+                                  >
+                                    <div className="w-fit">
+                                      Име на секция {index + 1}
+                                    </div>
+                                    <Input
+                                      id={subField.name}
+                                      name={subField.name}
+                                      type="text"
+                                      className="w-1/2"
+                                      value={subField.state.value}
+                                      onChange={(e) =>
+                                        subField.handleChange(e.target.value)
+                                      }
+                                      onBlur={subField.handleBlur}
+                                    />
+                                  </Label>
+
+                                  <FieldInfo field={subField} />
+                                </div>
+                              );
+                            }}
+                          </form.Field>
+                          <form.Field
+                            name={`sections[${index}].sectionPosition`}
+                          >
+                            {(subField) => {
+                              return (
+                                <div className="mb-2">
+                                  <Label
+                                    htmlFor={subField.name}
+                                    className="flex"
+                                  >
+                                    <div className="w-fit">
+                                      Позиция {index + 1}
+                                    </div>
+                                    <Input
+                                      id={subField.name}
+                                      name={subField.name}
+                                      type="number"
+                                      min={0}
+                                      className="w-1/2"
+                                      value={subField.state.value}
+                                      onChange={(e) =>
+                                        subField.handleChange(
+                                          Number(e.target.value)
+                                        )
+                                      }
+                                      onBlur={subField.handleBlur}
+                                    />
+                                  </Label>
+
+                                  <FieldInfo field={subField} />
+                                </div>
+                              );
+                            }}
+                          </form.Field>
+                          <form.Field
+                            name={`sections[${index}].sessions`}
+                            mode="array"
+                          >
+                            {(subField) => {
+                              return (
+                                <div className="mb-2">
+                                  {subField.state.value.map((_, i) => {
+                                    return (
+                                      <div key={i} className="mb-6 space-y-2">
+                                        <form.Field
+                                          name={`sections[${index}].sessions[${i}].sessionTitle`}
+                                        >
+                                          {(innerSubField) => {
+                                            return (
+                                              <div>
+                                                <Label
+                                                  htmlFor={innerSubField.name}
+                                                  className="flex"
+                                                >
+                                                  <div className="w-fit">
+                                                    Име на сесия {i + 1}
+                                                  </div>
+                                                  <Input
+                                                    id={innerSubField.name}
+                                                    name={innerSubField.name}
+                                                    type="text"
+                                                    className="w-1/2"
+                                                    value={
+                                                      innerSubField.state.value
+                                                    }
+                                                    onChange={(e) =>
+                                                      innerSubField.handleChange(
+                                                        e.target.value
+                                                      )
+                                                    }
+                                                    onBlur={
+                                                      innerSubField.handleBlur
+                                                    }
+                                                  />
+                                                </Label>
+
+                                                <FieldInfo
+                                                  field={innerSubField}
+                                                />
+                                              </div>
+                                            );
+                                          }}
+                                        </form.Field>
+                                        <form.Field
+                                          name={`sections[${index}].sessions[${i}].sessionPosition`}
+                                        >
+                                          {(innerSubField) => {
+                                            return (
+                                              <div>
+                                                <Label
+                                                  htmlFor={innerSubField.name}
+                                                  className="flex"
+                                                >
+                                                  <div className="w-fit">
+                                                    Позиция на сесия {index + 1}
+                                                  </div>
+                                                  <Input
+                                                    id={innerSubField.name}
+                                                    name={innerSubField.name}
+                                                    type="number"
+                                                    min={0}
+                                                    className="w-1/2"
+                                                    value={
+                                                      innerSubField.state.value
+                                                    }
+                                                    onChange={(e) =>
+                                                      innerSubField.handleChange(
+                                                        Number(e.target.value)
+                                                      )
+                                                    }
+                                                    onBlur={
+                                                      innerSubField.handleBlur
+                                                    }
+                                                  />
+                                                </Label>
+
+                                                <FieldInfo
+                                                  field={innerSubField}
+                                                />
+                                              </div>
+                                            );
+                                          }}
+                                        </form.Field>
+                                        <form.Field
+                                          name={`sections[${index}].sessions[${i}].videoUrl`}
+                                        >
+                                          {(innerSubField) => {
+                                            return (
+                                              <div>
+                                                <Label
+                                                  htmlFor={innerSubField.name}
+                                                  className="flex"
+                                                >
+                                                  <div className="w-fit">
+                                                    Видео линк на сесия{" "}
+                                                    {index + 1}
+                                                  </div>
+                                                  <Input
+                                                    id={innerSubField.name}
+                                                    name={innerSubField.name}
+                                                    type="text"
+                                                    className="w-1/2"
+                                                    value={
+                                                      innerSubField.state.value
+                                                    }
+                                                    onChange={(e) =>
+                                                      innerSubField.handleChange(
+                                                        e.target.value
+                                                      )
+                                                    }
+                                                    onBlur={
+                                                      innerSubField.handleBlur
+                                                    }
+                                                  />
+                                                </Label>
+
+                                                <FieldInfo
+                                                  field={innerSubField}
+                                                />
+                                              </div>
+                                            );
+                                          }}
+                                        </form.Field>
+                                        <form.Field
+                                          name={`sections[${index}].sessions[${i}].description`}
+                                        >
+                                          {(innerSubField) => {
+                                            return (
+                                              <div>
+                                                <Label
+                                                  htmlFor={innerSubField.name}
+                                                  className="flex"
+                                                >
+                                                  <div className="w-fit">
+                                                    Описание на сесия{" "}
+                                                    {index + 1}
+                                                  </div>
+                                                  <Input
+                                                    id={innerSubField.name}
+                                                    name={innerSubField.name}
+                                                    type="text"
+                                                    className="w-1/2"
+                                                    value={
+                                                      innerSubField.state.value
+                                                    }
+                                                    onChange={(e) =>
+                                                      innerSubField.handleChange(
+                                                        e.target.value
+                                                      )
+                                                    }
+                                                    onBlur={
+                                                      innerSubField.handleBlur
+                                                    }
+                                                  />
+                                                </Label>
+
+                                                <FieldInfo
+                                                  field={innerSubField}
+                                                />
+                                              </div>
+                                            );
+                                          }}
+                                        </form.Field>
+                                      </div>
+                                    );
+                                  })}
+                                  <Button
+                                    onClick={() =>
+                                      subField.pushValue({
+                                        sessionTitle: "",
+                                        sessionPosition: 0,
+                                        videoUrl: "",
+                                        description: "",
+                                      })
+                                    }
+                                    type="button"
+                                  >
+                                    <CirclePlus /> Сесия
+                                  </Button>
+                                </div>
+                              );
+                            }}
+                          </form.Field>
+                        </div>
+                      );
+                    })}
+                    <Button
+                      onClick={() =>
+                        field.pushValue({
+                          sectionTitle: "",
+                          sectionPosition: 0,
+                          sessions: [],
+                        })
+                      }
+                      type="button"
+                    >
+                      <CirclePlus /> Добави
+                    </Button>
+                  </div>
+                );
+              }}
+            />
+          </div>
+
           <div className="flex flex-row justify-center gap-2 mt-4">
             <Button
               type="button"
