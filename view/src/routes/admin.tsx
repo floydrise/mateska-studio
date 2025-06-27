@@ -1,4 +1,4 @@
-import {CreateWorkoutCard} from "@/components/CreateWorkoutCard";
+import { CreateWorkoutCard } from "@/components/CreateWorkoutCard";
 import AdminNav from "@/components/AdminNav";
 import { getAuthDataQueryOptions } from "@/lib/api";
 import { createFileRoute, redirect } from "@tanstack/react-router";

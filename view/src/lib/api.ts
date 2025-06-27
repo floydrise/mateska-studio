@@ -3,6 +3,7 @@ import type { AppType } from "../../../server";
 import { hc } from "hono/client";
 import { authClient } from "./auth-client";
 import type { Subscription } from "@better-auth/stripe";
+import type { WorkoutFormType } from "../../../shared/types";
 
 const api = hc<AppType>("/").api;
 
@@ -48,6 +49,33 @@ export const fetchUserAccountList = async () => {
     throw new Error(error.message);
   }
   return data;
+};
+
+export const postNewWorkoutPlan = async (workoutInfo: WorkoutFormType) => {
+  const {
+    workoutPlanTitle,
+    card: { cardTitle, imgUrl, stripePriceId, price, targetMuscles, equipment },
+    sections,
+  } = workoutInfo;
+  const res = await api.workouts.$post({
+    json: {
+      workoutPlanTitle,
+      card: {
+        cardTitle,
+        imgUrl,
+        stripePriceId,
+        price,
+        equipment,
+        targetMuscles,
+      },
+      sections,
+    },
+  });
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.msg);
+  }
+  return await res.json();
 };
 
 //  QueryOptions
