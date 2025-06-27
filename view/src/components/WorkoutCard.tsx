@@ -87,7 +87,7 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
                 const { error } = await authClient.subscription.upgrade({
                   plan: workoutCardTitle,
                   successUrl: "http://localhost:5173/profile",
-                  cancelUrl: "http://localhost:5173/workouts",
+                  cancelUrl: "http://localhost:5173/#products",
                   subscriptionId: subData?.stripeSubscriptionId ?? undefined,
                 });
                 if (error) toast.error("Изникна грешка: " + error.message);

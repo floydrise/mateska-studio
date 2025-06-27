@@ -21,6 +21,8 @@ import {
 import { WorkoutSchema } from "../../../server/schemas/zod_schemas";
 import type { WorkoutFormType } from "../../../shared/types";
 import { Textarea } from "./ui/textarea";
+import { postNewWorkoutPlan } from "@/lib/api";
+import { toast } from "sonner";
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
   return (
@@ -55,7 +57,8 @@ export const CreateWorkoutCard = () => {
       onChange: WorkoutSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
+      const res = await postNewWorkoutPlan(value);
+      toast(res.msg);
     },
   });
   return (
@@ -455,7 +458,7 @@ export const CreateWorkoutCard = () => {
                                                   className="flex"
                                                 >
                                                   <div className="w-fit">
-                                                    Позиция на сесия {index + 1}
+                                                    Позиция на сесия {i + 1}
                                                   </div>
                                                   <Input
                                                     id={innerSubField.name}
@@ -495,8 +498,7 @@ export const CreateWorkoutCard = () => {
                                                   className="flex"
                                                 >
                                                   <div className="w-fit">
-                                                    Видео линк на сесия{" "}
-                                                    {index + 1}
+                                                    Видео линк на сесия {i + 1}
                                                   </div>
                                                   <Input
                                                     id={innerSubField.name}
@@ -535,8 +537,7 @@ export const CreateWorkoutCard = () => {
                                                   className="flex"
                                                 >
                                                   <div className="w-fit">
-                                                    Описание на сесия{" "}
-                                                    {index + 1}
+                                                    Описание на сесия {i + 1}
                                                   </div>
                                                   <Textarea
                                                     id={innerSubField.name}

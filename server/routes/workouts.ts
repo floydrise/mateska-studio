@@ -18,7 +18,7 @@ import { authMiddleware } from "../middleware/auth-middleware";
 const app = new Hono()
   .post("/", authMiddleware, zValidator("json", WorkoutSchema), async (c) => {
     const user = c.get("user");
-    if (user?.role !== "amind") {
+    if (user?.role !== "admin") {
       return c.json({ msg: "Unauthorised" }, 401);
     }
     const validatedWorkout = c.req.valid("json");

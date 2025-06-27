@@ -7,7 +7,9 @@ import { stripe } from "@better-auth/stripe";
 import Stripe from "stripe";
 import { workoutCardTable } from "./server/db/schema/schema";
 
-export const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!);
+export const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2025-05-28.basil",
+});
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -87,6 +89,17 @@ export const auth = betterAuth({
             },
           }));
         },
+      },
+      onEvent: async (event) => {
+        // Handle any Stripe event
+        switch (event.type) {
+          case "customer.subscription.updated":
+            console.log("Subscription updated!");
+            break;
+          case "checkout.session.completed":
+            console.log("Checkout session completed");
+            break;
+        }
       },
     }),
   ],
