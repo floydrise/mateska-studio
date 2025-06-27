@@ -24,6 +24,7 @@ import BlurText from "@/components/BlurText";
 import SplitText from "@/components/SplitText";
 import { motion } from "motion/react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTheme } from "next-themes";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -45,6 +46,7 @@ function App() {
   const { isLoading, error, data, isError } = useQuery(
     getWorkoutCardsQueryOptions
   );
+  const { resolvedTheme } = useTheme();
   if (isError) toast.error(error.message);
   return (
     <main id="top" className="overflow-hidden">
@@ -105,6 +107,23 @@ function App() {
       <div className="w-full h-40 md:h-80 relative rotate-180">
         <Threads amplitude={2} distance={0} enableMouseInteraction={false} />
       </div>
+      {resolvedTheme === "light" ? (
+        <svg
+          className="rotate-180"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1000 100"
+        >
+          <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#F5F5F5"></path>
+        </svg>
+      ) : (
+        <svg
+          className="rotate-180"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1000 100"
+        >
+          <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
+        </svg>
+      )}
       <section className="bg-accent px-10 py-20">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -209,6 +228,15 @@ function App() {
           </motion.div>
         </ul>
       </section>
+      {resolvedTheme === "light" ? (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100">
+          <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#F5F5F5"></path>
+        </svg>
+      ) : (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100">
+          <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
+        </svg>
+      )}
       <section id="products" className="px-10 py-10">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -235,6 +263,23 @@ function App() {
               ))}
         </div>
       </section>
+      {resolvedTheme === "light" ? (
+        <svg
+          className="rotate-180"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1000 100"
+        >
+          <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#F5F5F5"></path>
+        </svg>
+      ) : (
+        <svg
+          className="rotate-180"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1000 100"
+        >
+          <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
+        </svg>
+      )}
       <section className="bg-accent px-10 py-10 flex flex-col items-center">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -259,6 +304,15 @@ function App() {
           <Testimonials />
         </motion.div>
       </section>
+      {resolvedTheme === "light" ? (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100">
+          <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#F5F5F5"></path>
+        </svg>
+      ) : (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100">
+          <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
+        </svg>
+      )}
       <section id="howTo" className="px-10 py-10">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -286,6 +340,23 @@ function App() {
           allowFullScreen
         ></motion.iframe>
       </section>
+      {resolvedTheme === "light" ? (
+        <svg
+          className="rotate-180"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1000 100"
+        >
+          <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#F5F5F5"></path>
+        </svg>
+      ) : (
+        <svg
+          className="rotate-180"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1000 100"
+        >
+          <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
+        </svg>
+      )}
       <section id="faq" className="bg-accent px-10 py-10">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -309,6 +380,15 @@ function App() {
           <FAQ />
         </motion.div>
       </section>
+      {resolvedTheme === "light" ? (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100">
+          <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#F5F5F5"></path>
+        </svg>
+      ) : (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100">
+          <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
+        </svg>
+      )}
     </main>
   );
 }

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import djulkaImg from "/djulka.webp";
+import milicaImg from "/milica.webp";
 type Testimonial = {
   quote: string;
   name: string;
@@ -161,10 +162,10 @@ const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "Обожавам колко лесно се ориентирам в сайта! Видеата са страхотни, а програмите – точно по мярка!",
-    name: "Ивана Петрова",
-    designation: "Графичен дизайнер, Пловдив",
-    src: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb",
+      "За нея имам само една дума и тя е СЪРЦЕ! Подхожда към всеки с внимание и според неговите индивидуални нужди и възможности, за да постигне мечтания от всеки резултат. Тренировките са страхотни не само за извайване на тялото ,но и за тонус и сила на съзнанието. Благодарна съм, че я срещнах. Тя промени живота ми като ми показа, че здравословния начин на живот е един голям и страхотен свят!",
+    name: "Милица Петрива",
+    designation: "Маникюристка, Бургас",
+    src: milicaImg,
   },
   {
     quote:

@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { WorkoutSchema } from "../../../server/schemas/zod_schemas";
 import type { WorkoutFormType } from "../../../shared/types";
+import { Textarea } from "./ui/textarea";
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
   return (
@@ -400,7 +401,10 @@ export const CreateWorkoutCard = () => {
                                 <div className="mb-2">
                                   {subField.state.value.map((_, i) => {
                                     return (
-                                      <div key={i} className="mb-6 space-y-2">
+                                      <div
+                                        key={i}
+                                        className="mb-6 space-y-2 p-2 rounded-2xl border"
+                                      >
                                         <form.Field
                                           name={`sections[${index}].sessions[${i}].sessionTitle`}
                                         >
@@ -534,10 +538,9 @@ export const CreateWorkoutCard = () => {
                                                     Описание на сесия{" "}
                                                     {index + 1}
                                                   </div>
-                                                  <Input
+                                                  <Textarea
                                                     id={innerSubField.name}
                                                     name={innerSubField.name}
-                                                    type="text"
                                                     className="w-1/2"
                                                     value={
                                                       innerSubField.state.value
@@ -593,7 +596,7 @@ export const CreateWorkoutCard = () => {
                       }
                       type="button"
                     >
-                      <CirclePlus /> Добави
+                      <CirclePlus /> Секция
                     </Button>
                   </div>
                 );
