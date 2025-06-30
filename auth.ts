@@ -90,17 +90,6 @@ export const auth = betterAuth({
           }));
         },
       },
-      onEvent: async (event) => {
-        // Handle any Stripe event
-        switch (event.type) {
-          case "customer.subscription.updated":
-            console.log("Subscription updated!");
-            break;
-          case "checkout.session.completed":
-            console.log("Checkout session completed");
-            break;
-        }
-      },
     }),
   ],
   user: {

@@ -71,7 +71,7 @@ export const postNewWorkoutPlan = async (workoutInfo: WorkoutFormType) => {
       sections,
     },
   });
-  
+
   return await res.json();
 };
 

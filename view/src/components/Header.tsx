@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import studioLogoLight from "/logoLight.webp";
 import studioLogoDark from "/logoDark.webp";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
@@ -13,6 +13,7 @@ export default function Header() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
+  const { pathname } = useLocation();
 
   useMotionValueEvent(scrollY, "change", (latestValue) => {
     const previous = scrollY.getPrevious();
@@ -29,11 +30,11 @@ export default function Header() {
         visible: { y: 0 },
         hidden: { y: "-140%" },
       }}
-      animate={hidden ? "hidden" : "visible"}
+      animate={pathname === "/" && (hidden ? "hidden" : "visible")}
       transition={{
         duration: 0.5,
       }}
-      className="p-2 border sticky top-0 backdrop-blur-md bg-background/20 z-30"
+      className="p-2 border-b rounded-2xl sticky top-0 backdrop-blur-md bg-background/20 z-30"
     >
       <nav className="flex flex-row justify-between items-center gap-2 w-full px-2">
         <Link to="/">
