@@ -12,9 +12,9 @@ import { useForm, type AnyFieldApi } from "@tanstack/react-form";
 import {
   Brush,
   CirclePlus,
-  Diamond,
+  ClipboardList,
   FolderKanban,
-  Section,
+  LayoutList,
   Send,
   Trash,
 } from "lucide-react";
@@ -82,7 +82,7 @@ export const CreateWorkoutCard = () => {
           <div className="flex flex-col gap-6">
             {/* Workout Plan Title */}
             <p className="text-lg flex gap-1 items-center font-semibold">
-              <Diamond /> План
+              <ClipboardList /> План
             </p>
             <div>
               <form.Field
@@ -319,8 +319,8 @@ export const CreateWorkoutCard = () => {
           </div>
 
           {/* Sections info */}
-          <p className="text-lg flex gap-1 items-center font-semibold mt-6">
-            <Section /> Секции
+          <p className="text-lg flex gap-1 items-center font-semibold my-6">
+            <LayoutList /> Секции
           </p>
           <div>
             <form.Field
