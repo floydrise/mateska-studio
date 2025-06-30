@@ -43,7 +43,10 @@ export const auth = betterAuth({
     },
   },
   plugins: [
-    admin(),
+    admin({
+      bannedUserMessage:
+        "Вие сте баннат от тази платформа! Ако смятате, че това е грешка, моля, свържете се с нас",
+    }),
     magicLink({
       sendMagicLink: async ({ email, token, url }, request) => {
         await fetch(

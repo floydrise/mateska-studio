@@ -9,9 +9,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Ban, Check, Trash, X } from "lucide-react";
+import { Ban, Bird, Trash } from "lucide-react";
 import type { UserWithRole } from "better-auth/plugins/admin";
 import { format } from "date-fns";
+import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { Skeleton } from "./ui/skeleton";
 
 interface ExtendedUserWithRole extends UserWithRole {
   stripeCustomerId?: string | undefined;
@@ -21,15 +26,22 @@ const tableHeads = [
   "Име",
   "Имейл",
   "Stripe ID",
+  "Роля",
   "Създаден на",
   "Баннат",
-  "Банни",
+  "Ban/Unban",
   "Изтрий",
 ];
 
 export const ListUsers = () => {
-  const { data } = useQuery(listUsersQueryOptions);
+  const { data, isLoading, isError, error } = useQuery(listUsersQueryOptions);
   const users: ExtendedUserWithRole[] | undefined = data?.users;
+  if (isError) {
+    toast.error("Възникна грешка: " + error.message);
+  }
+  if (isLoading) {
+    return <Skeleton className="w-full h-80 rounded-2xl" />;
+  }
   return (
     <Table>
       <TableCaption>Лист с всички потребители</TableCaption>
@@ -48,13 +60,60 @@ export const ListUsers = () => {
             <TableCell>{user.name}</TableCell>
             <TableCell>{user.email}</TableCell>
             <TableCell>{user.stripeCustomerId}</TableCell>
+            <TableCell>
+              <Badge
+                variant={user.role === "admin" ? "destructive" : "default"}
+              >
+                {user.role}
+              </Badge>
+            </TableCell>
             <TableCell>{format(user.createdAt, "dd/MM/yyyy")}</TableCell>
             <TableCell>{user.banned ? "Да" : "Не"}</TableCell>
             <TableCell>
-              <Ban />
+              {user.banned ? (
+                <Button
+                  variant={"outline"}
+                  onClick={async () => {
+                    const { data, error } = await authClient.admin.unbanUser({
+                      userId: user.id,
+                    });
+                    if (data) {
+                      toast.success("Успешно освободи: " + data.user.name);
+                    }
+                    if (error) toast.error("Възникна грешка: " + error.message);
+                  }}
+                >
+                  <Bird />
+                </Button>
+              ) : (
+                <Button
+                  variant={"outline"}
+                  onClick={async () => {
+                    const { data, error } = await authClient.admin.banUser({
+                      userId: user.id,
+                    });
+                    if (data) toast.success("Успешно банна: " + data.user.name);
+                    if (error) toast.error("Възникна грешка: " + error.message);
+                  }}
+                >
+                  <Ban />
+                </Button>
+              )}
             </TableCell>
             <TableCell>
-              <Trash />
+              <Button
+                variant={"outline"}
+                onClick={async () => {
+                  const { data, error } = await authClient.admin.removeUser({
+                    userId: user.id,
+                  });
+                  if (data?.success)
+                    toast.success("Успешно изтри потребител: " + user.name);
+                  if (error) toast.error("Възникна грешка: " + error.message);
+                }}
+              >
+                <Trash />
+              </Button>
             </TableCell>
           </TableRow>
         ))}
