@@ -75,6 +75,20 @@ export const postNewWorkoutPlan = async (workoutInfo: WorkoutFormType) => {
   return await res.json();
 };
 
+export const listAllUsers = async () => {
+  const { data, error } = await authClient.admin.listUsers({
+    query: {
+      limit: 10,
+      sortBy: "createdAt",
+      sortDirection: "desc",
+    },
+  });
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
+};
+
 //  QueryOptions
 export const getWorkoutCardsQueryOptions = queryOptions({
   queryKey: ["fetch-workout-cards"],
@@ -104,5 +118,11 @@ export const getUserWorkoutPlanQueryOptions = (workoutPlanId: string) =>
 export const getAuthDataQueryOptions = queryOptions({
   queryKey: ["get-auth-data"],
   queryFn: fetchAuthData,
+  staleTime: 5 * 1000,
+});
+
+export const listUsersQueryOptions = queryOptions({
+  queryKey: ["list-all-users"],
+  queryFn: listAllUsers,
   staleTime: 5 * 1000,
 });

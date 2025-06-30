@@ -9,10 +9,10 @@
     "email": "email dev"
   },
   "dependencies": {
-    "@better-auth/stripe": "^1.2.10",
+    "@better-auth/stripe": "^1.2.12",
     "@hono/zod-validator": "^0.7.0",
     "@react-email/components": "0.0.42",
-    "better-auth": "^1.2.10",
+    "better-auth": "^1.2.12",
     "drizzle-orm": "^0.44.2",
     "drizzle-zod": "^0.8.2",
     "hono": "^4.8.3",

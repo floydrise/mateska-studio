@@ -4,6 +4,7 @@ import { getAuthDataQueryOptions } from "@/lib/api";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import z from "zod";
 import { fallback, zodValidator } from "@tanstack/zod-adapter";
+import { ListUsers } from "@/components/ListUsers";
 
 const actionSearchSchema = z.object({
   action: fallback(z.enum(["create", "list_users", "edit"]), "create").default(
@@ -40,17 +41,17 @@ export const Route = createFileRoute("/admin")({
 function RouteComponent() {
   const { action } = Route.useSearch();
   return (
-    <main className="my-8">
+    <main className="my-8 flex flex-col items-center overflow-x-auto gap-8">
       <AdminNav />
-      <div className="h-full m-auto my-8">
-        {action === "create" ? (
-          <CreateWorkoutCard />
-        ) : action === "edit" ? (
-          <div>edit</div>
-        ) : action === "list_users" ? (
-          <div>list users</div>
-        ) : null}
-      </div>
+      {action === "create" ? (
+        <CreateWorkoutCard />
+      ) : action === "edit" ? (
+        <div>edit</div>
+      ) : action === "list_users" ? (
+        <div className="w-full h-fit max-w-4xl border rounded-2xl">
+          <ListUsers />
+        </div>
+      ) : null}
     </main>
   );
 }

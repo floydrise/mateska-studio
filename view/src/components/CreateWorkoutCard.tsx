@@ -62,7 +62,7 @@ export const CreateWorkoutCard = () => {
     },
   });
   return (
-    <Card className="max-w-4xl m-auto border-0 md:border-1">
+    <Card className="w-full h-full max-w-4xl border-0 md:border-1">
       <CardHeader>
         <CardTitle className="flex items-center gap-1 md:text-2xl">
           <Brush /> Създай нов план

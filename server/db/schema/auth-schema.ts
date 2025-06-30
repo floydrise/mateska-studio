@@ -75,7 +75,10 @@ export const verification = pgTable("verification", {
 export const subscription = pgTable("subscription", {
   id: text("id").primaryKey(),
   plan: text("plan").notNull(),
-  referenceId: text("reference_id").notNull(),
+  referenceId: text("reference_id")
+    .notNull()
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
   status: text("status").default("incomplete"),
