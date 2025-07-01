@@ -5,6 +5,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import z from "zod";
 import { fallback, zodValidator } from "@tanstack/zod-adapter";
 import { ListUsers } from "@/components/ListUsers";
+import { Lock } from "lucide-react";
 
 const actionSearchSchema = z.object({
   action: fallback(z.enum(["create", "list_users", "edit"]), "create").default(
@@ -45,11 +46,13 @@ function RouteComponent() {
       <AdminNav />
       {action === "create" ? (
         <>
-        <h1 className="text-3xl md:text-4xl font-semibold">Формуляр план</h1>
+          <h1 className="text-3xl md:text-4xl font-semibold">Формуляр план</h1>
           <CreateWorkoutCard />
         </>
       ) : action === "edit" ? (
-        <div>edit</div>
+        <div>
+          <Lock />
+        </div>
       ) : action === "list_users" ? (
         <>
           <h1 className="text-3xl md:text-4xl font-semibold">Потребители</h1>

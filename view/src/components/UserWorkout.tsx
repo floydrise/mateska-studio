@@ -190,7 +190,7 @@ export default function UserWorkout({
           title={content.title}
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
           allowFullScreen
-          className="w-full h-full scheme-normal"
+          className="w-[90%] h-[90%] scheme-normal"
         ></iframe>
 
         <p className="text-center">{content?.description}</p>

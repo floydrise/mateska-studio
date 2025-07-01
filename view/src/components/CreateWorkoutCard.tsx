@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm, type AnyFieldApi } from "@tanstack/react-form";
 import {
+  Boxes,
   Brush,
   CirclePlus,
   ClipboardList,
@@ -17,6 +18,7 @@ import {
   LayoutList,
   Send,
   Trash,
+  Video,
 } from "lucide-react";
 import { WorkoutSchema } from "../../../server/schemas/zod_schemas";
 import type { WorkoutFormType } from "../../../shared/types";
@@ -332,6 +334,9 @@ export const CreateWorkoutCard = () => {
                     {field.state.value.map((_, index) => {
                       return (
                         <div key={index} className="bg-accent rounded-xl p-2">
+                          <h1 className="font-semibold flex items-center gap-1 mb-2">
+                            <Boxes /> Секция #{index + 1}
+                          </h1>
                           <form.Field name={`sections[${index}].sectionTitle`}>
                             {(subField) => {
                               return (
@@ -340,9 +345,7 @@ export const CreateWorkoutCard = () => {
                                     htmlFor={subField.name}
                                     className="flex"
                                   >
-                                    <div className="w-fit">
-                                      Име на секция {index + 1}
-                                    </div>
+                                    <div className="w-fit">Име</div>
                                     <Input
                                       id={subField.name}
                                       name={subField.name}
@@ -371,9 +374,7 @@ export const CreateWorkoutCard = () => {
                                     htmlFor={subField.name}
                                     className="flex"
                                   >
-                                    <div className="w-fit">
-                                      Позиция {index + 1}
-                                    </div>
+                                    <div className="w-fit">Позиция</div>
                                     <Input
                                       id={subField.name}
                                       name={subField.name}
@@ -408,6 +409,9 @@ export const CreateWorkoutCard = () => {
                                         key={i}
                                         className="mb-6 space-y-2 p-2 rounded-2xl border"
                                       >
+                                        <h1 className="font-semibold flex items-center gap-1">
+                                          <Video /> Сесия #{i + 1}
+                                        </h1>
                                         <form.Field
                                           name={`sections[${index}].sessions[${i}].sessionTitle`}
                                         >
@@ -419,7 +423,7 @@ export const CreateWorkoutCard = () => {
                                                   className="flex"
                                                 >
                                                   <div className="w-fit">
-                                                    Име на сесия {i + 1}
+                                                    Име
                                                   </div>
                                                   <Input
                                                     id={innerSubField.name}
@@ -458,7 +462,7 @@ export const CreateWorkoutCard = () => {
                                                   className="flex"
                                                 >
                                                   <div className="w-fit">
-                                                    Позиция на сесия {i + 1}
+                                                    Позиция
                                                   </div>
                                                   <Input
                                                     id={innerSubField.name}
@@ -498,7 +502,7 @@ export const CreateWorkoutCard = () => {
                                                   className="flex"
                                                 >
                                                   <div className="w-fit">
-                                                    Видео линк на сесия {i + 1}
+                                                    Видео линк
                                                   </div>
                                                   <Input
                                                     id={innerSubField.name}
@@ -537,7 +541,7 @@ export const CreateWorkoutCard = () => {
                                                   className="flex"
                                                 >
                                                   <div className="w-fit">
-                                                    Описание на сесия {i + 1}
+                                                    Описание
                                                   </div>
                                                   <Textarea
                                                     id={innerSubField.name}

@@ -99,9 +99,9 @@ function App() {
           transition={{
             duration: 1.5,
           }}
-          className="w-fit animate-rotate-border rounded-xl bg-conic/[from_var(--border-angle)] from-background via-sky-500 to-background from-80% via-90% to-100% p-[3px] dark:p-px"
+          className="w-fit animate-rotate-border rounded-xl bg-conic/[from_var(--border-angle)] from-background via-sky-500 to-background from-80% via-90% to-100% p-[2px] dark:p-px"
         >
-          <motion.img
+          <img
             src="https://mateskasport.com/wp-content/uploads/2023/08/3.jpg"
             alt="Pic of Mateska"
             className="w-140 h-auto rounded-xl"
@@ -156,7 +156,7 @@ function App() {
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-xl">Стегни тялото си</li>
+            <li className="text-base md:text-xl">Стегни тялото си</li>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -174,7 +174,7 @@ function App() {
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-xl">Без излишно време</li>
+            <li className="text-base md:text-xl">Без излишно време</li>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -192,7 +192,7 @@ function App() {
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-xl">Ум и тяло в баланс</li>
+            <li className="text-base md:text-xl">Ум и тяло в баланс</li>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -210,7 +210,7 @@ function App() {
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-xl">На всяко устройство</li>
+            <li className="text-base md:text-xl">На всяко устройство</li>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -228,7 +228,7 @@ function App() {
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-xl">Следи напредъка си</li>
+            <li className="text-base md:text-xl">Следи напредъка си</li>
           </motion.div>
         </ul>
       </section>
