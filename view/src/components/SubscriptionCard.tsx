@@ -24,7 +24,7 @@ export default function SubscriptionCard({
 }: {
   subscription: Subscription;
 }) {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const queryClient = useQueryClient();
   return (
     <Card className="w-full max-w-md shadow-lg rounded-xl">
@@ -134,7 +134,6 @@ export default function SubscriptionCard({
                 queryKey: ["get-subscriptions"],
               });
             }}
-            variant={"destructive"}
             className="text-xl flex-1 transition duration-500 hover:scale-105 hover:-translate-y-1 hover:-translate-x-1"
           >
             <OctagonX className="size-5" /> Прекъсни

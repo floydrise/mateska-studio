@@ -92,17 +92,21 @@ function App() {
             </Link>
           </motion.div>
         </div>
-        <motion.img
+        <motion.div
           initial={{ opacity: 0, x: 100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{
             duration: 1.5,
           }}
-          src="https://mateskasport.com/wp-content/uploads/2023/08/3.jpg"
-          alt="Pic of Mateska"
-          className="w-140 h-auto rounded-xl"
-        />
+          className="w-fit animate-rotate-border rounded-xl bg-conic/[from_var(--border-angle)] from-background via-sky-500 to-background from-80% via-90% to-100% p-[3px] dark:p-px"
+        >
+          <motion.img
+            src="https://mateskasport.com/wp-content/uploads/2023/08/3.jpg"
+            alt="Pic of Mateska"
+            className="w-140 h-auto rounded-xl"
+          />
+        </motion.div>
       </section>
       <div className="w-full h-40 md:h-80 relative rotate-180">
         <Threads amplitude={2} distance={0} enableMouseInteraction={false} />

@@ -78,7 +78,6 @@ export const postNewWorkoutPlan = async (workoutInfo: WorkoutFormType) => {
 export const listAllUsers = async () => {
   const { data, error } = await authClient.admin.listUsers({
     query: {
-      limit: 10,
       sortBy: "createdAt",
       sortDirection: "desc",
     },

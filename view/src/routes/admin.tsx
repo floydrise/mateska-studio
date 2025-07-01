@@ -44,13 +44,19 @@ function RouteComponent() {
     <main className="my-8 flex flex-col items-center overflow-x-auto gap-8">
       <AdminNav />
       {action === "create" ? (
-        <CreateWorkoutCard />
+        <>
+        <h1 className="text-3xl md:text-4xl font-semibold">Формуляр план</h1>
+          <CreateWorkoutCard />
+        </>
       ) : action === "edit" ? (
         <div>edit</div>
       ) : action === "list_users" ? (
-        <div className="w-full h-fit max-w-4xl border rounded-2xl">
-          <ListUsers />
-        </div>
+        <>
+          <h1 className="text-3xl md:text-4xl font-semibold">Потребители</h1>
+          <div className="w-full h-fit max-w-4xl border rounded-2xl">
+            <ListUsers />
+          </div>
+        </>
       ) : null}
     </main>
   );

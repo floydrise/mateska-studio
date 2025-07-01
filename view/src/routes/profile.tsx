@@ -75,7 +75,22 @@ function RouteComponent() {
   return (
     <section className="mt-10 flex flex-col justify-center items-center w-full">
       <div>
-        <div className="max-w-fit">
+        <div className="">
+          <h1 className="text-2xl md:text-4xl font-bold mb-2">Абонамент:</h1>
+          {isLoading ? (
+            <Skeleton className="h-130 w-86" />
+          ) : data ? (
+            <SubscriptionCard subscription={data as Subscription} />
+          ) : (
+            <span className="text-muted-foreground">
+              Все още нямате абонаменти. Вземи от{" "}
+              <Link to="/" hash="products" className="underline">
+                тук
+              </Link>
+            </span>
+          )}
+        </div>
+        <div className="max-w-fit my-10">
           <h1 className="text-2xl md:text-4xl font-bold">Данни:</h1>
           {isPending ? (
             <Skeleton className="h-40 w-80" />
@@ -198,21 +213,6 @@ function RouteComponent() {
                 </AlertDialog>
               </div>
             </div>
-          )}
-        </div>
-        <div className="my-10">
-          <h1 className="text-2xl md:text-4xl font-bold mb-2">Абонамент:</h1>
-          {isLoading ? (
-            <Skeleton className="h-48 w-90" />
-          ) : data ? (
-            <SubscriptionCard subscription={data as Subscription} />
-          ) : (
-            <span className="text-muted-foreground">
-              Все още нямате абонаменти. Вземи от{" "}
-              <Link to="/" hash="products" className="underline">
-                тук
-              </Link>
-            </span>
           )}
         </div>
       </div>
