@@ -56,10 +56,11 @@ export const MakeAdminBtn = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>
+          <AlertDialogCancel className="transition-all transform-3d hover:-rotate-10">
             <X /> Не
           </AlertDialogCancel>
           <AlertDialogAction
+            className="transition-all transform-3d hover:rotate-10"
             onClick={() => {
               mutation.mutate(userInfo);
             }}

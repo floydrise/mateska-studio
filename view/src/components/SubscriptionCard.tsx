@@ -134,14 +134,14 @@ export default function SubscriptionCard({
                 queryKey: ["get-subscriptions"],
               });
             }}
-            className="text-xl flex-1 transition duration-500 hover:scale-105 hover:-translate-y-1 hover:-translate-x-1"
+            className="text-xl flex-1 transition-all transform-3d hover:-rotate-6 duration-300"
           >
             <OctagonX className="size-5" /> Прекъсни
           </Button>
         )}
         <Button
           variant={"outline"}
-          className="text-xl flex-1 transition duration-500 hover:scale-105 hover:-translate-y-1 hover:translate-x-1"
+          className="text-xl flex-1 transition-all transform-3d hover:rotate-6 duration-300"
           asChild
         >
           <Link
