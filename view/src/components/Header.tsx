@@ -34,7 +34,7 @@ export default function Header() {
       transition={{
         duration: 0.5,
       }}
-      className="p-2 border-b rounded-2xl sticky top-0 backdrop-blur-md bg-background/20 z-30"
+      className={`p-2 border-b rounded-2xl sticky top-0 backdrop-blur-md bg-background/20 z-30`}
     >
       <nav className="flex flex-row justify-between items-center gap-2 w-full px-2">
         <Link to="/">

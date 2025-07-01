@@ -28,12 +28,12 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
     workoutCardEquipment,
   } = workoutCard;
   return (
-    <Card className="group overflow-hidden w-full max-w-sm transition-all pt-0 scale-95 md:scale-100">
+    <Card className="group overflow-hidden w-full h-full transition-all pt-0">
       <div className="aspect-video w-full overflow-hidden">
         <img
           src={workoutCardImgUrl || imgPlaceholder}
           alt={workoutCardTitle}
-          className="h-full w-full  object-cover transition-transform duration-1000 group-hover:scale-115"
+          className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-115"
         />
       </div>
       <CardHeader>

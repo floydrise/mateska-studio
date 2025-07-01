@@ -16,7 +16,6 @@ import { Skeleton } from "./ui/skeleton";
 import { BanUserButton } from "./BanUserButton";
 import { UnbanUserButton } from "./UnbanUserButton";
 import { DeleteUserButton } from "./DeleteUserButton";
-import { BadgeCheck, BadgeX } from "lucide-react";
 import { MakeAdminBtn } from "./MakeAdminBtn";
 
 interface ExtendedUserWithRole extends UserWithRole {
@@ -67,7 +66,7 @@ export const ListUsers = () => {
               <MakeAdminBtn userInfo={{ role: user.role, id: user.id }} />
             </TableCell>
             <TableCell>{format(user.createdAt, "dd/MM/yyyy")}</TableCell>
-            <TableCell>{user.banned ? <BadgeCheck /> : <BadgeX />}</TableCell>
+            <TableCell>{user.banned ? "Да" : "Не"}</TableCell>
             <TableCell>
               {user.banned ? (
                 <UnbanUserButton userId={user.id} />

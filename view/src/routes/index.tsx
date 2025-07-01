@@ -25,6 +25,15 @@ import SplitText from "@/components/SplitText";
 import { motion } from "motion/react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTheme } from "next-themes";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import { useRef } from "react";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -48,6 +57,8 @@ function App() {
   );
   const { resolvedTheme } = useTheme();
   if (isError) toast.error(error.message);
+
+  const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
   return (
     <main id="top" className="overflow-hidden">
       <section className="flex flex-col md:flex-row gap-4 justify-between items-center mt-10 px-10">
@@ -253,18 +264,38 @@ function App() {
         >
           <Store /> Тренировъчни програми
         </motion.h1>
-        <div
-          className={"grid grid-cols-1 md:grid-cols-2 place-items-center gap-4"}
-        >
-          {isLoading
-            ? new Array(2)
-                .fill(null)
-                .map((_, index) => (
-                  <Skeleton key={index + "la"} className="w-100 h-120" />
-                ))
-            : data?.cards.map((card) => (
-                <WorkoutCard key={card.workoutCardId} workoutCard={card} />
-              ))}
+        <div className={"flex justify-center h-full w-full gap-4"}>
+          {isLoading ? (
+            new Array(3)
+              .fill(null)
+              .map((_, index) => (
+                <Skeleton key={index + "la"} className="w-100 h-120" />
+              ))
+          ) : (
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              plugins={[plugin.current]}
+              onMouseEnter={plugin.current.stop}
+              onMouseLeave={plugin.current.reset}
+              className="w-[95%] h-full"
+            >
+              <CarouselContent>
+                {data?.cards.map((card) => (
+                  <CarouselItem
+                    key={card.workoutCardId}
+                    className="xl:basis-1/3 md:basis-1/2"
+                  >
+                    <WorkoutCard workoutCard={card} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          )}
         </div>
       </section>
       {resolvedTheme === "light" ? (
