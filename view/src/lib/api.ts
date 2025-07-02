@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 import type { AppType } from "../../../server";
 import { hc } from "hono/client";
 import { authClient } from "./auth-client";
@@ -161,3 +161,11 @@ export const getAllWorkoutPlansQueryOptions = queryOptions({
   queryFn: fetchAllWorkoutPlans,
   staleTime: 5 * 1000,
 });
+
+export const getCardQuery = (planId: string) => {
+  return useQuery({
+    queryKey: ["get_card_by_plan_id", planId],
+    queryFn: () => fetchCardByPlanId(planId),
+    enabled: false,
+  });
+};

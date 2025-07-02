@@ -59,7 +59,7 @@ export const PatchCardSchema = createUpdateSchema(workoutCardTable, {
   workoutCardTargetMuscles: (schema) => schema.optional(),
   workoutCardTitle: (schema) =>
     schema.min(3, "Трябва да е най-малко 3 букви").optional(),
-});
+}).omit({ workoutCardCreatedAt: true });
 
 export const SelectCardSchema = createSelectSchema(workoutCardTable).omit({
   workoutCardCreatedAt: true,

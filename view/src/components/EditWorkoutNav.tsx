@@ -16,7 +16,7 @@ import {
   Shapes,
   Video,
 } from "lucide-react";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { toast } from "sonner";
 import {
   Tooltip,
@@ -25,10 +25,14 @@ import {
 } from "@/components/ui/tooltip";
 import { DeleteWorkoutBtn } from "./DeleteWorkoutBtn";
 import { getRouteApi, Link } from "@tanstack/react-router";
+import { EditCardForm } from "./EditCardForm";
+import type { PatchCardType } from "../../../shared/types";
 
 const routeApi = getRouteApi("/admin");
 
 export default function EditWorkoutNav() {
+  const [cardPromise, setCardPromise] =
+    useState<Promise<{ card: PatchCardType }>>();
   const { edit, action } = routeApi.useSearch();
   const [isOpen, setIsOpen] = useState(true);
   const { data, error, isError, isLoading } = useQuery(
@@ -37,9 +41,9 @@ export default function EditWorkoutNav() {
 
   if (isError) toast.error(error.message);
 
-  const handleCardBtnClick = async (planId: string) => {
-    const innerdata = await fetchCardByPlanId(planId);
-    console.log(innerdata);
+  const handleClick = (planId: number) => {
+    const promise = fetchCardByPlanId(String(planId));
+    setCardPromise(promise);
   };
 
   return (
@@ -104,9 +108,7 @@ export default function EditWorkoutNav() {
                           variant="ghost"
                           size="sm"
                           className="w-full justify-start"
-                          onClick={() =>
-                            handleCardBtnClick(String(plan.workoutPlanId))
-                          }
+                          onClick={() => handleClick(plan.workoutPlanId)}
                         >
                           <FolderKanban /> Карта
                         </Button>
@@ -144,7 +146,9 @@ export default function EditWorkoutNav() {
         {isLoading ? (
           <Loader className="animate-spin" />
         ) : action === "edit" && edit === "card" ? (
-          <div>Карта</div>
+          <Suspense fallback={<Loader className="animate-spin" />}>
+            <EditCardForm cardInfoPromise={cardPromise!} />
+          </Suspense>
         ) : (
           <div>
             <h1 className="text-2xl font-bold">Избери план от листа вляво</h1>
