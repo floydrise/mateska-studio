@@ -94,6 +94,30 @@ export const fetchAllWorkoutPlans = async () => {
   return await res.json();
 };
 
+export const fetchCardByPlanId = async (planId: string) => {
+  const res = await api.workouts.plans[":planId"].card.$get({
+    param: {
+      planId,
+    },
+  });
+  if (!res.ok) throw new Error("Изникна грешка");
+  return await res.json();
+};
+
+export const deleteWorkoutPlan = async (planId: string) => {
+  const res = await api.workouts.plans[":id"].$delete({
+    param: {
+      id: planId,
+    },
+  });
+
+  if (!res.ok) {
+    const errMsg = await res.json();
+    throw new Error(errMsg.msg || "грешка при триенето на плана");
+  }
+  return await res.json();
+};
+
 //  QueryOptions
 export const getWorkoutCardsQueryOptions = queryOptions({
   queryKey: ["fetch-workout-cards"],

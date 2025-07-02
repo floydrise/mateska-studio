@@ -46,11 +46,14 @@ function RouteComponent() {
       <AdminNav />
       {action === "create" ? (
         <>
-          <h1 className="text-3xl md:text-4xl font-semibold">Формуляр план</h1>
+          <h1 className="text-3xl md:text-4xl font-semibold">Създай</h1>
           <CreateWorkoutCard />
         </>
       ) : action === "edit" ? (
-        <EditWorkoutNav />
+        <>
+          <h1 className="text-3xl md:text-4xl font-semibold">Редактирай</h1>
+          <EditWorkoutNav />
+        </>
       ) : action === "list_users" ? (
         <>
           <h1 className="text-3xl md:text-4xl font-semibold">Потребители</h1>
