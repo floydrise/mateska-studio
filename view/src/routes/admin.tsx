@@ -11,6 +11,7 @@ const actionSearchSchema = z.object({
   action: fallback(z.enum(["create", "list_users", "edit"]), "create").default(
     "create"
   ),
+  edit: fallback(z.enum(["card", "section", "session"]), "card").optional(),
 });
 
 export const Route = createFileRoute("/admin")({

@@ -9,9 +9,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deletePlanMutation } from "@/lib/mutations";
 import { Button } from "./ui/button";
 import { Check, Trash, X } from "lucide-react";
+import { deletePlanMutation } from "@/lib/mutations";
 
 export const DeleteWorkoutBtn = ({
   workoutPlanId,

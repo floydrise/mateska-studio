@@ -1,5 +1,9 @@
 import { z } from "zod/v4";
-import { SelectCardSchema, WorkoutSchema } from "../server/schemas/zod_schemas";
+import {
+  PatchCardSchema,
+  SelectCardSchema,
+  WorkoutSchema,
+} from "../server/schemas/zod_schemas";
 import "@better-auth/stripe";
 
 export type WorkoutCardType = z.infer<typeof SelectCardSchema>;
@@ -24,4 +28,5 @@ export interface UserWorkoutType {
   }[];
 }
 
-export type WorkoutFormType = z.infer<typeof WorkoutSchema>
+export type WorkoutFormType = z.infer<typeof WorkoutSchema>;
+export type PatchCardType = z.infer<typeof PatchCardSchema>;

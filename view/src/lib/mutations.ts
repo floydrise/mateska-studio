@@ -2,9 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteWorkoutPlan } from "./api";
 import { toast } from "sonner";
 
-const queryClient = useQueryClient();
-
 export const deletePlanMutation = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (planId: string) => deleteWorkoutPlan(planId),
     onError: (error) => {

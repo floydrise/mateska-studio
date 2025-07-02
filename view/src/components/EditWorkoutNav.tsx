@@ -24,8 +24,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { DeleteWorkoutBtn } from "./DeleteWorkoutBtn";
+import { getRouteApi, Link } from "@tanstack/react-router";
+
+const routeApi = getRouteApi("/admin");
 
 export default function EditWorkoutNav() {
+  const { edit, action } = routeApi.useSearch();
   const [isOpen, setIsOpen] = useState(true);
   const { data, error, isError, isLoading } = useQuery(
     getAllWorkoutPlansQueryOptions
@@ -34,8 +38,8 @@ export default function EditWorkoutNav() {
   if (isError) toast.error(error.message);
 
   const handleCardBtnClick = async (planId: string) => {
-    const data = await fetchCardByPlanId(planId);
-    console.log(data);
+    const innerdata = await fetchCardByPlanId(planId);
+    console.log(innerdata);
   };
 
   return (
@@ -92,16 +96,21 @@ export default function EditWorkoutNav() {
                     </Tooltip>
 
                     <CollapsibleContent className="ml-4 space-y-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="w-full justify-start"
-                        onClick={() =>
-                          handleCardBtnClick(String(plan.workoutPlanId))
-                        }
+                      <Link
+                        to="/admin"
+                        search={{ action: "edit", edit: "card" }}
                       >
-                        <FolderKanban /> Карта
-                      </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="w-full justify-start"
+                          onClick={() =>
+                            handleCardBtnClick(String(plan.workoutPlanId))
+                          }
+                        >
+                          <FolderKanban /> Карта
+                        </Button>
+                      </Link>
                       <Button
                         variant="ghost"
                         size="sm"
@@ -134,6 +143,8 @@ export default function EditWorkoutNav() {
       <main className="flex-1 p-6">
         {isLoading ? (
           <Loader className="animate-spin" />
+        ) : action === "edit" && edit === "card" ? (
+          <div>Карта</div>
         ) : (
           <div>
             <h1 className="text-2xl font-bold">Избери план от листа вляво</h1>
