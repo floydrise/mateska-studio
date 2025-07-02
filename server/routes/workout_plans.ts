@@ -8,6 +8,7 @@ import {
 } from "../schemas/zod_schemas";
 import { db } from "../db";
 import {
+  workoutCardTable,
   workoutPlanTable,
   workoutSectionTable,
   workoutSessionsTable,
@@ -104,6 +105,28 @@ const app = new Hono()
         .then((res) => res[0]);
       if (!section) return c.json({ msg: "No section found" }, 404);
       return c.json({ section });
+    }
+  )
+  .get(
+    "/:planId/card",
+    zValidator(
+      "param",
+      z.object({
+        planId: z.coerce.number().positive(),
+      })
+    ),
+    authMiddleware,
+    async (c) => {
+      const { planId } = c.req.valid("param");
+      const user = c.get("user");
+      if (user?.role !== "admin") return c.json({ msg: "Unauthorised" }, 401);
+      const card = await db
+        .select()
+        .from(workoutCardTable)
+        .where(eq(workoutCardTable.workoutPlanId, planId))
+        .then((res) => res[0]);
+      if (!card) return c.json({ msg: "No card found" }, 404);
+      return c.json({ card });
     }
   )
   .delete(

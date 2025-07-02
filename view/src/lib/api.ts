@@ -88,6 +88,12 @@ export const listAllUsers = async () => {
   return data;
 };
 
+export const fetchAllWorkoutPlans = async () => {
+  const res = await api.workouts.plans.$get();
+  if (!res.ok) throw new Error("не можахме извлечем тренировъчните планове");
+  return await res.json();
+};
+
 //  QueryOptions
 export const getWorkoutCardsQueryOptions = queryOptions({
   queryKey: ["fetch-workout-cards"],
@@ -123,5 +129,11 @@ export const getAuthDataQueryOptions = queryOptions({
 export const listUsersQueryOptions = queryOptions({
   queryKey: ["list-all-users"],
   queryFn: listAllUsers,
+  staleTime: 5 * 1000,
+});
+
+export const getAllWorkoutPlansQueryOptions = queryOptions({
+  queryKey: ["fetch_all_workout_plans"],
+  queryFn: fetchAllWorkoutPlans,
   staleTime: 5 * 1000,
 });
