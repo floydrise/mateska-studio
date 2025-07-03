@@ -12,7 +12,7 @@ const actionSearchSchema = z.object({
     "create"
   ),
   edit: fallback(z.enum(["card", "section", "session"]), "card").optional(),
-  planId: z.number().positive().optional()
+  planId: z.number().positive().optional(),
 });
 
 export const Route = createFileRoute("/admin")({

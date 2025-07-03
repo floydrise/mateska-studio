@@ -39,7 +39,7 @@ export default function EditWorkoutNav() {
   if (isError) toast.error(error.message);
 
   return (
-    <div className="flex h-screen w-full">
+    <div className="flex h-fit w-full">
       <aside
         className={`${
           isOpen ? "w-48" : "w-14"
