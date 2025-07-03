@@ -3,7 +3,7 @@ import type { AppType } from "../../../server";
 import { hc } from "hono/client";
 import { authClient } from "./auth-client";
 import type { Subscription } from "@better-auth/stripe";
-import type { WorkoutFormType } from "../../../shared/types";
+import type { PatchCardType, WorkoutFormType } from "../../../shared/types";
 
 const api = hc<AppType>("/").api;
 
@@ -120,6 +120,23 @@ export const deleteWorkoutPlan = async (planId: string) => {
   if (!res.ok) {
     const errMsg = await res.json();
     throw new Error(errMsg.msg || "грешка при триенето на плана");
+  }
+  return await res.json();
+};
+
+export const patchWorkoutCard = async (
+  cardId: number,
+  patchedCard: PatchCardType
+) => {
+  const res = await api.workouts.cards[":id"].$patch({
+    param: {
+      id: String(cardId),
+    },
+    json: patchedCard,
+  });
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.msg);
   }
   return await res.json();
 };

@@ -1,4 +1,4 @@
-import { getCardInfoQueryOptions } from "@/lib/api";
+import { getCardInfoQueryOptions, patchWorkoutCard } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { CirclePlus, Eraser, Loader, Minus, Send } from "lucide-react";
@@ -16,6 +16,7 @@ import { PatchCardSchema } from "../../../server/schemas/zod_schemas";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
+import { useEffect } from "react";
 
 const routeApi = getRouteApi("/admin");
 
@@ -39,6 +40,7 @@ export const EditCardForm = () => {
   const card = data?.card;
 
   const defaultValues: PatchCardType = {
+    workoutCardId: card?.workoutCardId ?? 0,
     workoutCardTitle: card?.workoutCardTitle ?? "",
     workoutCardImgUrl: card?.workoutCardImgUrl ?? "",
     workoutCardPrice: card?.workoutCardPrice ?? 0,
@@ -53,7 +55,8 @@ export const EditCardForm = () => {
       onChange: PatchCardSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
+      const res = await patchWorkoutCard(planId!, value);
+      toast(res.msg);
     },
   });
 
@@ -61,6 +64,13 @@ export const EditCardForm = () => {
     toast.error("Изникна грешка: " + error.message);
     return <p>{error.message}</p>;
   }
+
+  // refresh defaultValues when
+  useEffect(() => {
+    if (card) {
+      form.reset();
+    }
+  }, [planId, card]);
 
   return (
     <Card className="w-full h-full  border-0 md:border-1">
@@ -73,10 +83,10 @@ export const EditCardForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {!data ? (
-          <p>No data</p>
-        ) : isLoading ? (
+        {isLoading ? (
           <Loader className="animate-spin" />
+        ) : !data ? (
+          <p>No data</p>
         ) : (
           <form
             onSubmit={(e) => {
