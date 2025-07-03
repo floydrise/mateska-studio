@@ -1,4 +1,4 @@
-import { queryOptions, useQuery } from "@tanstack/react-query";
+import { queryOptions } from "@tanstack/react-query";
 import type { AppType } from "../../../server";
 import { hc } from "hono/client";
 import { authClient } from "./auth-client";
@@ -100,7 +100,13 @@ export const fetchCardByPlanId = async (planId: string) => {
       planId,
     },
   });
-  if (!res.ok) throw new Error("Изникна грешка");
+  if (!res.ok) {
+    const data = await res.json();
+    if ("msg" in data) {
+      throw new Error(data.msg);
+    }
+    throw new Error("незнайна грешка");
+  }
   return await res.json();
 };
 
@@ -122,50 +128,48 @@ export const deleteWorkoutPlan = async (planId: string) => {
 export const getWorkoutCardsQueryOptions = queryOptions({
   queryKey: ["fetch-workout-cards"],
   queryFn: fetchWorkoutCards,
-  staleTime: 5 * 1000,
+  staleTime: 5 * 1000 * 60,
 });
 
 export const listUserAccountsQueryOptions = queryOptions({
   queryKey: ["list-user-accounts"],
   queryFn: fetchUserAccountList,
-  staleTime: 5 * 1000,
+  staleTime: 5 * 1000 * 60,
 });
 
 export const getUserSubscriptionsQueryOptions = queryOptions({
   queryKey: ["get-subscriptions"],
   queryFn: fetchUserActiveSubscriptions,
-  staleTime: 5 * 1000,
+  staleTime: 5 * 1000 * 60,
 });
 
 export const getUserWorkoutPlanQueryOptions = (workoutPlanId: string) =>
   queryOptions({
     queryKey: ["get-user-workout", workoutPlanId],
     queryFn: () => fetchUserWorkout(workoutPlanId),
-    staleTime: 5 * 1000,
+    staleTime: 5 * 1000 * 60,
   });
 
 export const getAuthDataQueryOptions = queryOptions({
   queryKey: ["get-auth-data"],
   queryFn: fetchAuthData,
-  staleTime: 5 * 1000,
+  staleTime: 5 * 1000 * 60,
 });
 
 export const listUsersQueryOptions = queryOptions({
   queryKey: ["list-all-users"],
   queryFn: listAllUsers,
-  staleTime: 5 * 1000,
+  staleTime: 5 * 1000 * 60,
 });
 
 export const getAllWorkoutPlansQueryOptions = queryOptions({
   queryKey: ["fetch_all_workout_plans"],
   queryFn: fetchAllWorkoutPlans,
-  staleTime: 5 * 1000,
+  staleTime: 5 * 1000 * 60,
 });
 
-export const getCardQuery = (planId: string) => {
-  return useQuery({
-    queryKey: ["get_card_by_plan_id", planId],
-    queryFn: () => fetchCardByPlanId(planId),
-    enabled: false,
+export const getCardInfoQueryOptions = (planId: number) =>
+  queryOptions({
+    queryKey: ["fetch_card_by_plan_id", planId],
+    queryFn: () => fetchCardByPlanId(String(planId)),
   });
-};

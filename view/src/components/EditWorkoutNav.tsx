@@ -5,7 +5,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { fetchCardByPlanId, getAllWorkoutPlansQueryOptions } from "@/lib/api";
+import { getAllWorkoutPlansQueryOptions } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import {
   ChevronRight,
@@ -16,7 +16,7 @@ import {
   Shapes,
   Video,
 } from "lucide-react";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import {
   Tooltip,
@@ -26,25 +26,17 @@ import {
 import { DeleteWorkoutBtn } from "./DeleteWorkoutBtn";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { EditCardForm } from "./EditCardForm";
-import type { PatchCardType } from "../../../shared/types";
 
 const routeApi = getRouteApi("/admin");
 
 export default function EditWorkoutNav() {
-  const [cardPromise, setCardPromise] =
-    useState<Promise<{ card: PatchCardType }>>();
-  const { edit, action } = routeApi.useSearch();
+  const { edit, action, planId } = routeApi.useSearch();
   const [isOpen, setIsOpen] = useState(true);
   const { data, error, isError, isLoading } = useQuery(
     getAllWorkoutPlansQueryOptions
   );
 
   if (isError) toast.error(error.message);
-
-  const handleClick = (planId: number) => {
-    const promise = fetchCardByPlanId(String(planId));
-    setCardPromise(promise);
-  };
 
   return (
     <div className="flex h-screen w-full">
@@ -102,31 +94,51 @@ export default function EditWorkoutNav() {
                     <CollapsibleContent className="ml-4 space-y-1">
                       <Link
                         to="/admin"
-                        search={{ action: "edit", edit: "card" }}
+                        search={{
+                          action: "edit",
+                          edit: "card",
+                          planId: plan.workoutPlanId,
+                        }}
                       >
                         <Button
                           variant="ghost"
                           size="sm"
                           className="w-full justify-start"
-                          onClick={() => handleClick(plan.workoutPlanId)}
+                          // onClick={() => handleClick(plan.workoutPlanId)}
                         >
                           <FolderKanban /> Карта
                         </Button>
                       </Link>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="w-full justify-start"
+                      <Link
+                        to="/admin"
+                        search={{
+                          action: "edit",
+                          edit: "section",
+                        }}
                       >
-                        <LayoutList /> Секции
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="w-full justify-start"
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="w-full justify-start"
+                        >
+                          <LayoutList /> Секции
+                        </Button>
+                      </Link>
+                      <Link
+                        to="/admin"
+                        search={{
+                          action: "edit",
+                          edit: "session",
+                        }}
                       >
-                        <Video /> Сесии
-                      </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="w-full justify-start"
+                        >
+                          <Video /> Сесии
+                        </Button>
+                      </Link>
                       <DeleteWorkoutBtn workoutPlanId={plan.workoutPlanId} />
                     </CollapsibleContent>
                   </Collapsible>
@@ -145,11 +157,11 @@ export default function EditWorkoutNav() {
       <main className="flex-1 p-6">
         {isLoading ? (
           <Loader className="animate-spin" />
-        ) : action === "edit" && edit === "card" ? (
-          <Suspense fallback={<Loader className="animate-spin" />}>
-            <EditCardForm cardInfoPromise={cardPromise!} />
-          </Suspense>
+        ) : action === "edit" && edit === "card" && planId ? (
+          // <Suspense fallback={<Loader className="animate-spin" />}>
+          <EditCardForm />
         ) : (
+          // </Suspense>
           <div>
             <h1 className="text-2xl font-bold">Избери план от листа вляво</h1>
             <p className="text-muted-foreground">
