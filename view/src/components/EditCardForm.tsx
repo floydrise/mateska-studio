@@ -353,7 +353,7 @@ export const EditCardForm = () => {
                   type={"submit"}
                   disabled={!canSubmit}
                   className={
-                    "w-full transition duration-300 ease-in-out hover:-translate-y-1 hover:translate-x-1 hover:scale-105"
+                    "w-full"
                   }
                 >
                   {isSubmitting ? (

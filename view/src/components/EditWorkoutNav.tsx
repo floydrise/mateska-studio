@@ -43,7 +43,7 @@ export default function EditWorkoutNav() {
       <aside
         className={`${
           isOpen ? "w-48" : "w-14"
-        } flex flex-col border rounded-lg transition-all duration-300 ease-in-out`}
+        } flex flex-col border rounded-lg transition-all duration-300 ease-in-out lg:ml-4`}
       >
         <div className="flex h-16 items-center justify-between border-b px-2">
           <span
