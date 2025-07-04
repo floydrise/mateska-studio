@@ -71,6 +71,11 @@ export const PatchWorkoutPlanSchema = createUpdateSchema(workoutPlanTable, {
 
 export const PatchSectionSchema = createUpdateSchema(workoutSectionTable, {
   sectionTitle: (schema) => schema.min(3, "Трябва да е поне 3 букви"),
+  position: (schema) => schema.positive({ error: "Трябва да е повече от 0" }),
+});
+
+export const PatchSectionsSchema = z.object({
+  sections: z.array(PatchSectionSchema),
 });
 
 export const PatchSessionSchema = createUpdateSchema(workoutSessionsTable, {

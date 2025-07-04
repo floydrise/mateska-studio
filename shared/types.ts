@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import {
   PatchCardSchema,
+  PatchSectionSchema,
   SelectCardSchema,
   WorkoutSchema,
 } from "../server/schemas/zod_schemas";
@@ -30,3 +31,4 @@ export interface UserWorkoutType {
 
 export type WorkoutFormType = z.infer<typeof WorkoutSchema>;
 export type PatchCardType = z.infer<typeof PatchCardSchema>;
+export type PatchSectionType = z.infer<typeof PatchSectionSchema>;

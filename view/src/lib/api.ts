@@ -141,6 +141,23 @@ export const patchWorkoutCard = async (
   return await res.json();
 };
 
+export const fetchSectionsByPlanId = async (planId: number) => {
+  const res = await api.workouts.plans[":id"].sections.$get({
+    param: {
+      id: String(planId),
+    },
+  });
+  if (!res.ok) {
+    const data = await res.json();
+    if ("msg" in data) {
+      throw new Error(data.msg);
+    } else {
+      throw new Error("проблем при извличането на секциите");
+    }
+  }
+  return await res.json();
+};
+
 //  QueryOptions
 export const getWorkoutCardsQueryOptions = queryOptions({
   queryKey: ["fetch-workout-cards"],
@@ -189,4 +206,10 @@ export const getCardInfoQueryOptions = (planId: number) =>
   queryOptions({
     queryKey: ["fetch_card_by_plan_id", planId],
     queryFn: () => fetchCardByPlanId(String(planId)),
+  });
+
+export const getSectionsByPlanIdQueryOptions = (planId: number) =>
+  queryOptions({
+    queryKey: ["fetch_sections_by_plan_id", planId],
+    queryFn: () => fetchSectionsByPlanId(planId),
   });

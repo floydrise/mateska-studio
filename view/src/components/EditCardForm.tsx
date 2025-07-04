@@ -352,9 +352,7 @@ export const EditCardForm = () => {
                 <Button
                   type={"submit"}
                   disabled={!canSubmit}
-                  className={
-                    "w-full"
-                  }
+                  className={"w-full"}
                 >
                   {isSubmitting ? (
                     "..."

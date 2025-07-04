@@ -26,6 +26,7 @@ import {
 import { DeleteWorkoutBtn } from "./DeleteWorkoutBtn";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { EditCardForm } from "./EditCardForm";
+import { EditSectionsForm } from "./EditSectionsForm";
 
 const routeApi = getRouteApi("/admin");
 
@@ -104,7 +105,6 @@ export default function EditWorkoutNav() {
                           variant="ghost"
                           size="sm"
                           className="w-full justify-start"
-                          // onClick={() => handleClick(plan.workoutPlanId)}
                         >
                           <FolderKanban /> Карта
                         </Button>
@@ -114,6 +114,7 @@ export default function EditWorkoutNav() {
                         search={{
                           action: "edit",
                           edit: "section",
+                          planId: plan.workoutPlanId,
                         }}
                       >
                         <Button
@@ -158,10 +159,10 @@ export default function EditWorkoutNav() {
         {isLoading ? (
           <Loader className="animate-spin" />
         ) : action === "edit" && edit === "card" && planId ? (
-          // <Suspense fallback={<Loader className="animate-spin" />}>
           <EditCardForm />
+        ) : action === "edit" && edit === "section" && planId ? (
+          <EditSectionsForm />
         ) : (
-          // </Suspense>
           <div>
             <h1 className="text-2xl font-bold">Избери план от листа вляво</h1>
             <p className="text-muted-foreground">
