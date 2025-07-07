@@ -1,6 +1,9 @@
-import { getSectionsByPlanIdQueryOptions } from "@/lib/api";
+import {
+  getSectionsByPlanIdQueryOptions,
+  patchWorkoutSections,
+} from "@/lib/api";
 import { useForm, type AnyFieldApi } from "@tanstack/react-form";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { PatchSectionsSchema } from "../../../server/schemas/zod_schemas";
 import type { PatchSectionType } from "../../../shared/types";
@@ -16,6 +19,7 @@ import { Eraser, Loader, Send } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { useEffect } from "react";
 
 const routeApi = getRouteApi("/admin");
 
@@ -36,6 +40,25 @@ export const EditSectionsForm = () => {
   const { planId } = routeApi.useSearch();
   const queryOptions = getSectionsByPlanIdQueryOptions(planId!);
   const { data, isLoading, error, isError } = useQuery(queryOptions);
+  const updatedMutation = useMutation({
+    mutationFn: ({
+      planId,
+      sectionId,
+      updatedSection,
+    }: {
+      planId: number;
+      sectionId: number;
+      updatedSection: PatchSectionType;
+    }) => patchWorkoutSections({ planId, sectionId, updatedSection }),
+    onError: (err) => {
+      toast.error(err.message);
+    },
+    onSuccess: (data) => {
+      toast.success(
+        "Успешно ъпдейтна секция: " + data.updatedSection.sectionTitle
+      );
+    },
+  });
 
   const defaultValues: { sections: PatchSectionType[] } = {
     sections: data?.sections ?? [],
@@ -47,7 +70,13 @@ export const EditSectionsForm = () => {
       onChange: PatchSectionsSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
+      value.sections.forEach((section) =>
+        updatedMutation.mutate({
+          planId: planId!,
+          sectionId: section.sectionId!,
+          updatedSection: section,
+        })
+      );
     },
   });
 
@@ -55,6 +84,13 @@ export const EditSectionsForm = () => {
     toast.error("Изникна грешка: " + error.message);
     return <p>{error.message}</p>;
   }
+
+  // refresh defaultValues when
+  useEffect(() => {
+    if (data?.sections) {
+      form.reset();
+    }
+  }, [planId, data?.sections]);
 
   return (
     <Card className="w-full h-full  border-0 md:border-1">
