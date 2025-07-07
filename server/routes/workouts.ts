@@ -91,9 +91,11 @@ const app = new Hono()
         .select({
           sectionId: workoutSectionTable.sectionId,
           sectionTitle: workoutSectionTable.sectionTitle,
+          sectionPosition: workoutSectionTable.position,
           sessionTitle: workoutSessionsTable.sessionTitle,
           sessionVideoUrl: workoutSessionsTable.sessionVideoUrl,
           sessionDescription: workoutSessionsTable.sessionDescription,
+          sessionPosition: workoutSessionsTable.position,
         })
         .from(workoutSectionTable)
         .innerJoin(
@@ -109,10 +111,12 @@ const app = new Hono()
       let sections: {
         sectionId: number;
         sectionTitle: string;
+        sectionPosition: number;
         sessions: {
           sessionTitle: string;
           videoUrl: string;
           description: string;
+          sessionPosition: number;
         }[];
       }[] = [];
 
@@ -123,6 +127,7 @@ const app = new Hono()
           section = {
             sectionId: row.sectionId,
             sectionTitle: row.sectionTitle,
+            sectionPosition: row.sectionPosition,
             sessions: [],
           };
           sections.push(section);
@@ -132,6 +137,7 @@ const app = new Hono()
           sessionTitle: row.sessionTitle,
           videoUrl: row.sessionVideoUrl,
           description: row.sessionDescription,
+          sessionPosition: row.sessionPosition,
         });
       }
 

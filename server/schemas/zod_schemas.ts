@@ -72,10 +72,39 @@ export const PatchWorkoutPlanSchema = createUpdateSchema(workoutPlanTable, {
 export const PatchSectionSchema = createUpdateSchema(workoutSectionTable, {
   sectionTitle: (schema) => schema.min(3, "Трябва да е поне 3 букви"),
   position: (schema) => schema.positive({ error: "Трябва да е повече от 0" }),
+  sessions: z.array(
+    z.object({
+      sessionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
+      sessionPosition: z
+        .number()
+        .positive({ error: "Трябва да е повече от 0" }),
+      videoUrl: z.url("Must be a URL"),
+      description: z.string().min(3, "Трябва да е най-малко 3 букви"),
+    })
+  ),
 });
 
-export const PatchSectionsSchema = z.object({
-  sections: z.array(PatchSectionSchema),
+export const PatchSectionsSchema = z.array(
+  z.object({
+    sectionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
+    sectionPosition: z.number().positive({ error: "Трябва да е повече от 0" }),
+    sessions: z
+      .array(
+        z.object({
+          sessionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
+          sessionPosition: z
+            .number()
+            .positive({ error: "Трябва да е повече от 0" }),
+          videoUrl: z.url("Must be a URL"),
+          description: z.string().min(3, "Трябва да е най-малко 3 букви"),
+        })
+      )
+      .min(1, "Трябва да добавиш поне 1 сесия"),
+  })
+);
+
+export const PatchSectionsFormSchema = z.object({
+  sections: PatchSectionsSchema,
 });
 
 export const PatchSessionSchema = createUpdateSchema(workoutSessionsTable, {

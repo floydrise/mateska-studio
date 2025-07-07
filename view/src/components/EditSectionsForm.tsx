@@ -1,12 +1,9 @@
-import {
-  getSectionsByPlanIdQueryOptions,
-  patchWorkoutSections,
-} from "@/lib/api";
+import { getUserWorkoutPlanQueryOptions } from "@/lib/api";
 import { useForm, type AnyFieldApi } from "@tanstack/react-form";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
-import { PatchSectionsSchema } from "../../../server/schemas/zod_schemas";
-import type { PatchSectionType } from "../../../shared/types";
+import { PatchSectionsFormSchema } from "../../../server/schemas/zod_schemas";
+import type { PatchSectionFormType } from "../../../shared/types";
 import { toast } from "sonner";
 import {
   Card,
@@ -15,11 +12,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Eraser, Loader, Send } from "lucide-react";
+import {
+  Boxes,
+  ChevronDown,
+  CirclePlus,
+  Eraser,
+  Flower,
+  Loader,
+  MinusCircle,
+  Send,
+  Video,
+} from "lucide-react";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Textarea } from "./ui/textarea";
 
 const routeApi = getRouteApi("/admin");
 
@@ -37,10 +45,17 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
 }
 
 export const EditSectionsForm = () => {
+  const [expandedSessions, setExpandedSessions] = useState<
+    Record<string, boolean>
+  >({});
+  const [expandedSections, setExpandedSections] = useState<
+    Record<string, boolean>
+  >({});
   const { planId } = routeApi.useSearch();
-  const queryOptions = getSectionsByPlanIdQueryOptions(planId!);
+  const queryOptions = getUserWorkoutPlanQueryOptions(String(planId));
   const { data, isLoading, error, isError } = useQuery(queryOptions);
-  const updatedMutation = useMutation({
+
+  /* const updatedMutation = useMutation({
     mutationFn: ({
       planId,
       sectionId,
@@ -58,25 +73,19 @@ export const EditSectionsForm = () => {
         "Успешно ъпдейтна секция: " + data.updatedSection.sectionTitle
       );
     },
-  });
+  }); */
 
-  const defaultValues: { sections: PatchSectionType[] } = {
+  const defaultValues: PatchSectionFormType = {
     sections: data?.sections ?? [],
   };
 
   const form = useForm({
     defaultValues: defaultValues,
     validators: {
-      onChange: PatchSectionsSchema,
+      onChange: PatchSectionsFormSchema,
     },
     onSubmit: async ({ value }) => {
-      value.sections.forEach((section) =>
-        updatedMutation.mutate({
-          planId: planId!,
-          sectionId: section.sectionId!,
-          updatedSection: section,
-        })
-      );
+      console.log(value);
     },
   });
 
@@ -99,7 +108,7 @@ export const EditSectionsForm = () => {
           <Eraser /> Редактирай секции
         </CardTitle>
         <CardDescription className="md:text-lg">
-          Попълни формуляра отдолу
+          Добави, премахни или редактирай секции и сесии
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -120,70 +129,370 @@ export const EditSectionsForm = () => {
               mode="array"
               children={(field) => {
                 return (
-                  <div className="flex flex-col md:flex-row items-center justify-evenly">
+                  <div className="flex flex-col gap-4">
                     {field.state.value!.map((_, index) => {
                       return (
-                        <div key={index}>
-                          <h1 className="font-semibold">Секция {index + 1}</h1>
-                          <form.Field name={`sections[${index}].sectionTitle`}>
-                            {(subField) => {
-                              return (
-                                <div className="mb-2">
-                                  <div className="flex gap-2">
-                                    <Label
-                                      htmlFor={subField.name}
-                                      className="flex items-center gap-2"
-                                    >
-                                      <div className="w-fit">Име: </div>
-                                      <Input
-                                        id={subField.name}
-                                        name={subField.name}
-                                        type="text"
-                                        className="w-full"
-                                        value={subField.state.value}
-                                        onChange={(e) =>
-                                          subField.handleChange(e.target.value)
-                                        }
-                                        onBlur={subField.handleBlur}
-                                      />
-                                    </Label>
+                        <div key={index} className="border p-4 rounded-2xl">
+                          <h1
+                            onClick={() =>
+                              setExpandedSections((prev) => ({
+                                ...prev,
+                                [`${index}-${index}`]:
+                                  !prev[`${index}-${index}`],
+                              }))
+                            }
+                            className="font-semibold flex gap-1 justify-between text-xl mb-2 hover:cursor-pointer"
+                          >
+                            <span className="flex items-center gap-1">
+                              <Boxes /> Секция #{index + 1}
+                            </span>
+                            <ChevronDown
+                              className={`${
+                                expandedSections[`${index}-${index}`]
+                                  ? "transition duration-500 rotate-180"
+                                  : "transition duration-500 rotate-0"
+                              }`}
+                            />
+                          </h1>
+                          <div
+                            className={`flex flex-col gap-2 overflow-hidden transition-all duration-700 ease-in-out ${
+                              expandedSections[`${index}-${index}`]
+                                ? "max-h-fit opacity-100"
+                                : "max-h-0 opacity-0"
+                            }`}
+                          >
+                            <form.Field
+                              name={`sections[${index}].sectionTitle`}
+                            >
+                              {(subField) => {
+                                return (
+                                  <div className="mb-2">
+                                    <div className="flex gap-2">
+                                      <Label
+                                        htmlFor={subField.name}
+                                        className="flex items-center gap-2"
+                                      >
+                                        <div className="w-fit">Име: </div>
+                                        <Input
+                                          id={subField.name}
+                                          name={subField.name}
+                                          type="text"
+                                          className="w-full"
+                                          value={subField.state.value}
+                                          onChange={(e) =>
+                                            subField.handleChange(
+                                              e.target.value
+                                            )
+                                          }
+                                          onBlur={subField.handleBlur}
+                                        />
+                                      </Label>
+                                    </div>
+                                    <FieldInfo field={subField} />
                                   </div>
-                                  <FieldInfo field={subField} />
-                                </div>
-                              );
-                            }}
-                          </form.Field>
-                          <form.Field name={`sections[${index}].position`}>
-                            {(subField) => {
-                              return (
-                                <div className="mb-2">
-                                  <div className="flex gap-2">
-                                    <Label
-                                      htmlFor={subField.name}
-                                      className="flex items-center gap-2"
-                                    >
-                                      <div className="w-fit">Позиция:</div>
-                                      <Input
-                                        id={subField.name}
-                                        name={subField.name}
-                                        type="number"
-                                        min={0}
-                                        className="w-fit"
-                                        value={subField.state.value}
-                                        onChange={(e) =>
-                                          subField.handleChange(
-                                            Number(e.target.value)
-                                          )
-                                        }
-                                        onBlur={subField.handleBlur}
-                                      />
-                                    </Label>
+                                );
+                              }}
+                            </form.Field>
+                            <form.Field
+                              name={`sections[${index}].sectionPosition`}
+                            >
+                              {(subField) => {
+                                return (
+                                  <div className="mb-2">
+                                    <div className="flex gap-2">
+                                      <Label
+                                        htmlFor={subField.name}
+                                        className="flex items-center gap-2"
+                                      >
+                                        <div className="w-fit">Позиция:</div>
+                                        <Input
+                                          id={subField.name}
+                                          name={subField.name}
+                                          type="number"
+                                          min={0}
+                                          className="w-fit"
+                                          value={subField.state.value}
+                                          onChange={(e) =>
+                                            subField.handleChange(
+                                              Number(e.target.value)
+                                            )
+                                          }
+                                          onBlur={subField.handleBlur}
+                                        />
+                                      </Label>
+                                    </div>
+                                    <FieldInfo field={subField} />
                                   </div>
-                                  <FieldInfo field={subField} />
-                                </div>
-                              );
-                            }}
-                          </form.Field>
+                                );
+                              }}
+                            </form.Field>
+                            <form.Field
+                              name={`sections[${index}].sessions`}
+                              mode="array"
+                            >
+                              {(subField) => {
+                                return (
+                                  <div className="mb-2">
+                                    <h1 className="text-xl font-semibold mb-2 flex items-center gap-1">
+                                      <Video /> Сесии
+                                    </h1>
+                                    {subField.state.value.map(
+                                      (innerData, i) => {
+                                        return (
+                                          <div
+                                            key={i}
+                                            className="mb-6 space-y-2 p-2 rounded-2xl border"
+                                          >
+                                            <h1
+                                              onClick={() =>
+                                                setExpandedSessions((prev) => ({
+                                                  ...prev,
+                                                  [`${index}-${i}`]:
+                                                    !prev[`${index}-${i}`],
+                                                }))
+                                              }
+                                              className="font-semibold flex items-center justify-between gap-1 hover:cursor-pointer"
+                                            >
+                                              <span className="flex items-center gap-1">
+                                                <Flower />{" "}
+                                                {innerData.sessionTitle}
+                                              </span>
+                                              <ChevronDown
+                                                className={`${
+                                                  expandedSessions[
+                                                    `${index}-${i}`
+                                                  ]
+                                                    ? "transition duration-500 rotate-180"
+                                                    : "transition duration-500 rotate-0"
+                                                }`}
+                                              />
+                                            </h1>
+                                            <div
+                                              className={`flex flex-col gap-2 overflow-hidden transition-all duration-700 ease-in-out ${
+                                                expandedSessions[
+                                                  `${index}-${i}`
+                                                ]
+                                                  ? "max-h-100 opacity-100"
+                                                  : "max-h-0 opacity-0"
+                                              }`}
+                                            >
+                                              <form.Field
+                                                name={`sections[${index}].sessions[${i}].sessionTitle`}
+                                              >
+                                                {(innerSubField) => {
+                                                  return (
+                                                    <div>
+                                                      <Label
+                                                        htmlFor={
+                                                          innerSubField.name
+                                                        }
+                                                        className="flex gap-2 items-center"
+                                                      >
+                                                        <div className="w-fit">
+                                                          Име:
+                                                        </div>
+                                                        <Input
+                                                          id={
+                                                            innerSubField.name
+                                                          }
+                                                          name={
+                                                            innerSubField.name
+                                                          }
+                                                          type="text"
+                                                          className="w-1/2"
+                                                          value={
+                                                            innerSubField.state
+                                                              .value
+                                                          }
+                                                          onChange={(e) =>
+                                                            innerSubField.handleChange(
+                                                              e.target.value
+                                                            )
+                                                          }
+                                                          onBlur={
+                                                            innerSubField.handleBlur
+                                                          }
+                                                        />
+                                                      </Label>
+
+                                                      <FieldInfo
+                                                        field={innerSubField}
+                                                      />
+                                                    </div>
+                                                  );
+                                                }}
+                                              </form.Field>
+                                              <form.Field
+                                                name={`sections[${index}].sessions[${i}].sessionPosition`}
+                                              >
+                                                {(innerSubField) => {
+                                                  return (
+                                                    <div>
+                                                      <Label
+                                                        htmlFor={
+                                                          innerSubField.name
+                                                        }
+                                                        className="flex gap-2 items-center"
+                                                      >
+                                                        <div className="w-fit">
+                                                          Позиция:
+                                                        </div>
+                                                        <Input
+                                                          id={
+                                                            innerSubField.name
+                                                          }
+                                                          name={
+                                                            innerSubField.name
+                                                          }
+                                                          type="number"
+                                                          min={0}
+                                                          className="w-1/2"
+                                                          value={
+                                                            innerSubField.state
+                                                              .value
+                                                          }
+                                                          onChange={(e) =>
+                                                            innerSubField.handleChange(
+                                                              Number(
+                                                                e.target.value
+                                                              )
+                                                            )
+                                                          }
+                                                          onBlur={
+                                                            innerSubField.handleBlur
+                                                          }
+                                                        />
+                                                      </Label>
+
+                                                      <FieldInfo
+                                                        field={innerSubField}
+                                                      />
+                                                    </div>
+                                                  );
+                                                }}
+                                              </form.Field>
+                                              <form.Field
+                                                name={`sections[${index}].sessions[${i}].videoUrl`}
+                                              >
+                                                {(innerSubField) => {
+                                                  return (
+                                                    <div>
+                                                      <Label
+                                                        htmlFor={
+                                                          innerSubField.name
+                                                        }
+                                                        className="flex gap-2 items-center"
+                                                      >
+                                                        <div className="w-fit">
+                                                          Видео линк:
+                                                        </div>
+                                                        <Input
+                                                          id={
+                                                            innerSubField.name
+                                                          }
+                                                          name={
+                                                            innerSubField.name
+                                                          }
+                                                          type="text"
+                                                          className="w-1/2"
+                                                          value={
+                                                            innerSubField.state
+                                                              .value
+                                                          }
+                                                          onChange={(e) =>
+                                                            innerSubField.handleChange(
+                                                              e.target.value
+                                                            )
+                                                          }
+                                                          onBlur={
+                                                            innerSubField.handleBlur
+                                                          }
+                                                        />
+                                                      </Label>
+
+                                                      <FieldInfo
+                                                        field={innerSubField}
+                                                      />
+                                                    </div>
+                                                  );
+                                                }}
+                                              </form.Field>
+                                              <form.Field
+                                                name={`sections[${index}].sessions[${i}].description`}
+                                              >
+                                                {(innerSubField) => {
+                                                  return (
+                                                    <div>
+                                                      <Label
+                                                        htmlFor={
+                                                          innerSubField.name
+                                                        }
+                                                        className="flex gap-2 items-center"
+                                                      >
+                                                        <div className="w-fit">
+                                                          Описание:
+                                                        </div>
+                                                        <Textarea
+                                                          id={
+                                                            innerSubField.name
+                                                          }
+                                                          name={
+                                                            innerSubField.name
+                                                          }
+                                                          className="w-1/2"
+                                                          value={
+                                                            innerSubField.state
+                                                              .value
+                                                          }
+                                                          onChange={(e) =>
+                                                            innerSubField.handleChange(
+                                                              e.target.value
+                                                            )
+                                                          }
+                                                          onBlur={
+                                                            innerSubField.handleBlur
+                                                          }
+                                                        />
+                                                      </Label>
+                                                      <FieldInfo
+                                                        field={innerSubField}
+                                                      />
+                                                    </div>
+                                                  );
+                                                }}
+                                              </form.Field>
+                                            </div>
+                                            <Button
+                                              className="rounded-full"
+                                              onClick={() =>
+                                                subField.removeValue(i)
+                                              }
+                                              type="button"
+                                            >
+                                              <MinusCircle /> Премахни
+                                            </Button>
+                                          </div>
+                                        );
+                                      }
+                                    )}
+                                    <Button
+                                      onClick={() =>
+                                        subField.pushValue({
+                                          sessionTitle: "",
+                                          sessionPosition: 0,
+                                          videoUrl: "",
+                                          description: "",
+                                        })
+                                      }
+                                      type="button"
+                                    >
+                                      <CirclePlus /> Сесия
+                                    </Button>
+                                  </div>
+                                );
+                              }}
+                            </form.Field>
+                          </div>
                         </div>
                       );
                     })}
@@ -197,7 +506,7 @@ export const EditSectionsForm = () => {
                 <Button
                   type={"submit"}
                   disabled={!canSubmit}
-                  className={"w-full"}
+                  className={"w-full mt-4"}
                 >
                   {isSubmitting ? (
                     "..."

@@ -14,7 +14,6 @@ import {
   Loader,
   Menu,
   Shapes,
-  Video,
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -122,22 +121,7 @@ export default function EditWorkoutNav() {
                           size="sm"
                           className="w-full justify-start"
                         >
-                          <LayoutList /> Секции
-                        </Button>
-                      </Link>
-                      <Link
-                        to="/admin"
-                        search={{
-                          action: "edit",
-                          edit: "session",
-                        }}
-                      >
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="w-full justify-start"
-                        >
-                          <Video /> Сесии
+                          <LayoutList /> Секции и Сесии
                         </Button>
                       </Link>
                       <DeleteWorkoutBtn workoutPlanId={plan.workoutPlanId} />
