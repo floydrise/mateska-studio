@@ -133,7 +133,7 @@ export const EditSectionsForm = () => {
                     {field.state.value!.map((_, index) => {
                       return (
                         <div key={index} className="border p-4 rounded-2xl">
-                          <h1
+                          <span
                             onClick={() =>
                               setExpandedSections((prev) => ({
                                 ...prev,
@@ -143,9 +143,18 @@ export const EditSectionsForm = () => {
                             }
                             className="font-semibold flex gap-1 justify-between text-xl mb-2 hover:cursor-pointer"
                           >
-                            <span className="flex items-center gap-1">
-                              <Boxes /> Секция #{index + 1}
-                            </span>
+                            <div className="flex items-center gap-4">
+                              <span className="flex items-center gap-1">
+                                <Boxes /> Секция #{index + 1}
+                              </span>
+                              <Button
+                                className="rounded-full w-fit"
+                                onClick={() => field.removeValue(index)}
+                                type="button"
+                              >
+                                <MinusCircle /> Премахни
+                              </Button>
+                            </div>
                             <ChevronDown
                               className={`${
                                 expandedSections[`${index}-${index}`]
@@ -153,7 +162,7 @@ export const EditSectionsForm = () => {
                                   : "transition duration-500 rotate-0"
                               }`}
                             />
-                          </h1>
+                          </span>
                           <div
                             className={`flex flex-col gap-2 overflow-hidden transition-all duration-700 ease-in-out ${
                               expandedSections[`${index}-${index}`]
@@ -469,7 +478,7 @@ export const EditSectionsForm = () => {
                                               }
                                               type="button"
                                             >
-                                              <MinusCircle /> Премахни
+                                              <MinusCircle /> Премахни сесия
                                             </Button>
                                           </div>
                                         );
@@ -496,6 +505,19 @@ export const EditSectionsForm = () => {
                         </div>
                       );
                     })}
+                    <Button
+                      onClick={() =>
+                        field.pushValue({
+                          sectionTitle: "",
+                          sectionPosition: 0,
+                          sessions: [],
+                        })
+                      }
+                      type="button"
+                      className="w-fit"
+                    >
+                      <CirclePlus /> Секция
+                    </Button>
                   </div>
                 );
               }}
