@@ -11,6 +11,7 @@ import {
 import cardsRoute from "./workout_cards";
 import plansRoute from "./workout_plans";
 import sessionsRoute from "./workout_sessions";
+import sectionsRoute from "./workout_sections";
 import { z } from "zod/v4";
 import { asc, eq } from "drizzle-orm";
 import { authMiddleware } from "../middleware/auth-middleware";
@@ -92,6 +93,7 @@ const app = new Hono()
           sectionId: workoutSectionTable.sectionId,
           sectionTitle: workoutSectionTable.sectionTitle,
           sectionPosition: workoutSectionTable.position,
+          sessionId: workoutSessionsTable.workoutSessionId,
           sessionTitle: workoutSessionsTable.sessionTitle,
           sessionVideoUrl: workoutSessionsTable.sessionVideoUrl,
           sessionDescription: workoutSessionsTable.sessionDescription,
@@ -113,6 +115,7 @@ const app = new Hono()
         sectionTitle: string;
         sectionPosition: number;
         sessions: {
+          sessionId: number;
           sessionTitle: string;
           videoUrl: string;
           description: string;
@@ -134,6 +137,7 @@ const app = new Hono()
         }
 
         section.sessions.push({
+          sessionId: row.sessionId,
           sessionTitle: row.sessionTitle,
           videoUrl: row.sessionVideoUrl,
           description: row.sessionDescription,
@@ -146,6 +150,7 @@ const app = new Hono()
   )
   .route("/plans", plansRoute)
   .route("/cards", cardsRoute)
-  .route("/sessions", sessionsRoute);
+  .route("/sessions", sessionsRoute)
+  .route("/sections", sectionsRoute);
 
 export default app;

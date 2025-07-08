@@ -86,11 +86,13 @@ export const PatchSectionSchema = createUpdateSchema(workoutSectionTable, {
 
 export const PatchSectionsSchema = z.array(
   z.object({
+    sectionId: z.number().optional(),
     sectionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
     sectionPosition: z.number().positive({ error: "Трябва да е повече от 0" }),
     sessions: z
       .array(
         z.object({
+          sessionId: z.number().optional(),
           sessionTitle: z.string().min(3, "Трябва да е най-малко 3 букви"),
           sessionPosition: z
             .number()

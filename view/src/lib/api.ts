@@ -3,7 +3,11 @@ import type { AppType } from "../../../server";
 import { hc } from "hono/client";
 import { authClient } from "./auth-client";
 import type { Subscription } from "@better-auth/stripe";
-import type { PatchCardType, WorkoutFormType } from "../../../shared/types";
+import type {
+  PatchCardType,
+  PatchSectionFormType,
+  WorkoutFormType,
+} from "../../../shared/types";
 
 const api = hc<AppType>("/").api;
 
@@ -154,6 +158,28 @@ export const fetchSectionsByPlanId = async (planId: number) => {
     } else {
       throw new Error("проблем при извличането на секциите");
     }
+  }
+  return await res.json();
+};
+
+export const putSectionsByPlanId = async ({
+  planId,
+  data,
+}: {
+  planId: number;
+  data: PatchSectionFormType;
+}) => {
+  const res = await api.workouts.sections[":planId"].$put({
+    param: {
+      planId: String(planId),
+    },
+    json: {
+      sections: data.sections,
+    },
+  });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.msg);
   }
   return await res.json();
 };

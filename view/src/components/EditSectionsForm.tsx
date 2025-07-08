@@ -1,6 +1,6 @@
-import { getUserWorkoutPlanQueryOptions } from "@/lib/api";
+import { getUserWorkoutPlanQueryOptions, putSectionsByPlanId } from "@/lib/api";
 import { useForm, type AnyFieldApi } from "@tanstack/react-form";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { PatchSectionsFormSchema } from "../../../server/schemas/zod_schemas";
 import type { PatchSectionFormType } from "../../../shared/types";
@@ -55,25 +55,21 @@ export const EditSectionsForm = () => {
   const queryOptions = getUserWorkoutPlanQueryOptions(String(planId));
   const { data, isLoading, error, isError } = useQuery(queryOptions);
 
-  /* const updatedMutation = useMutation({
+  const updatedMutation = useMutation({
     mutationFn: ({
       planId,
-      sectionId,
       updatedSection,
     }: {
       planId: number;
-      sectionId: number;
-      updatedSection: PatchSectionType;
-    }) => patchWorkoutSections({ planId, sectionId, updatedSection }),
+      updatedSection: PatchSectionFormType;
+    }) => putSectionsByPlanId({ planId, data: updatedSection }),
     onError: (err) => {
       toast.error(err.message);
     },
-    onSuccess: (data) => {
-      toast.success(
-        "Успешно ъпдейтна секция: " + data.updatedSection.sectionTitle
-      );
+    onSuccess: () => {
+      toast.success("Успешно редактира информацията");
     },
-  }); */
+  });
 
   const defaultValues: PatchSectionFormType = {
     sections: data?.sections ?? [],
@@ -85,7 +81,7 @@ export const EditSectionsForm = () => {
       onChange: PatchSectionsFormSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
+      updatedMutation.mutate({ planId: planId!, updatedSection: value });
     },
   });
 
@@ -264,7 +260,8 @@ export const EditSectionsForm = () => {
                                             >
                                               <span className="flex items-center gap-1">
                                                 <Flower />{" "}
-                                                {innerData.sessionTitle}
+                                                {innerData.sessionTitle ||
+                                                  "Нова сесия"}
                                               </span>
                                               <ChevronDown
                                                 className={`${
