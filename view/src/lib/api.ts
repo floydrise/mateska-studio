@@ -206,6 +206,19 @@ export const deleteSection = async ({
   return await res.json();
 };
 
+export const deleteSession = async (sessionId: number) => {
+  const res = await api.workouts.sessions[":sessionId"].$delete({
+    param: {
+      sessionId: String(sessionId),
+    },
+  });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.msg);
+  }
+  return await res.json();
+};
+
 //  QueryOptions
 export const getWorkoutCardsQueryOptions = queryOptions({
   queryKey: ["fetch-workout-cards"],

@@ -1,5 +1,6 @@
 import {
   deleteSection,
+  deleteSession,
   getUserWorkoutPlanQueryOptions,
   putSectionsByPlanId,
 } from "@/lib/api";
@@ -40,6 +41,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 const routeApi = getRouteApi("/admin");
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
@@ -54,8 +56,6 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
     </>
   );
 }
-
-// TODO: Create delete section
 
 export const EditSectionsForm = () => {
   const queryClient = useQueryClient();
@@ -100,7 +100,23 @@ export const EditSectionsForm = () => {
       toast.error(err.message);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["get-user-workout", String(planId!)],
+      });
       toast.success("Успешно редактира информацията");
+    },
+  });
+  const deleteSessionMutation = useMutation({
+    mutationFn: ({ sessionId }: { sessionId: number }) =>
+      deleteSession(sessionId),
+    onError: (err) => {
+      toast.error(err.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["get-user-workout", String(planId!)],
+      });
+      toast.success("Успешно изтри сесия");
     },
   });
 
@@ -159,7 +175,7 @@ export const EditSectionsForm = () => {
               children={(field) => {
                 return (
                   <div className="flex flex-col gap-4">
-                    {field.state.value!.map((innerData, index) => {
+                    {field.state.value!.map((sectionData, index) => {
                       return (
                         <div key={index} className="border p-4 rounded-2xl">
                           <span className="font-semibold flex gap-1 justify-between text-xl mb-2">
@@ -181,7 +197,7 @@ export const EditSectionsForm = () => {
                                   <Ellipsis />
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
-                                  {innerData.sectionId ? (
+                                  {sectionData.sectionId ? (
                                     <DropdownMenuItem asChild>
                                       <Button
                                         className="w-full"
@@ -190,7 +206,7 @@ export const EditSectionsForm = () => {
                                         onClick={() =>
                                           deleteSectionMutation.mutate({
                                             planId: planId!,
-                                            sectionId: innerData.sectionId!,
+                                            sectionId: sectionData.sectionId!,
                                           })
                                         }
                                       >
@@ -310,7 +326,7 @@ export const EditSectionsForm = () => {
                                       <Video /> Сесии
                                     </h1>
                                     {subField.state.value.map(
-                                      (innerData, i) => {
+                                      (sessionData, i) => {
                                         return (
                                           <div
                                             key={i}
@@ -328,7 +344,7 @@ export const EditSectionsForm = () => {
                                             >
                                               <span className="flex items-center gap-1">
                                                 <Flower />{" "}
-                                                {innerData.sessionTitle ||
+                                                {sessionData.sessionTitle ||
                                                   "Нова сесия"}
                                               </span>
                                               <ChevronDown
@@ -536,15 +552,28 @@ export const EditSectionsForm = () => {
                                                 }}
                                               </form.Field>
                                             </div>
-                                            <Button
-                                              className="rounded-full"
-                                              onClick={() =>
-                                                subField.removeValue(i)
-                                              }
-                                              type="button"
-                                            >
-                                              <MinusCircle /> Премахни сесия
-                                            </Button>
+                                            {sessionData.sessionId ? (
+                                              <Button
+                                                type="button"
+                                                onClick={() =>
+                                                  deleteSessionMutation.mutate({
+                                                    sessionId:
+                                                      sessionData.sessionId!,
+                                                  })
+                                                }
+                                              >
+                                                <Trash /> Изтрии
+                                              </Button>
+                                            ) : (
+                                              <Button
+                                                onClick={() =>
+                                                  subField.removeValue(i)
+                                                }
+                                                type="button"
+                                              >
+                                                <MinusCircle /> Премахни сесия
+                                              </Button>
+                                            )}
                                           </div>
                                         );
                                       }
