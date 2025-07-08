@@ -184,6 +184,28 @@ export const putSectionsByPlanId = async ({
   return await res.json();
 };
 
+export const deleteSection = async ({
+  planId,
+  sectionId,
+}: {
+  planId: number;
+  sectionId: number;
+}) => {
+  const res = await api.workouts.plans[":planId"].sections[
+    ":sectionId"
+  ].$delete({
+    param: {
+      planId: String(planId),
+      sectionId: String(sectionId),
+    },
+  });
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.msg);
+  }
+  return await res.json();
+};
+
 //  QueryOptions
 export const getWorkoutCardsQueryOptions = queryOptions({
   queryKey: ["fetch-workout-cards"],

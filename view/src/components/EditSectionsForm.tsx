@@ -1,6 +1,10 @@
-import { getUserWorkoutPlanQueryOptions, putSectionsByPlanId } from "@/lib/api";
+import {
+  deleteSection,
+  getUserWorkoutPlanQueryOptions,
+  putSectionsByPlanId,
+} from "@/lib/api";
 import { useForm, type AnyFieldApi } from "@tanstack/react-form";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { PatchSectionsFormSchema } from "../../../server/schemas/zod_schemas";
 import type { PatchSectionFormType } from "../../../shared/types";
@@ -16,11 +20,13 @@ import {
   Boxes,
   ChevronDown,
   CirclePlus,
+  Ellipsis,
   Eraser,
   Flower,
   Loader,
   MinusCircle,
   Send,
+  Trash,
   Video,
 } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
@@ -28,7 +34,12 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { Textarea } from "./ui/textarea";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 const routeApi = getRouteApi("/admin");
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
@@ -44,7 +55,10 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
   );
 }
 
+// TODO: Create delete section
+
 export const EditSectionsForm = () => {
+  const queryClient = useQueryClient();
   const [expandedSessions, setExpandedSessions] = useState<
     Record<string, boolean>
   >({});
@@ -55,6 +69,25 @@ export const EditSectionsForm = () => {
   const queryOptions = getUserWorkoutPlanQueryOptions(String(planId));
   const { data, isLoading, error, isError } = useQuery(queryOptions);
 
+  // Mutations
+  const deleteSectionMutation = useMutation({
+    mutationFn: ({
+      planId,
+      sectionId,
+    }: {
+      planId: number;
+      sectionId: number;
+    }) => deleteSection({ planId, sectionId }),
+    onError: (err) => {
+      toast.error(err.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["get-user-workout", String(planId!)],
+      });
+      toast.success("Успешно изтри секция");
+    },
+  });
   const updatedMutation = useMutation({
     mutationFn: ({
       planId,
@@ -126,33 +159,68 @@ export const EditSectionsForm = () => {
               children={(field) => {
                 return (
                   <div className="flex flex-col gap-4">
-                    {field.state.value!.map((_, index) => {
+                    {field.state.value!.map((innerData, index) => {
                       return (
                         <div key={index} className="border p-4 rounded-2xl">
-                          <span
-                            onClick={() =>
-                              setExpandedSections((prev) => ({
-                                ...prev,
-                                [`${index}-${index}`]:
-                                  !prev[`${index}-${index}`],
-                              }))
-                            }
-                            className="font-semibold flex gap-1 justify-between text-xl mb-2 hover:cursor-pointer"
-                          >
+                          <span className="font-semibold flex gap-1 justify-between text-xl mb-2">
                             <div className="flex items-center gap-4">
-                              <span className="flex items-center gap-1">
+                              <span
+                                onClick={() =>
+                                  setExpandedSections((prev) => ({
+                                    ...prev,
+                                    [`${index}-${index}`]:
+                                      !prev[`${index}-${index}`],
+                                  }))
+                                }
+                                className="flex items-center gap-1 hover:cursor-pointer"
+                              >
                                 <Boxes /> Секция #{index + 1}
                               </span>
-                              <Button
-                                className="rounded-full w-fit"
-                                onClick={() => field.removeValue(index)}
-                                type="button"
-                              >
-                                <MinusCircle /> Премахни
-                              </Button>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger className="hover:cursor-pointer">
+                                  <Ellipsis />
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                  {innerData.sectionId ? (
+                                    <DropdownMenuItem asChild>
+                                      <Button
+                                        className="w-full"
+                                        variant={"ghost"}
+                                        type="button"
+                                        onClick={() =>
+                                          deleteSectionMutation.mutate({
+                                            planId: planId!,
+                                            sectionId: innerData.sectionId!,
+                                          })
+                                        }
+                                      >
+                                        <Trash /> Изтрии
+                                      </Button>
+                                    </DropdownMenuItem>
+                                  ) : (
+                                    <DropdownMenuItem asChild>
+                                      <Button
+                                        className="w-full"
+                                        variant={"ghost"}
+                                        onClick={() => field.removeValue(index)}
+                                        type="button"
+                                      >
+                                        <MinusCircle /> Премахни
+                                      </Button>
+                                    </DropdownMenuItem>
+                                  )}
+                                </DropdownMenuContent>
+                              </DropdownMenu>
                             </div>
                             <ChevronDown
-                              className={`${
+                              onClick={() =>
+                                setExpandedSections((prev) => ({
+                                  ...prev,
+                                  [`${index}-${index}`]:
+                                    !prev[`${index}-${index}`],
+                                }))
+                              }
+                              className={`hover:cursor-pointer ${
                                 expandedSections[`${index}-${index}`]
                                   ? "transition duration-500 rotate-180"
                                   : "transition duration-500 rotate-0"
