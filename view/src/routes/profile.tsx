@@ -32,6 +32,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
 import { toast } from "sonner";
+import { TDEECalc } from "@/components/TDEECalc";
 
 export const Route = createFileRoute("/profile")({
   component: RouteComponent,
@@ -75,7 +76,7 @@ function RouteComponent() {
   return (
     <section className="mt-10 flex flex-col justify-center items-center w-full">
       <div>
-        <div className="">
+        <section className="">
           <h1 className="text-2xl md:text-4xl font-bold mb-2">Абонамент:</h1>
           {isLoading ? (
             <Skeleton className="h-130 w-86" />
@@ -89,8 +90,12 @@ function RouteComponent() {
               </Link>
             </span>
           )}
-        </div>
-        <div className="max-w-fit my-10">
+        </section>
+        <section className="my-4 w-full">
+          <h1 className="text-2xl md:text-4xl font-bold mb-2">Калкулатор:</h1>
+          <TDEECalc />
+        </section>
+        <section className="max-w-fit my-10">
           <h1 className="text-2xl md:text-4xl font-bold">Данни:</h1>
           {isPending ? (
             <Skeleton className="h-40 w-80" />
@@ -214,7 +219,7 @@ function RouteComponent() {
               </div>
             </div>
           )}
-        </div>
+        </section>
       </div>
     </section>
   );

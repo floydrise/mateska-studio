@@ -137,10 +137,16 @@ const Testimonials = () => {
             </motion.div>
           </div>
           <div className="flex gap-6 pt-5">
-            <Button className="h-8  rounded" onClick={handleprev}>
+            <Button
+              className="h-8 transition duration-500 hover:rotate-10 rounded"
+              onClick={handleprev}
+            >
               <ArrowLeft />
             </Button>
-            <Button className="h-8 rounded " onClick={handlenext}>
+            <Button
+              className="h-8 transition duration-500 hover:-rotate-10 rounded"
+              onClick={handlenext}
+            >
               <ArrowRight />
             </Button>
           </div>
