@@ -93,7 +93,7 @@ export default function Footer() {
               <p>к-с "Славейков"</p>
               <p>Бургас, 8000</p>
               <p>Телефон: (123) 456-7890</p>
-              <p>Имейл: hello@example.com</p>
+              <p>Имейл: aleksandramateskasport@gmail.com</p>
             </address>
           </div>
           <div className="relative">

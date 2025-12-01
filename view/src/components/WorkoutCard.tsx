@@ -90,7 +90,14 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
                   cancelUrl: "http://localhost:5173/#products",
                   subscriptionId: subData?.stripeSubscriptionId ?? undefined,
                 });
-                if (error) toast.error("Изникна грешка: " + error.message);
+                if (error)
+                  toast.error(
+                    `Изникна грешка: ${
+                      error.message?.includes("there are no changes to confirm")
+                        ? "Вече сте абониран към този план"
+                        : error.message
+                    }`
+                  );
               } catch (error) {
                 console.log(error);
               }

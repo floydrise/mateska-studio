@@ -34,9 +34,12 @@ const fetchUserWorkout = async (workoutPlanId: string) => {
 };
 
 export const fetchUserActiveSubscriptions = async () => {
-  const { data: subscriptions } = await authClient.subscription.list();
+  const { data: subscriptions, error } = await authClient.subscription.list();
+  if (error) throw new Error(error.message);
   if (subscriptions?.length === 0) return null;
-  const activeSubscription = subscriptions!.find(
+
+  // @ts-ignore
+  const activeSubscription = subscriptions.find(
     (sub) => sub.status === "active" || sub.status === "trialing"
   );
   return activeSubscription as Subscription;

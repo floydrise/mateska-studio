@@ -8,6 +8,7 @@ import { routeTree } from "./routeTree.gen";
 import "./styles.css";
 import reportWebVitals from "./reportWebVitals.ts";
 import { ThemeProvider } from "./components/theme-provider.tsx";
+import { NotFound } from "./components/NotFound.tsx";
 // Create a client
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ const router = createRouter({
   scrollRestoration: true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
+  defaultNotFoundComponent: () => <NotFound />,
 });
 
 // Register the router instance for type safety
