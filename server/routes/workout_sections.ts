@@ -72,7 +72,15 @@ const app = new Hono().put(
       return c.json({ msg: "Successfully updated info" });
     } catch (error) {
       console.error(error);
-      return c.json({ msg: error }, 500);
+      return c.json(
+        {
+          msg:
+            error instanceof Error
+              ? error.message
+              : "Грешка от сървъра - /api/workouts/sections",
+        },
+        500
+      );
     }
   }
 );

@@ -66,7 +66,9 @@ function RouteComponent() {
   const [password, setPassword] = useState("");
   const { data: authData, isPending } = authClient.useSession();
   const { data: accountsList } = useQuery(listUserAccountsQueryOptions);
-  let hasPassword = accountsList?.find((acc) => acc.provider === "credential");
+  let hasPassword = accountsList?.find(
+    (acc) => acc.providerId === "credential"
+  );
   const user = authData?.user;
   const navigate = useNavigate();
   const { data, isLoading, isError, error } = useQuery(

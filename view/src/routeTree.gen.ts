@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WorkoutsRouteImport } from './routes/workouts'
 import { Route as Terms_of_useRouteImport } from './routes/terms_of_use'
 import { Route as Reset_passwordRouteImport } from './routes/reset_password'
 import { Route as RegisterRouteImport } from './routes/register'
@@ -21,11 +20,6 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WorkoutWorkoutIdRouteImport } from './routes/workout.$workoutId'
 
-const WorkoutsRoute = WorkoutsRouteImport.update({
-  id: '/workouts',
-  path: '/workouts',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const Terms_of_useRoute = Terms_of_useRouteImport.update({
   id: '/terms_of_use',
   path: '/terms_of_use',
@@ -87,7 +81,6 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/reset_password': typeof Reset_passwordRoute
   '/terms_of_use': typeof Terms_of_useRoute
-  '/workouts': typeof WorkoutsRoute
   '/workout/$workoutId': typeof WorkoutWorkoutIdRoute
 }
 export interface FileRoutesByTo {
@@ -100,7 +93,6 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/reset_password': typeof Reset_passwordRoute
   '/terms_of_use': typeof Terms_of_useRoute
-  '/workouts': typeof WorkoutsRoute
   '/workout/$workoutId': typeof WorkoutWorkoutIdRoute
 }
 export interface FileRoutesById {
@@ -114,7 +106,6 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/reset_password': typeof Reset_passwordRoute
   '/terms_of_use': typeof Terms_of_useRoute
-  '/workouts': typeof WorkoutsRoute
   '/workout/$workoutId': typeof WorkoutWorkoutIdRoute
 }
 export interface FileRouteTypes {
@@ -129,7 +120,6 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset_password'
     | '/terms_of_use'
-    | '/workouts'
     | '/workout/$workoutId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -142,7 +132,6 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset_password'
     | '/terms_of_use'
-    | '/workouts'
     | '/workout/$workoutId'
   id:
     | '__root__'
@@ -155,7 +144,6 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset_password'
     | '/terms_of_use'
-    | '/workouts'
     | '/workout/$workoutId'
   fileRoutesById: FileRoutesById
 }
@@ -169,19 +157,11 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   Reset_passwordRoute: typeof Reset_passwordRoute
   Terms_of_useRoute: typeof Terms_of_useRoute
-  WorkoutsRoute: typeof WorkoutsRoute
   WorkoutWorkoutIdRoute: typeof WorkoutWorkoutIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/workouts': {
-      id: '/workouts'
-      path: '/workouts'
-      fullPath: '/workouts'
-      preLoaderRoute: typeof WorkoutsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/terms_of_use': {
       id: '/terms_of_use'
       path: '/terms_of_use'
@@ -265,7 +245,6 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   Reset_passwordRoute: Reset_passwordRoute,
   Terms_of_useRoute: Terms_of_useRoute,
-  WorkoutsRoute: WorkoutsRoute,
   WorkoutWorkoutIdRoute: WorkoutWorkoutIdRoute,
 }
 export const routeTree = rootRouteImport

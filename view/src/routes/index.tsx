@@ -110,7 +110,7 @@ function App() {
           transition={{
             duration: 1.5,
           }}
-          className="w-fit animate-rotate-border rounded-xl bg-conic/[from_var(--border-angle)] from-background via-sky-500 to-background from-80% via-90% to-100% p-[2px] dark:p-px"
+          className="w-fit animate-rotate-border rounded-xl bg-conic/[from_var(--border-angle)] from-background via-sky-500 to-background from-80% via-90% to-100% p-0.5 dark:p-px"
         >
           <img
             src="https://mateskasport.com/wp-content/uploads/2023/08/3.jpg"
