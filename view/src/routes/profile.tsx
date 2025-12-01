@@ -1,5 +1,4 @@
 import SubscriptionCard from "@/components/SubscriptionCard";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   getAuthDataQueryOptions,
@@ -15,24 +14,9 @@ import {
   redirect,
   useNavigate,
 } from "@tanstack/react-router";
-import { format } from "date-fns";
-import { Calendar, LogOut, Mail, Trash, User } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
-import { toast } from "sonner";
 import { TDEECalc } from "@/components/TDEECalc";
+import { UserInfoSection } from "@/components/UserInfoSection";
 
 export const Route = createFileRoute("/profile")({
   component: RouteComponent,
@@ -64,26 +48,37 @@ export const Route = createFileRoute("/profile")({
 
 function RouteComponent() {
   const [password, setPassword] = useState("");
+
   const { data: authData, isPending } = authClient.useSession();
   const { data: accountsList } = useQuery(listUserAccountsQueryOptions);
-  let hasPassword = accountsList?.find(
+  const hasPassword = accountsList?.some(
     (acc) => acc.providerId === "credential"
   );
+
   const user = authData?.user;
   const navigate = useNavigate();
-  const { data, isLoading, isError, error } = useQuery(
-    getUserSubscriptionsQueryOptions
-  );
+
+  const {
+    data: subscription,
+    isLoading,
+    isError,
+    error,
+  } = useQuery(getUserSubscriptionsQueryOptions);
+
   if (isError) console.log("Изинка грешка: " + error.message);
+
   return (
-    <section className="mt-10 flex flex-col justify-center items-center w-full">
-      <div>
-        <section className="">
+    <section className="my-10 flex justify-center">
+      {/* === THREE SECTIONS WRAPPED HERE === */}
+      <div className="w-full xl:mx-10 flex flex-col justify-center items-center xl:items-start xl:flex-row gap-10">
+        {/* АБОНАМЕНТ */}
+        <section className="flex-1">
           <h1 className="text-2xl md:text-4xl font-bold mb-2">Абонамент:</h1>
+
           {isLoading ? (
-            <Skeleton className="h-130 w-86" />
-          ) : data ? (
-            <SubscriptionCard subscription={data as Subscription} />
+            <Skeleton className="h-130 w-full" />
+          ) : subscription ? (
+            <SubscriptionCard subscription={subscription as Subscription} />
           ) : (
             <span className="text-muted-foreground">
               Все още нямате абонаменти. Вземи от{" "}
@@ -93,133 +88,27 @@ function RouteComponent() {
             </span>
           )}
         </section>
-        <section className="my-4 w-full">
+
+        {/* КАЛКУЛАТОР */}
+        <section className="flex-1">
           <h1 className="text-2xl md:text-4xl font-bold mb-2">Калкулатор:</h1>
           <TDEECalc />
         </section>
-        <section className="max-w-fit my-10">
-          <h1 className="text-2xl md:text-4xl font-bold">Данни:</h1>
+
+        {/* ДАННИ */}
+        <section className="flex-1">
+          <h1 className="text-2xl md:text-4xl font-bold mb-2">Данни:</h1>
+
           {isPending ? (
-            <Skeleton className="h-40 w-80" />
+            <Skeleton className="h-40 w-full" />
           ) : (
-            <div>
-              <div>
-                <p className="flex items-center text-xl gap-1 text-muted-foreground">
-                  <User /> Име: {user?.name}
-                </p>
-                <p className="flex items-center text-xl gap-1 text-muted-foreground">
-                  <Mail /> Email: {user?.email}
-                </p>
-                <p className="flex items-center text-xl gap-1 text-muted-foreground">
-                  <Calendar /> Регистриран на:{" "}
-                  {format(user?.createdAt!, "dd/MM/yyyy")}
-                </p>
-              </div>
-              <div className="w-full flex justify-between gap-2 mt-2">
-                <Button
-                  onClick={async () =>
-                    authClient.signOut({
-                      fetchOptions: {
-                        onSuccess: () => navigate({ to: "/" }),
-                      },
-                    })
-                  }
-                  variant={"outline"}
-                  className="flex-1 transition duration-300 hover:scale-105"
-                >
-                  <LogOut /> Излез
-                </Button>
-                <AlertDialog>
-                  <AlertDialogTrigger
-                    asChild
-                    className="transition duration-300 hover:scale-105"
-                  >
-                    <Button variant={"destructive"}>
-                      <Trash /> Изтрии
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Напълно сигурен/а ли сте?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription className={"text-red-500"}>
-                        Това действие{" "}
-                        <span className={"underline italic"}>НЕ</span> може да
-                        бъде отменено. Това ще изтрие акаунтът Ви и ще изтрие
-                        всички данни от сървърите ни.
-                      </AlertDialogDescription>
-                      <br />
-                      <AlertDialogDescription className={"font-semibold"}>
-                        {hasPassword ? (
-                          <>
-                            <Label htmlFor="password" className="text-lg">
-                              Потвърдете паролата си:
-                            </Label>
-                            <Input
-                              type="text"
-                              id="password"
-                              placeholder="password"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <span>
-                              Ще ви бъде изпратен линк, моля кликнете го и
-                              акаунтът ви ще бъде изтрит
-                            </span>
-                          </>
-                        ) : (
-                          <span>
-                            Ще ви бъде изпратен линк, моля кликнете го и
-                            акаунтът ви ще бъде изтрит
-                          </span>
-                        )}
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Отмени</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={async () => {
-                          if (hasPassword) {
-                            try {
-                              const { error, data } =
-                                await authClient.deleteUser({
-                                  password: password,
-                                  callbackURL: "http://localhost:5173/goodbye",
-                                });
-                              if (error) {
-                                toast.error(
-                                  error.message === "Invalid password"
-                                    ? "Невалидна парола"
-                                    : error.message
-                                );
-                                setPassword("");
-                              }
-                              if (data?.success)
-                                toast.success("Проверете пощата си");
-                            } catch (error) {
-                              console.log(error);
-                            }
-                          } else {
-                            const { data, error } = await authClient.deleteUser(
-                              {
-                                callbackURL: "http://localhost:5173/goodbye",
-                              }
-                            );
-                            if (error) toast.error(error.message);
-                            if (data?.success)
-                              toast.success("Проверете пощата си");
-                          }
-                          // navigate({ to: "/goodbye" });
-                        }}
-                      >
-                        Продължи
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </div>
-            </div>
+            <UserInfoSection
+              user={user!}
+              hasPassword={!!hasPassword}
+              password={password}
+              setPassword={setPassword}
+              navigate={navigate}
+            />
           )}
         </section>
       </div>

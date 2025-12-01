@@ -137,11 +137,14 @@ export const TDEECalc = () => {
   });
 
   return (
-    <Card className="max-w-sm">
+    <Card className="max-w-xs md:max-w-full">
       <CardHeader>
-        <CardTitle>Дневен прием на калории и BMI</CardTitle>
+        <CardTitle className="lg:text-2xl font-bold">
+          Дневен прием на калории и BMI
+        </CardTitle>
         <CardDescription>
-          Попълни полетата и разбери колко калории на ден да консумираш и BMI
+          Попълни полетата и разбери колко калории на ден да консумираш и BMI.
+          Мерни единици - кг. и см.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -195,7 +198,6 @@ export const TDEECalc = () => {
                       Възраст:
                     </Label>
                     <Input
-                      className="w-40"
                       id={field.name}
                       name={field.name}
                       value={field.state.value}
@@ -219,10 +221,9 @@ export const TDEECalc = () => {
                 <>
                   <div className="flex gap-2">
                     <Label htmlFor={field.name} className="text-lg">
-                      Тегло (kg):
+                      Тегло:
                     </Label>
                     <Input
-                      className="w-40"
                       id={field.name}
                       name={field.name}
                       value={field.state.value}
@@ -246,10 +247,9 @@ export const TDEECalc = () => {
                 <>
                   <div className="flex gap-2">
                     <Label htmlFor={field.name} className="text-lg">
-                      Височина (cm):
+                      Височина:
                     </Label>
                     <Input
-                      className="w-40"
                       id={field.name}
                       name={field.name}
                       value={field.state.value}
@@ -280,7 +280,6 @@ export const TDEECalc = () => {
                       onValueChange={field.handleChange}
                     >
                       <SelectTrigger
-                        className="w-40"
                         onBlur={field.handleBlur}
                         id={field.name}
                         name={field.name}
@@ -313,7 +312,7 @@ export const TDEECalc = () => {
             <Button
               type="button"
               variant={"outline"}
-              className="transition duration-500 hover:-rotate-10"
+              className="transition duration-500 hover:-rotate-5 flex-1"
               onClick={() => {
                 form.reset();
                 setCals(null);
@@ -326,7 +325,7 @@ export const TDEECalc = () => {
               selector={(state) => [state.canSubmit, state.isSubmitting]}
               children={([canSubmit, isSubmitting]) => (
                 <Button
-                  className="transition duration-500 hover:rotate-10"
+                  className="transition duration-500 hover:rotate-5 flex-1"
                   type={"submit"}
                   disabled={!canSubmit}
                 >
