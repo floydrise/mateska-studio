@@ -15,7 +15,7 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
-    <div className="min-h-[100dvh] grid grid-rows-[auto_1fr_auto]">
+    <div className="min-h-dvh grid grid-rows-[auto_1fr_auto]">
       <HeadContent />
       <Header />
       <Outlet />
