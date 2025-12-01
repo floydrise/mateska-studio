@@ -27,7 +27,7 @@ export default function SubscriptionCard({
   const [show, setShow] = useState(true);
   const queryClient = useQueryClient();
   return (
-    <div className="w-fit animate-rotate-border rounded-xl bg-conic/[from_var(--border-angle)] from-background via-sky-500 to-background from-80% via-90% to-100% p-[2px] dark:p-px">
+    <div className="w-fit animate-rotate-border rounded-xl bg-conic/[from_var(--border-angle)] from-background via-sky-500 to-background from-80% via-90% to-100% p-0.5 dark:p-px">
       <Card className="w-full max-w-md shadow-lg rounded-xl">
         <CardContent className="pt-6 px-6">
           <div

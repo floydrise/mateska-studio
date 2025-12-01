@@ -1,6 +1,5 @@
 import { Hono } from "hono";
-import { authMiddleware } from "../middleware/auth-middleware";
-import { auth, stripeClient } from "../../auth";
+import { stripeClient } from "../../auth";
 import { internalMiddleware } from "../middleware/internal-middleware";
 import { zValidator } from "@hono/zod-validator";
 import z from "zod/v4";
@@ -18,15 +17,14 @@ const app = new Hono().post(
         name: z.string(),
         emailVerified: z.boolean(),
         email: z.string(),
-        createdAt: z.string(),
-        updatedAt: z.string(),
-        image: z.string().optional(),
+        stripeCustomerId: z.string(),
       }),
     })
   ),
   internalMiddleware,
   async (c) => {
     const { user } = c.req.valid("json");
+
     const userSubscription = await db
       .select()
       .from(subscription)
@@ -37,9 +35,9 @@ const app = new Hono().post(
       await stripeClient.subscriptions.cancel(
         userSubscription.stripeSubscriptionId!
       );
-      await stripeClient.customers.del(userSubscription.stripeCustomerId!);
     }
-    return c.json({ msg: "Success" });
+    await stripeClient.customers.del(user.stripeCustomerId!);
+    return c.json({ msg: "Успешно изтри Customer в Stripe" });
   }
 );
 

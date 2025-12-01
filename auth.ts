@@ -7,9 +7,7 @@ import { stripe } from "@better-auth/stripe";
 import Stripe from "stripe";
 import { workoutCardTable } from "./server/db/schema/schema";
 
-export const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-05-28.basil",
-});
+export const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -69,9 +67,11 @@ export const auth = betterAuth({
       stripeClient,
       stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
       createCustomerOnSignUp: true,
-      onCustomerCreate: async ({ customer, stripeCustomer, user }, request) => {
+      onCustomerCreate: async ({ stripeCustomer, user }, ctx) => {
         // Do something with the newly created customer
-        console.log(`Customer ${customer.id} created for user ${user.id}`);
+        console.log(
+          `Customer ${stripeCustomer.id} created for user ${user.id}`
+        );
       },
 
       subscription: {
@@ -99,16 +99,22 @@ export const auth = betterAuth({
     deleteUser: {
       enabled: true,
       beforeDelete: async (user, request) => {
-        await fetch(`${process.env.BETTER_AUTH_URL}/api/delete_stripe_data`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-internal-api-key": process.env.INTERNAL_API_KEY!,
-          },
-          body: JSON.stringify({
-            user,
-          }),
-        });
+        const res = await fetch(
+          `${process.env.BETTER_AUTH_URL!}/api/delete_stripe_data`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-internal-api-key": process.env.INTERNAL_API_KEY!,
+            },
+            body: JSON.stringify({
+              user,
+            }),
+          }
+        );
+        const data = await res.json();
+
+        console.info(data);
       },
       sendDeleteAccountVerification: async ({ user, url, token }) => {
         await fetch(`${Bun.env.BETTER_AUTH_URL}/api/send_email/delete_user`, {
