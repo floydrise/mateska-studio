@@ -8,6 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dumbbell, ChevronRight, ChevronDown, ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import type { UserWorkoutType } from "../../../shared/types";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export default function UserWorkout({
   userWorkout,
@@ -89,24 +90,30 @@ export default function UserWorkout({
                   </CollapsibleTrigger>
                   <CollapsibleContent className="ml-4 space-y-1">
                     {section.sessions.map((session, index) => (
-                      <Button
-                        key={session.sessionTitle + index}
-                        variant="ghost"
-                        size="sm"
-                        className="w-full min-h-fit justify-start border-l"
-                        onClick={() => {
-                          setContent({
-                            title: session.sessionTitle,
-                            videoUrl: session.videoUrl,
-                            description: session.description,
-                          });
-                          setSessionIndex(index);
-                        }}
-                      >
-                        <span className="text-wrap">
-                          {session.sessionTitle}
-                        </span>
-                      </Button>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            key={session.sessionTitle + index}
+                            variant="ghost"
+                            className="w-full min-h-fit justify-start border-l"
+                            onClick={() => {
+                              setContent({
+                                title: session.sessionTitle,
+                                videoUrl: session.videoUrl,
+                                description: session.description,
+                              });
+                              setSessionIndex(index);
+                            }}
+                          >
+                            {session.sessionTitle.length >= 10
+                              ? session.sessionTitle.slice(0, 12) + "..."
+                              : session.sessionTitle}
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{session.sessionTitle}</p>
+                        </TooltipContent>
+                      </Tooltip>
                     ))}
                   </CollapsibleContent>
                 </Collapsible>
@@ -125,7 +132,7 @@ export default function UserWorkout({
           </nav>
         </ScrollArea>
       </aside>
-      <main className="flex-1 flex flex-col max-w-screen items-center gap-10 md:my-10">
+      <main className="flex-1 flex flex-col max-w-screen items-center gap-10 my-6 md:my-10">
         <div className="flex items-center justify-between w-full md:w-1/2">
           <Button
             size={"icon"}
@@ -154,7 +161,9 @@ export default function UserWorkout({
           </Button>
           <div className="flex flex-col items-center">
             <p className="text-muted-foreground">{sectionInfo.title}</p>
-            <h1 className="text-2xl font-bold">{content?.title}</h1>
+            <h1 className="text-sm md:text-lg lg:text-2xl font-bold">
+              {content?.title}
+            </h1>
           </div>
           <Button
             size={"icon"}
