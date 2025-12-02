@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import djulkaImg from "/djulka.webp";
 import milicaImg from "/milica.webp";
+import dianaImg from "/diana.jpg";
 type Testimonial = {
   quote: string;
   name: string;
@@ -175,10 +176,10 @@ const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "Като майка с малко свободно време, тези кратки и ефективни тренировки ми върнаха формата – и самочувствието.",
-    name: "Ралица Димитрова",
-    designation: "Майка на две деца, Варна",
-    src: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb",
+      "Когато искаш да тренираш , а времето за тренировка не съответсва с твоето свободно, може да направиш като мен: тренировки онлайн от Александра Матеска по всяко време в къщи лесно и удобно постигаш невероятни резултати. Единственото което се иска е желание. 💋 Благодаря Алекс , че намираш вариант да задоволиш капризите на всеки твой клиент 💋 💖",
+    name: "Диана Ташева",
+    designation: "Майка на две деца, Бургас",
+    src: dianaImg,
   },
   {
     quote:
