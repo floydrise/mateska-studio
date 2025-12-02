@@ -65,18 +65,12 @@ export default function UserWorkout({
         <ScrollArea className="flex-1">
           <nav className="p-2">
             {isOpen ? (
-              userWorkout.sections.map((section, index) => (
+              userWorkout.sections.map((section, sectionIndex) => (
                 <Collapsible key={section.sectionId}>
                   <CollapsibleTrigger asChild>
                     <Button
                       variant="ghost"
                       className="w-full h-fit justify-start"
-                      onClick={() =>
-                        setSectionInfo({
-                          index,
-                          title: section.sectionTitle,
-                        })
-                      }
                     >
                       {isOpen && (
                         <>
@@ -97,6 +91,10 @@ export default function UserWorkout({
                             variant="ghost"
                             className="w-full min-h-fit justify-start border-l"
                             onClick={() => {
+                              setSectionInfo({
+                                index: sectionIndex,
+                                title: section.sectionTitle,
+                              });
                               setContent({
                                 title: session.sessionTitle,
                                 videoUrl: session.videoUrl,
