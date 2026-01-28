@@ -40,10 +40,10 @@ export const WorkoutSchema = z.object({
               sessionPosition: z.number().positive(),
               videoUrl: z.url("Must be a URL"),
               description: z.string().min(3, "Трябва да е най-малко 3 букви"),
-            })
+            }),
           )
           .min(1, "Трябва да добавиш поне 1 сесия"),
-      })
+      }),
     )
     .min(1, "Трябва да добавиш поне 1 секция"),
 });
@@ -80,7 +80,7 @@ export const PatchSectionSchema = createUpdateSchema(workoutSectionTable, {
         .positive({ error: "Трябва да е повече от 0" }),
       videoUrl: z.url("Must be a URL"),
       description: z.string().min(3, "Трябва да е най-малко 3 букви"),
-    })
+    }),
   ),
 });
 
@@ -99,10 +99,10 @@ export const PatchSectionsSchema = z.array(
             .positive({ error: "Трябва да е повече от 0" }),
           videoUrl: z.url("Must be a URL"),
           description: z.string().min(3, "Трябва да е най-малко 3 букви"),
-        })
+        }),
       )
       .min(1, "Трябва да добавиш поне 1 сесия"),
-  })
+  }),
 );
 
 export const PatchSectionsFormSchema = z.object({
@@ -130,7 +130,7 @@ export const PostSectionSchema = z.object({
         videoUrl: z.url("Must be a URL"),
         description: z.string().min(3, "Трябва да е най-малко 3 букви"),
         position: z.number().positive(),
-      })
+      }),
     )
     .min(1, "Трябва да добавиш поне 1 сесия"),
   position: z.number().positive(),

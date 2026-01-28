@@ -40,7 +40,7 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
         <div className="flex justify-between items-start">
           <h3 className="text-xl font-bold">{workoutCardTitle}</h3>
           <div className="text-lg font-semibold text-green-600">
-            {workoutCardPrice.toFixed(2)} лв
+            €{workoutCardPrice.toFixed(2)}
           </div>
         </div>
       </CardHeader>
@@ -96,7 +96,7 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
                       error.message?.includes("there are no changes to confirm")
                         ? "Вече сте абониран към този план"
                         : error.message
-                    }`
+                    }`,
                   );
               } catch (error) {
                 console.log(error);

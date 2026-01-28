@@ -1,0 +1,146 @@
+{
+  "first_plan": {
+    "workoutPlanTitle": "Програма за цялото тяло",
+    "card": {
+      "cardTitle": "Начинаещ Сила и Тонус",
+      "imgUrl": "https://example.com/images/workout.jpg",
+      "stripePriceId": "",
+      "price": 49.99,
+      "targetMuscles": ["Гърди", "Гръб", "Крака", "Рамене"],
+      "equipment": ["Дъмбели", "Ластици", "Йога постелка"]
+    },
+    "sections": [
+      {
+        "sectionTitle": "Седмица 1: Основи",
+        "sessions": [
+          {
+            "sessionTitle": "Горна част на тялото – основи",
+            "videoUrl": "https://example.com/videos/session1.mp4",
+            "description": "Тази сесия се фокусира върху основни движения за горна част с леки тежести."
+          },
+          {
+            "sessionTitle": "Сила в долната част",
+            "videoUrl": "https://example.com/videos/session2.mp4",
+            "description": "Активирай седалището и краката с кръгова тренировка за долната част."
+          }
+        ]
+      },
+      {
+        "sectionTitle": "Седмица 2: Напредък",
+        "sessions": [
+          {
+            "sessionTitle": "Цялостна тренировка",
+            "videoUrl": "https://example.com/videos/session3.mp4",
+            "description": "Комбинирана тренировка за сила и кардио елементи."
+          }
+        ]
+      }
+    ]
+  },
+  "second_plan": {
+    "workoutPlanTitle": "Train With Me",
+    "card": {
+      "cardTitle": "Train With Me - Full Body",
+      "imgUrl": "https://example.com/images/train-with-me.jpg",
+      "price": 60,
+      "targetMuscles": ["chest", "back", "legs", "core"],
+      "equipment": ["dumbbells", "yoga mat", "resistance bands"],
+      "stripePriceId": "price_1RZCefQ1fyNLsQ88k0alE0E5"
+    },
+    "sections": [
+      {
+        "sectionTitle": "Week 1",
+        "sessions": [
+          {
+            "sessionTitle": "Push Day",
+            "videoUrl": "https://vimeo.com/123456789",
+            "description": "Upper body push exercises including chest and triceps."
+          },
+          {
+            "sessionTitle": "Pull Day",
+            "videoUrl": "https://vimeo.com/987654321",
+            "description": "Upper body pull exercises including back and biceps."
+          },
+          {
+            "sessionTitle": "Leg Day",
+            "videoUrl": "https://vimeo.com/112233445",
+            "description": "Lower body exercises including quads, hamstrings, and glutes."
+          }
+        ]
+      },
+      {
+        "sectionTitle": "Week 2",
+        "sessions": [
+          {
+            "sessionTitle": "Push Day",
+            "videoUrl": "https://vimeo.com/223344556",
+            "description": "More volume on chest, shoulders, and triceps."
+          },
+          {
+            "sessionTitle": "Pull Day",
+            "videoUrl": "https://vimeo.com/334455667",
+            "description": "Focused back and biceps hypertrophy session."
+          },
+          {
+            "sessionTitle": "Leg Day",
+            "videoUrl": "https://vimeo.com/445566778",
+            "description": "Advanced lower-body compound movements."
+          }
+        ]
+      }
+    ]
+  },
+  "third_plan": {
+    "workoutPlanTitle": "Начинаещи и среднонапреднали",
+    "card": {
+      "cardTitle": "Начинаещи и среднонапреднали",
+      "imgUrl": "https://mateskasport.com/wp-content/uploads/2024/08/4-300x300.jpg",
+      "stripePriceId": "price_1SubDEQ1fyNLsQ8857F43rwU",
+      "price": 40,
+      "targetMuscles": ["Гърди", "Гръб", "Крака", "Цяло тяло"],
+      "equipment": ["Ластици", "Стол"]
+    },
+    "sections": [
+      {
+        "sectionTitle": "Цяло тяло",
+        "sessions": [
+          {
+            "sessionTitle": "Цяло тяло на стол",
+            "videoUrl": "https://player.vimeo.com/video/1152539931?h=f8f7689838&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "sectionTitle": "Тренировка с ластици",
+        "sessions": [
+          {
+            "sessionTitle": "Бедра и дупе",
+            "videoUrl": "https://player.vimeo.com/video/1152537531?h=9381033c75&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "sectionTitle": "Долна част",
+        "sessions": [
+          {
+            "sessionTitle": "Долна част с ластик",
+            "videoUrl": "https://player.vimeo.com/video/1153960323?h=6cbab02769&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
+            "description": ""
+          },
+          {
+            "sessionTitle": "Долна част I",
+            "videoUrl": "https://player.vimeo.com/video/1151885557?h=f883a16c2a&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
+            "description": ""
+          },
+          {
+            "sessionTitle": "Долна част II",
+            "videoUrl": "https://player.vimeo.com/video/1151016397?h=f4cbd7b6eb&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
+            "description": ""
+          }
+        ]
+      }
+    ]
+  }
+}
