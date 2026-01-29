@@ -3,4 +3,5 @@ node_modules/
 .env
 .idea
 .vscode
-stripe_webhook.json
+stripe_webhook.txt
+dummy_data.json
