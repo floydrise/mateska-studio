@@ -30,7 +30,7 @@ export const auth = betterAuth({
             email: user.email,
             name: user.name,
           }),
-        }
+        },
       );
     },
   },
@@ -59,7 +59,7 @@ export const auth = betterAuth({
               url,
               email,
             }),
-          }
+          },
         );
       },
     }),
@@ -70,7 +70,7 @@ export const auth = betterAuth({
       onCustomerCreate: async ({ stripeCustomer, user }, ctx) => {
         // Do something with the newly created customer
         console.log(
-          `Customer ${stripeCustomer.id} created for user ${user.id}`
+          `Customer ${stripeCustomer.id} created for user ${user.id}`,
         );
       },
 
@@ -110,7 +110,7 @@ export const auth = betterAuth({
             body: JSON.stringify({
               user,
             }),
-          }
+          },
         );
         const data = await res.json();
 
