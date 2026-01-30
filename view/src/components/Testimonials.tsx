@@ -181,11 +181,4 @@ const testimonials: Testimonial[] = [
     designation: "Майка на две деца, Бургас",
     src: dianaImg,
   },
-  {
-    quote:
-      "След работа обичам да отделям 20-30 минути за себе си – тази платформа ми даде идеалния начин да го правя.",
-    name: "Даниела Георгиева",
-    designation: "Финансов анализатор, Русе",
-    src: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb",
-  },
 ];
