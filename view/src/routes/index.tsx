@@ -53,7 +53,7 @@ export const Route = createFileRoute("/")({
 
 function App() {
   const { isLoading, error, data, isError } = useQuery(
-    getWorkoutCardsQueryOptions
+    getWorkoutCardsQueryOptions,
   );
   const { resolvedTheme } = useTheme();
   if (isError) toast.error(error.message);
@@ -360,20 +360,25 @@ function App() {
         >
           <Book /> Как се ползва?
         </motion.h1>
-        <motion.iframe
+
+        <motion.div
           initial={{ opacity: 0, x: 100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{
             duration: 1.5,
           }}
-          className="w-full md:h-150"
-          src="https://www.youtube.com/embed/xu8rh9Ref4Y?si=OXfGi8aM0cCXvgDT"
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        ></motion.iframe>
+          className="relative w-full pt-[56.25%]"
+        >
+          <iframe
+            src="https://player.vimeo.com/video/1161138060?badge=0&autopause=0&player_id=0&app_id=58479"
+            className="absolute inset-0 h-full w-full"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            title="MateskaSport - How to use"
+          />
+        </motion.div>
       </section>
       {resolvedTheme === "light" ? (
         <svg
