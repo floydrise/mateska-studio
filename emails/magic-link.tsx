@@ -16,7 +16,7 @@ const MagicLink = ({ email, url }: { email: string; url: string }) => (
       <Preview>Добре дошъл в Mateska Studio</Preview>
       <Container style={container}>
         <Img
-          src="https://mateskasport.com/wp-content/uploads/2025/01/Logo-2.png"
+          src="https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/logos/logoLight.webp"
           alt="Mateska Studio - company logo"
           width="300"
           style={{ margin: "auto" }}

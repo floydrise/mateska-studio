@@ -3,9 +3,6 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
-import djulkaImg from "/djulka.webp";
-import milicaImg from "/milica.webp";
-import dianaImg from "/diana.jpg";
 type Testimonial = {
   quote: string;
   name: string;
@@ -165,20 +162,20 @@ const testimonials: Testimonial[] = [
       "Алекс е повече от треньор – тя е двигателят зад промяната ми. Без нея нямаше да направя и крачка към мечтаното тяло. Всеки съвет, всяка тренировка, всяка подкрепа – всичко има значение. Благодаря ти от сърце, Алекс!",
     name: "Джулия",
     designation: "Маникюристка, Бургас",
-    src: djulkaImg,
+    src: "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/testimonials/djulka.webp",
   },
   {
     quote:
       "За нея имам само една дума и тя е СЪРЦЕ! Подхожда към всеки с внимание и според неговите индивидуални нужди и възможности, за да постигне мечтания от всеки резултат. Тренировките са страхотни не само за извайване на тялото ,но и за тонус и сила на съзнанието. Благодарна съм, че я срещнах. Тя промени живота ми като ми показа, че здравословния начин на живот е един голям и страхотен свят!",
     name: "Милица Петрива",
     designation: "Маникюристка, Бургас",
-    src: milicaImg,
+    src: "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/testimonials/milica.webp",
   },
   {
     quote:
       "Когато искаш да тренираш , а времето за тренировка не съответсва с твоето свободно, може да направиш като мен: тренировки онлайн от Александра Матеска по всяко време в къщи лесно и удобно постигаш невероятни резултати. Единственото което се иска е желание. 💋 Благодаря Алекс , че намираш вариант да задоволиш капризите на всеки твой клиент 💋 💖",
     name: "Диана Ташева",
     designation: "Майка на две деца, Бургас",
-    src: dianaImg,
+    src: "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/testimonials/diana.webp",
   },
 ];

@@ -16,17 +16,18 @@ const ResetPassword = ({ name, url }: { name: string; url: string }) => (
       <Preview>Следвай стъпките описани в имейла</Preview>
       <Container style={container}>
         <Img
-          src="https://mateskasport.com/wp-content/uploads/2025/01/Logo-2.png"
+          src="https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/logos/logoLight.webp"
           alt="Mateska Studio - company logo"
           width="300"
           style={{ margin: "auto" }}
         />
         <Heading style={h1}>Здравей, {name} 👀👋🏻</Heading>
         <Text style={{ ...text, marginBottom: "14px" }}>
-          Забрави паролата, а? Моля, кликни линка отдолу и следвай стъпките за
-          смяна на парола 👇🏻
+          Забрави паролата, а?
           <br />
-          {url}
+          Моля, кликни линка отдолу и следвай стъпките за смяна на парола 👇🏻
+          <br />
+          <a href={url}>Линк за смяна на паролата!</a>
           <br />
           Успех!
         </Text>

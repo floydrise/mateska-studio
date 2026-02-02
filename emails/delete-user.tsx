@@ -22,17 +22,18 @@ export const DeleteUserTemplate = ({
       <Preview>Съжаляваме, че си тръгваш 😞</Preview>
       <Container style={container}>
         <Img
-          src="https://mateskasport.com/wp-content/uploads/2025/01/Logo-2.png"
+          src="https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/logos/logoLight.webp"
           alt="Mateska Studio - company logo"
           width="300"
           style={{ margin: "auto" }}
         />
         <Heading style={h1}>Здравей, {userName} 👋🏻</Heading>
         <Text style={{ ...text, marginBottom: "14px" }}>
-          Съжаляваме, че си тръгваш 😞 Моля кликни линка отдолу да потвърдиш, че
-          искаш да изтриеш акаунта си
+          Съжаляваме, че си тръгваш 😞
           <br />
-          {url}
+          Моля кликни линка отдолу да потвърдиш, че искаш да изтриеш акаунта си:
+          <br />
+          <a href={url}>Линк за потвърждение на акаунт</a>
         </Text>
         <Text style={{ ...text, color: " #FF0000" }}>
           ВАЖНО! Ако не отвориш линка отгоре, профилът ти НЯМА да бъде изтрит!
