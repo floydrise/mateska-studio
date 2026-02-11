@@ -8,11 +8,6 @@ import {
   Sparkles,
   Store,
 } from "lucide-react";
-import girlMeditatingImg from "/lotus.png";
-import hourGlassImg from "/hourglass.png";
-import scaleImg from "/scale.png";
-import monitorImg from "/monitor.png";
-import mirrorImg from "/mirror.png";
 import { getWorkoutCardsQueryOptions } from "@/lib/api";
 import WorkoutCard from "@/components/WorkoutCard";
 import { useQuery } from "@tanstack/react-query";
@@ -113,7 +108,7 @@ function App() {
           className="w-fit animate-rotate-border rounded-xl bg-conic/[from_var(--border-angle)] from-background via-sky-500 to-background from-80% via-90% to-100% p-0.5 dark:p-px"
         >
           <img
-            src="https://mateskasport.com/wp-content/uploads/2023/08/3.jpg"
+            src="https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/why_us_section_landing_page/mateska_landing_page.webp"
             alt="Pic of Mateska"
             className="w-140 h-auto rounded-xl"
           />
@@ -122,6 +117,7 @@ function App() {
       <div className="w-full h-40 md:h-80 relative rotate-180">
         <Threads amplitude={2} distance={0} enableMouseInteraction={false} />
       </div>
+
       {resolvedTheme === "light" ? (
         <svg
           className="rotate-180"
@@ -139,6 +135,8 @@ function App() {
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
         </svg>
       )}
+
+      {/* Why us */}
       <section className="bg-accent px-10 py-20">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -163,7 +161,9 @@ function App() {
             className="flex flex-col items-center w-fit"
           >
             <img
-              src={girlMeditatingImg}
+              src={
+                "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/why_us_section_landing_page/meditation.webp"
+              }
               alt="Image of a slim waist"
               className="size-20"
             />
@@ -181,7 +181,9 @@ function App() {
             className="flex flex-col items-center w-fit"
           >
             <img
-              src={hourGlassImg}
+              src={
+                "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/why_us_section_landing_page/deadline.webp"
+              }
               alt="Image of a slim waist"
               className="size-20"
             />
@@ -199,7 +201,9 @@ function App() {
             className="flex flex-col items-center w-fit"
           >
             <img
-              src={scaleImg}
+              src={
+                "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/why_us_section_landing_page/scale_1.webp"
+              }
               alt="Image of a slim waist"
               className="size-20"
             />
@@ -217,7 +221,9 @@ function App() {
             className="flex flex-col items-center w-fit"
           >
             <img
-              src={monitorImg}
+              src={
+                "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/why_us_section_landing_page/dashboard.webp"
+              }
               alt="Image of a slim waist"
               className="size-20"
             />
@@ -235,7 +241,9 @@ function App() {
             className="flex flex-col items-center w-fit"
           >
             <img
-              src={mirrorImg}
+              src={
+                "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/why_us_section_landing_page/mirror_1.webp"
+              }
               alt="Image of a slim waist"
               className="size-20"
             />
@@ -243,6 +251,7 @@ function App() {
           </motion.div>
         </ul>
       </section>
+
       {resolvedTheme === "light" ? (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100">
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#F5F5F5"></path>
@@ -252,6 +261,8 @@ function App() {
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
         </svg>
       )}
+
+      {/* Workout plans */}
       <section id="products" className="px-10 py-10">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -298,6 +309,7 @@ function App() {
           )}
         </div>
       </section>
+
       {resolvedTheme === "light" ? (
         <svg
           className="rotate-180"
@@ -315,6 +327,8 @@ function App() {
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
         </svg>
       )}
+
+      {/* Testimonials */}
       <section className="bg-accent px-10 py-10 flex flex-col items-center">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -339,6 +353,7 @@ function App() {
           <Testimonials />
         </motion.div>
       </section>
+
       {resolvedTheme === "light" ? (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100">
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#F5F5F5"></path>
@@ -348,6 +363,8 @@ function App() {
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
         </svg>
       )}
+
+      {/* How to use */}
       <section id="howTo" className="px-10 py-10">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -380,6 +397,7 @@ function App() {
           />
         </motion.div>
       </section>
+
       {resolvedTheme === "light" ? (
         <svg
           className="rotate-180"
@@ -397,6 +415,8 @@ function App() {
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
         </svg>
       )}
+
+      {/* FAQ */}
       <section id="faq" className="bg-accent px-10 py-10">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -420,6 +440,7 @@ function App() {
           <FAQ />
         </motion.div>
       </section>
+
       {resolvedTheme === "light" ? (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100">
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#F5F5F5"></path>
