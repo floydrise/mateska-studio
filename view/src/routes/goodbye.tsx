@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import byeImg from "/goodbye.webp";
 import { Button } from "@/components/ui/button.tsx";
 import { Home } from "lucide-react";
 import { motion } from "motion/react";
@@ -34,7 +33,9 @@ function RouteComponent() {
         }
       >
         <img
-          src={byeImg}
+          src={
+            "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/public_imgs/goodbye.webp"
+          }
           alt={"Image of a waving hand and a sign saying 'goodbye'"}
           className={"size-20"}
         />

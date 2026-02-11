@@ -1,13 +1,14 @@
 import { Home } from "lucide-react";
 import { Button } from "./ui/button";
-import notFoundImg from "/notFound.webp?url";
 import { Link } from "@tanstack/react-router";
 
 export const NotFound = () => {
   return (
     <div className="flex flex-col gap-4 my-10 items-center justify-center">
       <img
-        src={notFoundImg}
+        src={
+          "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/public_imgs/notFound.webp"
+        }
         alt="Картинка, която показва, че страницата не е открита"
         className="size-140 object-contain"
       />

@@ -117,18 +117,22 @@ export const auth = betterAuth({
         console.info(data);
       },
       sendDeleteAccountVerification: async ({ user, url, token }) => {
-        await fetch(`${Bun.env.BETTER_AUTH_URL}/api/send_email/delete_user`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-internal-api-key": process.env.INTERNAL_API_KEY!,
+        const res = await fetch(
+          `${Bun.env.BETTER_AUTH_URL}/api/send_email/delete_user`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-internal-api-key": process.env.INTERNAL_API_KEY!,
+            },
+            body: JSON.stringify({
+              url: url,
+              user_email: user.email,
+              user_name: user.name,
+            }),
           },
-          body: JSON.stringify({
-            url: url,
-            user_email: user.email,
-            user_name: user.name,
-          }),
-        });
+        );
+        const data = await res.json();
       },
     },
   },
