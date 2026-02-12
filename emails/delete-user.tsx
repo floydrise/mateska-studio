@@ -22,7 +22,7 @@ export const DeleteUserTemplate = ({
       <Preview>Съжаляваме, че си тръгваш 😞</Preview>
       <Container style={container}>
         <Img
-          src="https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/logos/logoLight.webp"
+          src="https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/logos/logoLight-1.png"
           alt="Mateska Studio - company logo"
           width="300"
           style={{ margin: "auto" }}

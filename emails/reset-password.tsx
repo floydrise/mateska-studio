@@ -16,7 +16,7 @@ const ResetPassword = ({ name, url }: { name: string; url: string }) => (
       <Preview>Следвай стъпките описани в имейла</Preview>
       <Container style={container}>
         <Img
-          src="https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/logos/logoLight.webp"
+          src="https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/logos/logoLight-1.png"
           alt="Mateska Studio - company logo"
           width="300"
           style={{ margin: "auto" }}

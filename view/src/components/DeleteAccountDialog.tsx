@@ -109,7 +109,7 @@ export const DeleteAccountDialog = ({
               try {
                 const { data, error } = await authClient.deleteUser({
                   password: hasPassword ? password : undefined,
-                  callbackURL: import.meta.env.BASE_URL + "/goodbye",
+                  callbackURL: import.meta.env.VITE_APP_URL + "/goodbye",
                 });
 
                 if (error) {
