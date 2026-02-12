@@ -86,8 +86,9 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
               try {
                 const { error } = await authClient.subscription.upgrade({
                   plan: workoutCardTitle,
-                  successUrl: "http://localhost:5173/profile",
-                  cancelUrl: "http://localhost:5173/#products",
+                  returnUrl: import.meta.env.VITE_APP_URL,
+                  successUrl: import.meta.env.VITE_APP_URL + "/profile",
+                  cancelUrl: import.meta.env.VITE_APP_URL + "/#products",
                   subscriptionId: subData?.stripeSubscriptionId ?? undefined,
                 });
                 if (error)

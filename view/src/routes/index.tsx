@@ -149,7 +149,7 @@ function App() {
         >
           <Sparkles /> Защо да избереш нас?
         </motion.h1>
-        <ul className="list-disc flex md:flex-row flex-col items-center gap-6 justify-evenly">
+        <ul className="flex md:flex-row flex-col items-center gap-6 justify-evenly">
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -167,7 +167,9 @@ function App() {
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-base md:text-xl">Стегни тялото си</li>
+            <li className="text-base md:text-xl text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-violet-400">
+              Стегни тялото си
+            </li>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -187,7 +189,9 @@ function App() {
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-base md:text-xl">Без излишно време</li>
+            <li className="text-base md:text-xl text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-violet-400">
+              Без излишно време
+            </li>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -207,7 +211,9 @@ function App() {
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-base md:text-xl">Ум и тяло в баланс</li>
+            <li className="text-base md:text-xl text-transparent bg-clip-text bg-linear-to-r from-red-400 to-blue-400">
+              Ум и тяло в баланс
+            </li>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -227,7 +233,9 @@ function App() {
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-base md:text-xl">На всяко устройство</li>
+            <li className="text-base md:text-xl text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-violet-400">
+              На всяко устройство
+            </li>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -247,7 +255,9 @@ function App() {
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-base md:text-xl">Следи напредъка си</li>
+            <li className="text-base md:text-xl text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-violet-400">
+              Следи напредъка си
+            </li>
           </motion.div>
         </ul>
       </section>

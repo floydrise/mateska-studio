@@ -47,7 +47,7 @@ export const ResetPasswordForm = () => {
       await authClient.requestPasswordReset(
         {
           email: value.email,
-          redirectTo: "http://localhost:5173/reset_password",
+          redirectTo: import.meta.env.VITE_APP_URL + "/reset_password",
         },
         {
           onRequest: () => {
@@ -63,7 +63,7 @@ export const ResetPasswordForm = () => {
             toast.error("Изникна грешка" + ctx.error.message);
             form.reset();
           },
-        }
+        },
       );
     },
   });

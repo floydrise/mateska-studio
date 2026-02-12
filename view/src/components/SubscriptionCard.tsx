@@ -127,7 +127,7 @@ export default function SubscriptionCard({
             <Button
               onClick={async () => {
                 const { error } = await authClient.subscription.cancel({
-                  returnUrl: "/",
+                  returnUrl: import.meta.env.VITE_APP_URL,
                 });
                 if (error) {
                   toast.error("Изникна грешка: " + error.message);

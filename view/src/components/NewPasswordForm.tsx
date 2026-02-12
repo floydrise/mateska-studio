@@ -1,4 +1,4 @@
-import { Eye, EyeClosed, Info, Loader, Send } from "lucide-react";
+import { Eye, EyeClosed, Loader, Send } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -8,11 +8,6 @@ import z from "zod/v4";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { useState } from "react";
 
 const LoginSchema = z.object({
@@ -86,11 +81,11 @@ export const NewPasswordForm = ({ token }: { token: string }) => {
           onError: (ctx) => {
             toast.dismiss(toastId);
             toast.error(
-              "Изникна грешка: " + ctx.error.message + "\nМоля опитайте отново"
+              "Изникна грешка: " + ctx.error.message + "\nМоля опитайте отново",
             );
             navigate({ to: "/" });
           },
-        }
+        },
       );
     },
   });

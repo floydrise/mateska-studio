@@ -228,11 +228,11 @@ export default function Footer() {
         </div>
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t pt-4 text-center md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © 2025 MateskaSport Studio. Всички права запазени.
+            © 2026 MateskaSport Studio. Всички права запазени.
           </p>
           <p className="text-sm text-muted-foreground">
             Създадено от{" "}
-            <a href="stefancodes.dev" className="text-blue-500">
+            <a href="https://www.stefancodes.dev/en" target="_blank" className="text-blue-500">
               Стефан Петров 💻
             </a>
           </p>
