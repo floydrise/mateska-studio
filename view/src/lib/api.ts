@@ -9,7 +9,11 @@ import type {
   WorkoutFormType,
 } from "../../../shared/types";
 
-const api = hc<AppType>("/").api;
+const api = hc<AppType>("/", {
+  init: {
+    credentials: "include", // Required for sending cookies cross-origin
+  },
+}).api;
 
 const fetchWorkoutCards = async () => {
   const res = await api.workouts.cards.$get();
@@ -40,7 +44,7 @@ export const fetchUserActiveSubscriptions = async () => {
 
   // @ts-ignore
   const activeSubscription = subscriptions.find(
-    (sub) => sub.status === "active" || sub.status === "trialing"
+    (sub) => sub.status === "active" || sub.status === "trialing",
   );
   return activeSubscription as Subscription;
 };
@@ -133,7 +137,7 @@ export const deleteWorkoutPlan = async (planId: string) => {
 
 export const patchWorkoutCard = async (
   cardId: number,
-  patchedCard: PatchCardType
+  patchedCard: PatchCardType,
 ) => {
   const res = await api.workouts.cards[":id"].$patch({
     param: {

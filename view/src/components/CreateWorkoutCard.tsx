@@ -64,7 +64,7 @@ export const CreateWorkoutCard = () => {
     },
   });
   return (
-    <Card className="w-full h-full max-w-4xl border-0 md:border-1">
+    <Card className="w-full h-full max-w-4xl border-0 md:border">
       <CardHeader>
         <CardTitle className="flex items-center gap-1 md:text-2xl">
           <Brush /> Създай нов план
@@ -384,7 +384,7 @@ export const CreateWorkoutCard = () => {
                                       value={subField.state.value}
                                       onChange={(e) =>
                                         subField.handleChange(
-                                          Number(e.target.value)
+                                          Number(e.target.value),
                                         )
                                       }
                                       onBlur={subField.handleBlur}
@@ -435,7 +435,7 @@ export const CreateWorkoutCard = () => {
                                                     }
                                                     onChange={(e) =>
                                                       innerSubField.handleChange(
-                                                        e.target.value
+                                                        e.target.value,
                                                       )
                                                     }
                                                     onBlur={
@@ -475,7 +475,7 @@ export const CreateWorkoutCard = () => {
                                                     }
                                                     onChange={(e) =>
                                                       innerSubField.handleChange(
-                                                        Number(e.target.value)
+                                                        Number(e.target.value),
                                                       )
                                                     }
                                                     onBlur={
@@ -514,7 +514,7 @@ export const CreateWorkoutCard = () => {
                                                     }
                                                     onChange={(e) =>
                                                       innerSubField.handleChange(
-                                                        e.target.value
+                                                        e.target.value,
                                                       )
                                                     }
                                                     onBlur={
@@ -552,7 +552,7 @@ export const CreateWorkoutCard = () => {
                                                     }
                                                     onChange={(e) =>
                                                       innerSubField.handleChange(
-                                                        e.target.value
+                                                        e.target.value,
                                                       )
                                                     }
                                                     onBlur={

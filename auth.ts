@@ -30,7 +30,7 @@ export const auth = betterAuth({
             email: user.email,
             name: user.name,
           }),
-        }
+        },
       );
     },
   },
@@ -59,7 +59,7 @@ export const auth = betterAuth({
               url,
               email,
             }),
-          }
+          },
         );
       },
     }),
@@ -70,7 +70,7 @@ export const auth = betterAuth({
       onCustomerCreate: async ({ stripeCustomer, user }, ctx) => {
         // Do something with the newly created customer
         console.log(
-          `Customer ${stripeCustomer.id} created for user ${user.id}`
+          `Customer ${stripeCustomer.id} created for user ${user.id}`,
         );
       },
 
@@ -110,25 +110,29 @@ export const auth = betterAuth({
             body: JSON.stringify({
               user,
             }),
-          }
+          },
         );
         const data = await res.json();
 
         console.info(data);
       },
       sendDeleteAccountVerification: async ({ user, url, token }) => {
-        await fetch(`${Bun.env.BETTER_AUTH_URL}/api/send_email/delete_user`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-internal-api-key": process.env.INTERNAL_API_KEY!,
+        const res = await fetch(
+          `${Bun.env.BETTER_AUTH_URL}/api/send_email/delete_user`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-internal-api-key": process.env.INTERNAL_API_KEY!,
+            },
+            body: JSON.stringify({
+              url: url,
+              user_email: user.email,
+              user_name: user.name,
+            }),
           },
-          body: JSON.stringify({
-            url: url,
-            user_email: user.email,
-            user_name: user.name,
-          }),
-        });
+        );
+        const data = await res.json();
       },
     },
   },

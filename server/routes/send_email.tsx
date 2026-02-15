@@ -17,12 +17,12 @@ const app = new Hono()
       z.object({
         url: z.url(),
         email: z.email(),
-      })
+      }),
     ),
     async (c) => {
       const { url, email } = c.req.valid("json");
       const { data, error } = await resend.emails.send({
-        from: "MateskaSport Studio <notifications@stefancodes.dev>",
+        from: "MateskaSport Studio <notifications@contact.mateskasport.com>",
         to: [email],
         subject: "Добре дошъл в екипа на MateskaSport",
         react: <MagicLink email={email} url={url} />,
@@ -32,7 +32,7 @@ const app = new Hono()
       }
 
       return c.json(data);
-    }
+    },
   )
   .post(
     "/reset_password",
@@ -43,12 +43,12 @@ const app = new Hono()
         url: z.url(),
         name: z.string(),
         email: z.email(),
-      })
+      }),
     ),
     async (c) => {
       const { url, name, email } = c.req.valid("json");
       const { data, error } = await resend.emails.send({
-        from: "MateskaSport Studio <notifications@stefancodes.dev>",
+        from: "MateskaSport Studio <notifications@contact.mateskasport.com>",
         to: [email],
         subject: "Смени паролата си",
         react: <ResetPassword name={name} url={url} />,
@@ -58,7 +58,7 @@ const app = new Hono()
       }
 
       return c.json(data);
-    }
+    },
   )
   .post(
     "/delete_user",
@@ -69,12 +69,12 @@ const app = new Hono()
         url: z.url(),
         user_email: z.email(),
         user_name: z.string(),
-      })
+      }),
     ),
     async (c) => {
       const { url, user_email, user_name } = c.req.valid("json");
       const { data, error } = await resend.emails.send({
-        from: "MateskaSport Studio <notifications@stefancodes.dev>",
+        from: "MateskaSport Studio <notifications@contact.mateskasport.com>",
         to: [user_email],
         subject: "Изтрии профилът си в MateskaSport Studio",
         react: <DeleteUserTemplate userName={user_name} url={url} />,
@@ -84,7 +84,7 @@ const app = new Hono()
       }
 
       return c.json(data);
-    }
+    },
   );
 
 export default app;

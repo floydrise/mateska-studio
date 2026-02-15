@@ -40,7 +40,7 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
         <div className="flex justify-between items-start">
           <h3 className="text-xl font-bold">{workoutCardTitle}</h3>
           <div className="text-lg font-semibold text-green-600">
-            {workoutCardPrice.toFixed(2)} лв
+            €{workoutCardPrice.toFixed(2)}
           </div>
         </div>
       </CardHeader>
@@ -86,8 +86,9 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
               try {
                 const { error } = await authClient.subscription.upgrade({
                   plan: workoutCardTitle,
-                  successUrl: "http://localhost:5173/profile",
-                  cancelUrl: "http://localhost:5173/#products",
+                  returnUrl: import.meta.env.VITE_APP_URL,
+                  successUrl: import.meta.env.VITE_APP_URL + "/profile",
+                  cancelUrl: import.meta.env.VITE_APP_URL + "/#products",
                   subscriptionId: subData?.stripeSubscriptionId ?? undefined,
                 });
                 if (error)
@@ -96,7 +97,7 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
                       error.message?.includes("there are no changes to confirm")
                         ? "Вече сте абониран към този план"
                         : error.message
-                    }`
+                    }`,
                   );
               } catch (error) {
                 console.log(error);

@@ -8,11 +8,6 @@ import {
   Sparkles,
   Store,
 } from "lucide-react";
-import girlMeditatingImg from "/lotus.png";
-import hourGlassImg from "/hourglass.png";
-import scaleImg from "/scale.png";
-import monitorImg from "/monitor.png";
-import mirrorImg from "/mirror.png";
 import { getWorkoutCardsQueryOptions } from "@/lib/api";
 import WorkoutCard from "@/components/WorkoutCard";
 import { useQuery } from "@tanstack/react-query";
@@ -53,7 +48,7 @@ export const Route = createFileRoute("/")({
 
 function App() {
   const { isLoading, error, data, isError } = useQuery(
-    getWorkoutCardsQueryOptions
+    getWorkoutCardsQueryOptions,
   );
   const { resolvedTheme } = useTheme();
   if (isError) toast.error(error.message);
@@ -113,7 +108,7 @@ function App() {
           className="w-fit animate-rotate-border rounded-xl bg-conic/[from_var(--border-angle)] from-background via-sky-500 to-background from-80% via-90% to-100% p-0.5 dark:p-px"
         >
           <img
-            src="https://mateskasport.com/wp-content/uploads/2023/08/3.jpg"
+            src="https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/why_us_section_landing_page/mateska_landing_page.webp"
             alt="Pic of Mateska"
             className="w-140 h-auto rounded-xl"
           />
@@ -122,6 +117,7 @@ function App() {
       <div className="w-full h-40 md:h-80 relative rotate-180">
         <Threads amplitude={2} distance={0} enableMouseInteraction={false} />
       </div>
+
       {resolvedTheme === "light" ? (
         <svg
           className="rotate-180"
@@ -139,6 +135,8 @@ function App() {
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
         </svg>
       )}
+
+      {/* Why us */}
       <section className="bg-accent px-10 py-20">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -151,7 +149,7 @@ function App() {
         >
           <Sparkles /> Защо да избереш нас?
         </motion.h1>
-        <ul className="list-disc flex md:flex-row flex-col items-center gap-6 justify-evenly">
+        <ul className="flex md:flex-row flex-col items-center gap-6 justify-evenly">
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -163,11 +161,15 @@ function App() {
             className="flex flex-col items-center w-fit"
           >
             <img
-              src={girlMeditatingImg}
+              src={
+                "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/why_us_section_landing_page/meditation.webp"
+              }
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-base md:text-xl">Стегни тялото си</li>
+            <li className="text-base md:text-xl text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-violet-400">
+              Стегни тялото си
+            </li>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -181,11 +183,15 @@ function App() {
             className="flex flex-col items-center w-fit"
           >
             <img
-              src={hourGlassImg}
+              src={
+                "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/why_us_section_landing_page/deadline.webp"
+              }
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-base md:text-xl">Без излишно време</li>
+            <li className="text-base md:text-xl text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-violet-400">
+              Без излишно време
+            </li>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -199,11 +205,15 @@ function App() {
             className="flex flex-col items-center w-fit"
           >
             <img
-              src={scaleImg}
+              src={
+                "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/why_us_section_landing_page/scale_1.webp"
+              }
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-base md:text-xl">Ум и тяло в баланс</li>
+            <li className="text-base md:text-xl text-transparent bg-clip-text bg-linear-to-r from-red-400 to-blue-400">
+              Ум и тяло в баланс
+            </li>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -217,11 +227,15 @@ function App() {
             className="flex flex-col items-center w-fit"
           >
             <img
-              src={monitorImg}
+              src={
+                "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/why_us_section_landing_page/dashboard.webp"
+              }
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-base md:text-xl">На всяко устройство</li>
+            <li className="text-base md:text-xl text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-violet-400">
+              На всяко устройство
+            </li>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -235,14 +249,19 @@ function App() {
             className="flex flex-col items-center w-fit"
           >
             <img
-              src={mirrorImg}
+              src={
+                "https://slpuwykwyzkiukdhghuc.supabase.co/storage/v1/object/public/why_us_section_landing_page/mirror_1.webp"
+              }
               alt="Image of a slim waist"
               className="size-20"
             />
-            <li className="text-base md:text-xl">Следи напредъка си</li>
+            <li className="text-base md:text-xl text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-violet-400">
+              Следи напредъка си
+            </li>
           </motion.div>
         </ul>
       </section>
+
       {resolvedTheme === "light" ? (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100">
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#F5F5F5"></path>
@@ -252,6 +271,8 @@ function App() {
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
         </svg>
       )}
+
+      {/* Workout plans */}
       <section id="products" className="px-10 py-10">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -298,6 +319,7 @@ function App() {
           )}
         </div>
       </section>
+
       {resolvedTheme === "light" ? (
         <svg
           className="rotate-180"
@@ -315,6 +337,8 @@ function App() {
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
         </svg>
       )}
+
+      {/* Testimonials */}
       <section className="bg-accent px-10 py-10 flex flex-col items-center">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -339,6 +363,7 @@ function App() {
           <Testimonials />
         </motion.div>
       </section>
+
       {resolvedTheme === "light" ? (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100">
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#F5F5F5"></path>
@@ -348,6 +373,8 @@ function App() {
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
         </svg>
       )}
+
+      {/* How to use */}
       <section id="howTo" className="px-10 py-10">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -360,21 +387,27 @@ function App() {
         >
           <Book /> Как се ползва?
         </motion.h1>
-        <motion.iframe
+
+        <motion.div
           initial={{ opacity: 0, x: 100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{
             duration: 1.5,
           }}
-          className="w-full md:h-150"
-          src="https://www.youtube.com/embed/xu8rh9Ref4Y?si=OXfGi8aM0cCXvgDT"
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        ></motion.iframe>
+          className="relative w-full pt-[56.25%]"
+        >
+          <iframe
+            src="https://player.vimeo.com/video/1161138060?badge=0&autopause=0&player_id=0&app_id=58479"
+            className="absolute inset-0 h-full w-full"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            title="MateskaSport - How to use"
+          />
+        </motion.div>
       </section>
+
       {resolvedTheme === "light" ? (
         <svg
           className="rotate-180"
@@ -392,6 +425,8 @@ function App() {
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#262626"></path>
         </svg>
       )}
+
+      {/* FAQ */}
       <section id="faq" className="bg-accent px-10 py-10">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -415,6 +450,7 @@ function App() {
           <FAQ />
         </motion.div>
       </section>
+
       {resolvedTheme === "light" ? (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100">
           <path d="M0 0v100S0 4 500 4s500 96 500 96V0H0Z" fill="#F5F5F5"></path>

@@ -90,10 +90,18 @@ export default function Footer() {
           <div>
             <h3 className="mb-4 text-lg font-semibold">Свържете се</h3>
             <address className="space-y-2 text-sm not-italic">
-              <p>к-с "Славейков"</p>
-              <p>Бургас, 8000</p>
-              <p>Телефон: (123) 456-7890</p>
-              <p>Имейл: aleksandramateskasport@gmail.com</p>
+              <p>Адрес:</p>
+              <p>ж.к. "Изгрев", Бургас, 8000</p>
+
+              <p>
+                Телефон: <a href="tel:+359894388764">089 4388764</a>
+              </p>
+              <p>
+                Имейл:{" "}
+                <a href="mailto:aleksandramateskasport@gmail.com">
+                  aleksandramateskasport@gmail.com
+                </a>
+              </p>
             </address>
           </div>
           <div className="relative">
@@ -220,7 +228,13 @@ export default function Footer() {
         </div>
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t pt-4 text-center md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © 2025 MateskaSport Studio. Всички права запазени.
+            © 2026 MateskaSport Studio. Всички права запазени.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Създадено от{" "}
+            <a href="https://www.stefancodes.dev/en" target="_blank" className="text-blue-500">
+              Стефан Петров 💻
+            </a>
           </p>
           <nav className="flex gap-4 text-sm">
             <Link

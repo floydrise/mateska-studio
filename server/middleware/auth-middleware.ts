@@ -9,6 +9,7 @@ export const authMiddleware = createMiddleware<{
 }>(async (c, next) => {
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
 
+  console.log(session);
   if (!session) {
     return c.json({ msg: "Not authorised" }, 401);
   }

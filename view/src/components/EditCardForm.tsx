@@ -73,7 +73,7 @@ export const EditCardForm = () => {
   }, [planId, card]);
 
   return (
-    <Card className="w-full h-full  border-0 md:border-1">
+    <Card className="w-full h-full  border-0 md:border">
       <CardHeader className="text-center">
         <CardTitle className="flex items-center gap-1 md:text-2xl m-auto">
           <Eraser /> Редактирай карта

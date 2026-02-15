@@ -3,8 +3,9 @@ import { magicLinkClient } from "better-auth/client/plugins";
 import { stripeClient } from "@better-auth/stripe/client";
 import { adminClient } from "better-auth/client/plugins";
 
+const baseURL = import.meta.env.VITE_APP_URL;
 export const authClient = createAuthClient({
-  baseURL: "http://localhost:5173",
+  baseURL,
   plugins: [
     magicLinkClient(),
     stripeClient({

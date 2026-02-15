@@ -77,7 +77,7 @@ function RouteComponent() {
               setIsLoading(true);
               await authClient.signIn.social({
                 provider: "google",
-                callbackURL: "http://localhost:5173/",
+                callbackURL: import.meta.env.VITE_APP_URL,
               });
             }}
           >
@@ -91,7 +91,7 @@ function RouteComponent() {
               setIsLoading(true);
               await authClient.signIn.social({
                 provider: "facebook",
-                callbackURL: "http://localhost:5173/",
+                callbackURL: import.meta.env.VITE_APP_URL,
               });
             }}
           >
