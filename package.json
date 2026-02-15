@@ -1,6 +1,8 @@
 {
   "name": "mateskastudio",
   "scripts": {
+    "build": "cd view && bun run build",
+    "start": "bun server/index.ts",
     "dev": "bun run --hot server/index.ts",
     "db:push": "bunx drizzle-kit push",
     "db:studio": "bunx drizzle-kit studio",
