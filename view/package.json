@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "bunx --bun vite",
     "start": "bunx --bun vite",
-    "build": "bunx --bun vite build",
+    "build": "vite build",
     "serve": "vite preview",
     "test": "vitest run"
   },
