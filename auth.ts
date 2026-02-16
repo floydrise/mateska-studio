@@ -118,7 +118,7 @@ export const auth = betterAuth({
       },
       sendDeleteAccountVerification: async ({ user, url, token }) => {
         const res = await fetch(
-          `${Bun.env.BETTER_AUTH_URL}/api/send_email/delete_user`,
+          `${process.env.BETTER_AUTH_URL!}/api/send_email/delete_user`,
           {
             method: "POST",
             headers: {
