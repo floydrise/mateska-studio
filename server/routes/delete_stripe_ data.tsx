@@ -5,7 +5,7 @@ import { zValidator } from "@hono/zod-validator";
 import z from "zod/v4";
 import { db } from "../db";
 import { subscription } from "../db/schema/auth-schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 const app = new Hono().post(
   "/",
@@ -19,7 +19,7 @@ const app = new Hono().post(
         email: z.string(),
         stripeCustomerId: z.string(),
       }),
-    })
+    }),
   ),
   internalMiddleware,
   async (c) => {
@@ -28,17 +28,24 @@ const app = new Hono().post(
     const userSubscription = await db
       .select()
       .from(subscription)
-      .where(eq(subscription.referenceId, user.id))
+      .where(
+        and(
+          eq(subscription.referenceId, user.id),
+          eq(subscription.status, "active"),
+        ),
+      )
       .then((res) => res[0]);
+
+    console.log(userSubscription);
 
     if (userSubscription) {
       await stripeClient.subscriptions.cancel(
-        userSubscription.stripeSubscriptionId!
+        userSubscription.stripeSubscriptionId!,
       );
     }
     await stripeClient.customers.del(user.stripeCustomerId!);
     return c.json({ msg: "Успешно изтри Customer в Stripe" });
-  }
+  },
 );
 
 export default app;
