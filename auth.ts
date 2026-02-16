@@ -133,10 +133,15 @@ export const auth = betterAuth({
           },
         );
         const data = await res.json();
+        console.log(data);
       },
     },
   },
-  trustedOrigins: ["http://localhost:5173", "http://localhost:3000", "https://studio.mateskasport.com"],
+  trustedOrigins: [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://studio.mateskasport.com",
+  ],
   socialProviders: {
     google: {
       prompt: "select_account",
