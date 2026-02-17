@@ -6,3 +6,4 @@ node_modules/
 stripe_webhook.txt
 dummy_data.json
 workouts_data.json
+stripe_backup_code.txt

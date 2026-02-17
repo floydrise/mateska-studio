@@ -39,8 +39,11 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
       <CardHeader>
         <div className="flex justify-between items-start">
           <h3 className="text-xl font-bold">{workoutCardTitle}</h3>
-          <div className="text-lg font-semibold text-green-600">
-            €{workoutCardPrice.toFixed(2)}
+          <div className="font-semibold items-center flex flex-col md:flex-row gap-2">
+            <p className="text-sm text-red-300 line-through">€40</p>
+            <p className="text-lg text-green-600 animate-pulse">
+              €{workoutCardPrice.toFixed(2)}
+            </p>
           </div>
         </div>
       </CardHeader>
