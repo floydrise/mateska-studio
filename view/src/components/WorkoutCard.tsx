@@ -15,11 +15,19 @@ import { useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getUserSubscriptionsQueryOptions } from "@/lib/api";
 
+const nameToSlug = (workoutCardTitle: string) => {
+  return workoutCardTitle
+    .split(" ")
+    .map((name) => name.toLowerCase())
+    .join("-");
+};
+
 const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
   const { data } = authClient.useSession();
   const user = data?.user;
   const navigate = useNavigate();
   const { data: subData } = useQuery(getUserSubscriptionsQueryOptions);
+
   const {
     workoutCardTitle,
     workoutCardImgUrl,
@@ -27,6 +35,7 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
     workoutCardTargetMuscles,
     workoutCardEquipment,
   } = workoutCard;
+
   return (
     <Card className="group overflow-hidden w-full h-full transition-all pt-0">
       <div className="aspect-video w-full overflow-hidden">
@@ -113,14 +122,21 @@ const WorkoutCard = ({ workoutCard }: { workoutCard: WorkoutCardType }) => {
         >
           <Rocket className={"size-5"} /> Купи
         </Button>
+
         <Button
           size={"lg"}
           variant={"outline"}
           className={
             "w-1/2 text-lg transform duration-500 hover:scale-105 hover:-translate-y-1 hover:translate-x-1"
           }
+          asChild
         >
-          <BookOpen className={"size-5"} /> Инфо
+          <a
+            href={`https://mateskasport.com/product/${nameToSlug(workoutCardTitle)}`}
+            target="_blank"
+          >
+            <BookOpen className={"size-5"} /> Инфо
+          </a>
         </Button>
       </CardFooter>
     </Card>
